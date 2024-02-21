@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="Mask.css">
+  <script type="module" src="MaskDB.js"></script>
+
+  <title>Mask Plot</title>
+</head>
+
+<!-- add the common header -->
+<div id="pageName" style="display: none;">Mask Plot</div>
+<div id="headerContainer"></div>
+
+
+<div id="svgPlot"></div>
+
+<script src="MaskPlot.js"></script>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const designID = urlParams.get('design-id');
+
+  if (designID) {
+    getPlot(designID)
+    .then(svgContent => {
+      if (!svgContent) {
+        displayNoPlotMessage();
+      } else {
+        const svgPlot = document.getElementById("svgPlot");
+        svgPlot.innerHTML = svgContent;
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle error
+    });
+  } else {
+    displayNoPlotMessage();
+  }
+</script>
+</body>
+</html>

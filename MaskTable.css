@@ -1,0 +1,58 @@
+
+#BasicMaskTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabHead {
+    background-color: #f5f5f5;
+}
+
+#headerRow {
+    font-weight: bold;
+}
+
+#BasicMaskTable th,
+#BasicMaskTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#paginationContainer {
+    margin-top: 10px;
+}
+
+#paginationContainer button {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#paginationContainer span {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+/* Search bar styling */
+#searchBar {
+    margin-bottom: 10px;
+}
+
+#searchBar input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.button {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #ddd;
+}

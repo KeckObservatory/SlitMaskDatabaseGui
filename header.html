@@ -1,0 +1,72 @@
+<head>
+
+<link rel="stylesheet" type="text/css" href="Mask.css">
+<link rel="icon" href="imgs/favicon.ico" type="image/x-icon">
+
+  <script type="module" src="MaskDB.js"></script>
+
+  <script language=javascript>if (window != top) top.location=window.location;</script>
+
+
+  <link rel="stylesheet" type="text/css" href="Mask.css">
+
+  <title id="headerTitle">SLIT MASK COMMON HEADER</title>
+
+  <meta name='doccomm' content='Keck Observatory Web Page'>
+  <meta http-equiv='Cache-Control:no-cache'>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+
+  <table width=100% border=0 cellspacing=0 background="imgs/logobar.jpg">
+    <tr>
+      <td align=center width=120>
+        <a>
+          <img border=0 src=./imgs/wmkecklogo.gif width=64>
+        </a>
+      </td>
+      <td colspan="4" align="left" style="font-size: 36px; color: white;">
+      &nbsp; <span id="headerName"></span>
+      </td>
+    </tr>
+    <tr>
+      <td nowrap width=120><font color=white size=1>W.M. Keck Observatory</font></td>
+      <td width=90% class="linksClass">
+          <table id="linksTable" class="linksTable"></table>
+      </td>
+    </tr>
+  </table>
+</head>
+
+<body>
+<!-- Add User Name and the buttons for Homepage / Logout-->
+<table width=100%>
+  <tr valign=top>
+    <td align=right>
+      <table>
+        <tr valign=top>
+
+          <td><span id="userName">UNDEFINED USER</span></td>
+
+          <td>
+            <form action="./MaskMain.html">
+              <input class='buttonWhite' type='submit' value='Slit Mask Home'>
+            </form>
+          </td>
+
+          <td>
+            <form action="http://www2.keck.hawaii.edu/inst/PILogin/homepage.php">
+              <input class='buttonWhite' type='submit' value='Keck Home'>
+            </form>
+          </td>
+
+          <td>
+            <form action="http://www3build.keck.hawaii.edu/logout">
+              <input class='buttonWhite' type='submit' value='Log Out'>
+            </form>
+          </td>
+
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+

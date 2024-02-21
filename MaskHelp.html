@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<link rel="stylesheet" type="text/css" href="Mask.css">
+<script type="module" src="MaskDB.js"></script>
+
+
+<div id="pageName" style="display: none;">Slit Mask Help</div>
+<div id="headerContainer"></div>
+
+<body>
+
+<h2>Slitmask Options:</h2>
+
+Help for the inventory options:
+
+<ul>
+  <li>
+    <b>Forget</b>
+  </li>
+
+  <p class="indented">
+    The Forget button is DANGEROUS. It causes the blueprint to be forgotten
+    as if it had never been submitted. This is a good feature when you have
+    submitted a mask you didn't mean to submit, or when you need to revise a
+    design and prevent the original version from being milled. Mask blueprints
+    that have been forgotten will not show up in the inventory. To 'unforget'
+    the blueprint, you will need the help of a wizard.
+  </p><br>
+
+  <li>
+    <b>Remill</b>
+  </li>
+
+  <p class="indented">
+    After being milled, masks are marked 'done' so that they do not pop up
+    again in the 'to be milled' list. To make another copy of a mask that
+    has been milled already, you will need to mark it 'unmilled' using the
+    Remill button.
+
+    NOTE: It is a Bad Idea to use the Remill button to re-use a slitmask from
+    a previous run. The Observing Date will be past and the slitmask milling
+    work queue will reject it. Instead we recommend you (a) regenerate the
+    design file using DSIMULATOR or equivalent, and submit the revised version,
+    or (b) edit the MDF (FITS file output from DSIMULATOR) and resubmit it with
+    the corrected observing date. See Mask Dates Help for tips on this.
+  </p><br>
+
+  <li>
+      <b>Plot</b>
+
+  </li>
+
+  <p class="indented">
+    The Plot button is not dangerous. It produces a graphical representation of
+    the mask design.
+  </p>
+
+  <li>
+    <b>FITS file</b>
+  </li>
+
+  <p class="indented">
+
+    The FITS file button is not dangerous. It generates a 'FITS chunk' for any
+    mask design. This can take a while to generate and is not useful unless you
+    already know what it is :-)
+  </p><br>
+
+  <li>
+    <b>Detail</b>
+  </li>
+
+  <p class="indented">
+    The Detail button is not dangerous. It shows all the data contained in the
+    mask design and blueprint(s).
+  </p><br>
+
+</ul>
+</body>
+</html>

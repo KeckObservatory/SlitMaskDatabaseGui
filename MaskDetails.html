@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script type="module" src="MaskDB.js"></script>
+<link rel="stylesheet" type="text/css" href="Mask.css">
+
+<!-- add the common header -->
+<div id="pageName" style="display: none;">Slit Mask Details</div>
+<div id="headerContainer"></div>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mask Details</title>
+</head>
+<body>
+<!--<h2>Mask Design Details</h2>-->
+<div id="spin1" class="spinner"></div>
+<table border="1" id="maskDesignTable" style="display: none;">
+  <tbody id="firstTable"></tbody>
+</table>
+
+
+<h2>Additional Information</h2>
+<div id="spin3" class="spinner"></div>
+<div id="remainingTables"></div>
+
+<script>
+  async function queryApi(url) {
+    try {
+      const response = await fetch(url, {
+        mode: 'cors',
+        credentials: 'include' // cookies
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Error getting data:', error);
+      return null;
+    }
+  }
+
+  async function getResults() {
+    console.log('Process Data function called.');
+    const designId = getDesignID();
+    if (!designId) {
+      console.error('No design ID found in URL parameters');
+      hideAllSpinners();
+      return;
+    }
+    const apiUrl = `https://vm-appserver.keck.hawaii.edu/slitmask/mask-detail?design-id=${designId}`;
+    showAllSpinners();
+
+    const results = await queryApi(apiUrl);
+    if (!results || !results.data || Object.keys(results.data).length === 0) {
+      console.info('No results from API!');
+      hideAllSpinners();
+      return;
+    }
+
+    const [mask_design, ...remainingObjects] = results.data;
+
+    createHorizontalTable(mask_design[1][0], 'maskDesignTable');
+
+    const remainingTablesContainer = document.getElementById('remainingTables');
+
+    if (remainingObjects.length === 0) {
+      console.log('No remaining objects to display.');
+      hideAllSpinners();
+      return;
+    }
+
+    // create the remaining tables dynamically
+    remainingObjects.forEach(function([title, tableData], index) {
+      if (Array.isArray(tableData) && tableData.length === 0) {
+        console.log(`Table data for ${title} is empty.`);
+        return;
+      }
+      console.log(`Creating table for ${title}:`, tableData);
+      const tableId = `table${index + 3}`;
+      const table = document.createElement('table');
+      table.id = tableId; // Corrected assignment
+      table.border = '1';
+      table.style.display = 'none';
+      const tbody = document.createElement('tbody');
+      table.appendChild(tbody);
+
+      // collapsible header as a button
+      const button = document.createElement('button');
+      button.classList.add('collapsible', 'detail-button-width');
+      button.textContent = title;
+      button.addEventListener('click', function () {
+        const content = document.getElementById(tableId);
+        if (content.style.display === 'table') {
+          content.style.display = 'none';
+        } else {
+          content.style.display = 'table';
+        }
+      });
+      remainingTablesContainer.appendChild(button);
+      remainingTablesContainer.appendChild(table);
+
+      // different tables for different content
+      if (/Slit/.test(title)) {
+        createHeaderTable(tableData, tableId);
+      } else {
+        createHorizontalTable(tableData[0], tableId);
+      }
+    });
+
+    hideAllSpinners();
+    showTable('maskDesignTable');
+    // showTable('maskOwnerTable');
+  }
+
+  function showSpinner(spinnerId) {
+    document.getElementById(spinnerId).style.display = 'block';
+  }
+
+  function hideSpinner(spinnerId) {
+    document.getElementById(spinnerId).style.display = 'none';
+  }
+
+  function hideAllSpinners() {
+    hideSpinner('spin1');
+    // hideSpinner('spin2');
+    hideSpinner('spin3');
+  }
+
+  function showAllSpinners() {
+    showSpinner('spin1');
+    // showSpinner('spin2');
+    showSpinner('spin3');
+  }
+
+  function showTable(tableId) {
+    document.getElementById(tableId).style.display = 'table';
+  }
+
+  function createHorizontalTable(obj, tableId) {
+    const table = document.getElementById(tableId);
+    if (!table) {
+      console.error('Table element not found for ID:', tableId);
+      return;
+    }
+
+    const tbody = table.querySelector('tbody');
+
+    if (!tbody) {
+      console.error('Tbody element not found for table:', table);
+      return;
+    }
+
+    const keys = Object.keys(obj);
+    const numKeys = keys.length;
+
+    for (let i = 0; i < numKeys; i++) {
+      const tr = document.createElement('tr');
+
+      // Create a row for the key
+      const tdKey = document.createElement('td');
+      tdKey.innerHTML = '<strong>' + keys[i].replace(/-/g, ' ') + '</strong>';
+      tr.appendChild(tdKey);
+
+      // Append the key's value in the next row
+      const tdValue = document.createElement('td');
+      tdValue.textContent = obj[keys[i]];
+      tr.appendChild(tdValue);
+
+      tbody.appendChild(tr);
+    }
+  }
+
+  function createHeaderTable(objList, tableId) {
+    const table = document.getElementById(tableId);
+    table.classList.add('slit-table-details');
+
+    if (!table) {
+      console.error('Table element not found for ID:', tableId);
+      return;
+    }
+
+    const tbody = table.querySelector('tbody');
+    if (!tbody) {
+      console.error('Tbody element not found for table:', table);
+      return;
+    }
+
+    // Clear existing tbody content
+    tbody.innerHTML = '';
+
+    // Create header row from the keys of the first object in the list
+    const headerRow = document.createElement('tr');
+    Object.keys(objList[0]).forEach(key => {
+      const th = document.createElement('th');
+      th.textContent = key.replace(/-/g, ' ');
+      headerRow.appendChild(th);
+    });
+    tbody.appendChild(headerRow);
+
+    // Create data rows from each object in the list
+    objList.forEach(obj => {
+      const dataRow = document.createElement('tr');
+      Object.values(obj).forEach(value => {
+        const td = document.createElement('td');
+        td.textContent = value;
+        dataRow.appendChild(td);
+      });
+      tbody.appendChild(dataRow);
+    });
+  }
+
+  function getDesignID() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('design-id');
+  }
+
+  // Call getResults when the page loads
+  window.onload = function() {
+    getResults();
+  };
+
+</script>
+</body>
+</html>

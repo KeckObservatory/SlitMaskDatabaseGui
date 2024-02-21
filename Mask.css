@@ -1,0 +1,274 @@
+
+body {
+    background-color: #cbd3e7;
+}
+
+#SlitMaskTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.SlitMaskClass {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.linksTable {
+    vertical-align: bottom;
+    width: 80%;
+    display: inline-block;
+}
+
+.linksClass {
+    vertical-align: bottom;
+    width: 80%;
+
+}
+
+#OptionTable {
+    border: none;
+    width: 100%;
+}
+
+.OptionsClass {
+    border: none;
+    width: 100px;
+    height: 80px;
+}
+
+.InventoryClass {
+    border: none;
+    width: 100px;
+    height: 60px;
+}
+
+.indented {
+    padding-left: 20px;
+}
+
+.left-align {
+    text-align: left;
+}
+
+
+.sort-icon {
+ display: inline-block;
+ margin-left: 5px;
+ vertical-align: middle;
+}
+
+.tab {
+    padding: 10px 20px;
+    background-color: #ebebeb;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tabHead {
+    /*border-bottom: 2px solid #ccc;*/
+    /*border-bottom: none;*/
+    border-collapse: collapse;
+}
+
+#svg-container {
+    border: 1px solid black;
+    width: 960px;
+    height: 400px;
+    overflow: hidden;
+}
+
+.dropdown {
+    position: absolute;
+    display: none;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 16px; /* Adjust padding */
+    text-decoration: none;
+    display: block;
+    text-align: left; /* Align text to the left */
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Alternate light and dark rows */
+#BasicMaskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#BasicMaskTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#BasicMaskTable td {
+    text-align: center;
+}
+
+/* Alternate light and dark rows */
+#maskDesignTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#maskDesignTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#maskDesignTable td {
+    text-align: center;
+}
+
+.detail-button-width {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.collapsible {
+    text-align: center;
+    border: none;
+    border-radius: 15px;
+    background-color: #acacbf;
+    color: black;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: auto;
+    margin-top: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.slit-table-details {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.OptionsClass {
+    padding: 8px;
+}
+
+/*.material-button {*/
+/*    background-color: inherit;*/
+/*    font-size: 16px;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 20px;*/
+/*    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);*/
+/*    transition: all 0.3s ease;*/
+/*    cursor: pointer;*/
+/*}*/
+
+.material-button:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); /
+}
+
+.material-icon {
+    background-color: inherit;
+
+    width: 120px;
+    height: 120px;
+}
+.inventory-icon {
+    background-color: inherit;
+
+    width: 120px;
+    height: 90px;
+}
+
+.label {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.limit-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-button {
+    /*background-color: inherit;*/
+    background-color: rgba(203, 211, 231, 0.85);
+
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.material-button:hover {
+    background-color: #f5f5f5;
+}
+
+.material-button .label {
+    margin-right: 8px;
+}
+
+.material-button img {
+    width: 48px;
+    height: 48px;
+}
+
+.label {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.limit-container {
+    display: flex;
+    align-items: center;
+}
+
+.limit-label {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+input[name="LimitResults"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+
+

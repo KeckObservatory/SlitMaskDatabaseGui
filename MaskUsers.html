@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="MaskTable.css">
+  <script src="MaskHeader.js"></script>
+  <script src="MaskTable.js"></script>
+  <title>User Mask Inventory</title>
+</head>
+
+<body>
+<!-- add the common header -->
+<div id="pageName" style="display: none;">User Mask Inventory</div>
+<div id="headerContainer"></div>
+
+<!-- Search bar -->
+<div id="searchBar">
+  <input type="text" id="searchInput" placeholder="Search..." />
+  <button onclick="searchTable()">Search</button>
+</div>
+
+<table id="BasicMaskTable">
+  <thead class="tabHead">
+  <tr id="headerRow"></tr>
+  </thead>
+  <tbody id="BasicMaskRenderer"></tbody>
+</table>
+
+<div id="paginationContainer"></div>
+<script>
+  apiUrl = 'slitmask/mask-system-users';
+  addOptions = false;
+
+</script>
+
+</body>
+
+</html>
