@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="Mask.css">
 <link rel="icon" href="imgs/favicon.ico" type="image/x-icon">
-
+  
   <script type="module" src="MaskDB.js"></script>
 
   <script language=javascript>if (window != top) top.location=window.location;</script>
@@ -18,8 +18,8 @@
 
   <table width=100% border=0 cellspacing=0 background="imgs/logobar.jpg">
     <tr>
-      <td align=center width=120>
-        <a>
+      <td align=center width=120 class="headerTd">
+        <a id="logoLink" href="">
           <img border=0 src=./imgs/wmkecklogo.gif width=64>
         </a>
       </td>
@@ -28,17 +28,18 @@
       </td>
     </tr>
     <tr>
-      <td nowrap width=120><font color=white size=1>W.M. Keck Observatory</font></td>
+      <td nowrap width=120 id="keckName"><font color=white size=1>W.M. Keck Observatory</font></td>
       <td width=90% class="linksClass">
           <table id="linksTable" class="linksTable"></table>
       </td>
+
     </tr>
   </table>
 </head>
 
 <body>
 <!-- Add User Name and the buttons for Homepage / Logout-->
-<table width=100%>
+<table width=100% id="buttonLinksTable">
   <tr valign=top>
     <td align=right>
       <table>

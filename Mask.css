@@ -270,5 +270,20 @@ input[name="LimitResults"] {
     margin-top: 5px;
 }
 
+.headerTd {
+    display: inline-block; /* Change display to inline-block */
+}
 
+#buttonLinksTable {
+    padding-top: 10px;
+    text-align: right; /* Align the content of the table to the right */
+}
+
+#keckName {
+    padding-left: 10px; /* Add left padding */
+}
+
+.linksClass {
+    vertical-align: middle;
+}
 

@@ -7,7 +7,7 @@ function getPlot(designID) {
   })
   .then(response => {
     if (!response.ok) {
-      throw new Error('Failed to get Plot file from the API');
+      throw new Error('Failed to get Plot file!');
     }
     return response.text();
   })

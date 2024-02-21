@@ -2,5 +2,23 @@
 {
   "wwwRootUrl": "https://www3build.keck.hawaii.edu/",
   "wwwBaseLoc": "/sandbox/lfuhrman/Slitmask/",
-  "apiRootUrl": "https://vm-appserver.keck.hawaii.edu/"
+  "apiRootUrl": "https://vm-appserver.keck.hawaii.edu/",
+  "header_links": [
+    {
+      "name": "Keck Home",
+      "url": "http://keckobservatory.org/"
+    },
+    {
+      "name": "Instruments",
+      "url": "https://www2.keck.hawaii.edu/inst/index.php"
+    },
+    {
+      "name": "Schedule",
+      "url": "http://www2.keck.hawaii.edu/observing/keckChedule/keckSchedule/index.php"
+    },
+    {
+      "name": "Observing",
+      "url": "http://keckobservatory.org/observing"
+    }
+  ]
 }

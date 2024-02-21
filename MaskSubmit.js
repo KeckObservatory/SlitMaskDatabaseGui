@@ -1,27 +1,30 @@
 function submitMask() {
-  // Prevent the default form submission
-  event.preventDefault();
+  let apiRootUrl = ''
+  fetch('mask_config.json')
+  .then(response => response.json())
+  .then(config => {
+    apiRootUrl = config.apiRootUrl;
 
-  // Get the file input element
+  })
+  .catch(error => console.error('Error loading config:', error));
+
+  event.preventDefault();
   const fileInput = document.querySelector('input[type="file"]');
 
-  // Check if a file is selected
   if (fileInput.files.length === 0) {
     alert("Please select a file.");
     return false;
   }
 
-  // Get the first file selected by the user
+  // the input file
   const file = fileInput.files[0];
 
   // Prepare form data to send
   const formData = new FormData();
   formData.append('maskFile', file);
+  const apiUrl = apiRootUrl + '/slitmask/upload-mdf';
 
-  // Set up the API URL
-  const apiUrl = 'https://vm-appserver.keck.hawaii.edu/slitmask/upload-mdf';
-
-  // Send the file to the server using Fetch API
+  // Send the file to the API
   fetch(apiUrl, {
     method: 'POST',
     body: formData,
@@ -37,10 +40,7 @@ function submitMask() {
     return response.json();
   })
   .then(data => {
-    // Handle the response data here
     console.log('File uploaded successfully:', data);
-
-    // Submit the form programmatically
     document.querySelector('form').submit();
   })
   .catch(error => {
