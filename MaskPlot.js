@@ -1,7 +1,15 @@
 function getPlot(designID) {
-  const apiUrl = 'https://vm-appserver.keck.hawaii.edu/slitmask/mask-plot?design-id=' + designID;
+  let apiRootUrl = ''
+  fetch('mask_config.json')
+  .then(config => {
+    apiRootUrl = config.apiRootUrl;
 
-  fetch(apiUrl, {
+  })
+  .catch(error => console.error('Error loading config:', error));
+
+  const apiUrl = apiRootUrl + "/slitmask/mask-plot?design-id=" + designID;
+
+    fetch(apiUrl, {
     mode: 'cors',
     credentials: 'include'
   })
@@ -21,7 +29,6 @@ function getPlot(designID) {
     reject(error)
   });
 }
-
 
 function displayNoPlotMessage() {
   const svgPlot = document.getElementById("svgPlot");

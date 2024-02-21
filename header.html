@@ -2,8 +2,8 @@
 
 <link rel="stylesheet" type="text/css" href="Mask.css">
 <link rel="icon" href="imgs/favicon.ico" type="image/x-icon">
-  
-  <script type="module" src="MaskDB.js"></script>
+
+  <script type="module" src="MaskHeader.js"></script>
 
   <script language=javascript>if (window != top) top.location=window.location;</script>
 
@@ -29,6 +29,8 @@
     </tr>
     <tr>
       <td nowrap width=120 id="keckName"><font color=white size=1>W.M. Keck Observatory</font></td>
+
+      <!-- add the keck links  -->
       <td width=90% class="linksClass">
           <table id="linksTable" class="linksTable"></table>
       </td>
@@ -39,35 +41,5 @@
 
 <body>
 <!-- Add User Name and the buttons for Homepage / Logout-->
-<table width=100% id="buttonLinksTable">
-  <tr valign=top>
-    <td align=right>
-      <table>
-        <tr valign=top>
-
-          <td><span id="userName">UNDEFINED USER</span></td>
-
-          <td>
-            <form action="./MaskMain.html">
-              <input class='buttonWhite' type='submit' value='Slit Mask Home'>
-            </form>
-          </td>
-
-          <td>
-            <form action="http://www2.keck.hawaii.edu/inst/PILogin/homepage.php">
-              <input class='buttonWhite' type='submit' value='Keck Home'>
-            </form>
-          </td>
-
-          <td>
-            <form action="http://www3build.keck.hawaii.edu/logout">
-              <input class='buttonWhite' type='submit' value='Log Out'>
-            </form>
-          </td>
-
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<table width=100% id="buttonLinksTable"></table>
 

@@ -3,7 +3,7 @@
   "wwwRootUrl": "https://www3build.keck.hawaii.edu/",
   "wwwBaseLoc": "/sandbox/lfuhrman/Slitmask/",
   "apiRootUrl": "https://vm-appserver.keck.hawaii.edu/",
-  "header_links": [
+  "headerLinks": [
     {
       "name": "Keck Home",
       "url": "http://keckobservatory.org/"
@@ -20,5 +20,20 @@
       "name": "Observing",
       "url": "http://keckobservatory.org/observing"
     }
+  ],
+  "buttonLinks": [
+    {
+      "name": "Slit Mask Home",
+      "url": "./MaskMain.html"
+    },
+    {
+      "name": "Keck Home",
+      "url": "http://www2.keck.hawaii.edu/inst/PILogin/homepage.php"
+    },
+    {
+      "name": "Log Out",
+      "url": "http://www3build.keck.hawaii.edu/logout"
+    }
   ]
+
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<script type="module" src="MaskDB.js"></script>
+<script type="module" src="MaskHeader.js"></script>
 <link rel="stylesheet" type="text/css" href="Mask.css">
 
 <!-- add the common header -->
@@ -40,14 +40,18 @@
   }
 
   async function getResults() {
-    console.log('Process Data function called.');
     const designId = getDesignID();
     if (!designId) {
       console.error('No design ID found in URL parameters');
       hideAllSpinners();
       return;
     }
-    const apiUrl = `https://vm-appserver.keck.hawaii.edu/slitmask/mask-detail?design-id=${designId}`;
+
+    // get the api url from the config file
+    const response = await fetch('mask_config.json');
+    const config = await response.json();
+    const apiRootUrl = config.apiRootUrl;
+    const apiUrl = apiRootUrl + `/slitmask/mask-detail?design-id=${designId}`;
     showAllSpinners();
 
     const results = await queryApi(apiUrl);
