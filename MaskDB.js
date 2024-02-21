@@ -185,78 +185,9 @@ function gen_links_menu() {
 
   return cols
 }
-// End Header functions
 
 // adds the common header
 window.addEventListener('DOMContentLoaded', loadHeader);
-
-// run on-load functions
-
-// async function display_svg(url) {
-//   try {
-//     console.log("Fetching:");
-//     const response = await fetch(url);
-//     const svgContent = await response.text();
-//
-//     const svgContainer = document.getElementById("svg-container");
-//     svgContainer.innerHTML = svgContent;
-//   } catch (error) {
-//     console.error("Error fetching SVG:", error);
-//   }
-// }
-
-// Call the function with the URL of the SVG file
-// const svgUrl = "./file.svg";
-// display_svg(svgUrl);
-
-// const svgElement = document.getElementById("my-svg");
-// let scale = 1;
-//
-// function handleWheel(event) {
-//   event.preventDefault();
-//
-//   // Check if the scroll direction is positive or negative
-//   const scrollDirection = event.deltaY > 0 ? -1 : 1;
-//
-//   // Adjust the scale based on the scroll direction
-//   scale += 0.1 * scrollDirection;
-//
-//   updateTransform();
-// }
-
-// function updateTransform() {
-//   svgElement.style.transform = `scale(${scale})`;
-// }
-//
-// // Attach the wheel event listener to the SVG element
-// svgElement.addEventListener("wheel", handleWheel);
-//
-// // adds the common header
-// window.addEventListener('DOMContentLoaded', loadHeader);
-
-// const svgIframe = document.getElementById("my-svg");
-// let scale = 1;
-//
-// function handleWheel(event) {
-//   event.preventDefault();
-//
-//   // Check if the scroll direction is positive or negative
-//   const scrollDirection = event.deltaY > 0 ? -1 : 1;
-//
-//   // Adjust the scale based on the scroll direction
-//   scale += 0.1 * scrollDirection;
-//
-//   updateTransform();
-// }
-//
-// function updateTransform() {
-//   svgIframe.style.transform = `scale(${scale})`;
-// }
-
-// Attach the wheel event listener to the SVG iframe
-// svgIframe.addEventListener("wheel", handleWheel);
-
-
 
 
 
