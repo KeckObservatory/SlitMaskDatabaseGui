@@ -3,37 +3,67 @@
   "wwwRootUrl": "https://www3build.keck.hawaii.edu/",
   "wwwBaseLoc": "/sandbox/lfuhrman/Slitmask/",
   "apiRootUrl": "https://vm-appserver.keck.hawaii.edu/",
-  "headerLinks": [
-    {
-      "name": "Keck Home",
-      "url": "http://keckobservatory.org/"
-    },
-    {
-      "name": "Instruments",
-      "url": "https://www2.keck.hawaii.edu/inst/index.php"
-    },
-    {
-      "name": "Schedule",
-      "url": "http://www2.keck.hawaii.edu/observing/keckChedule/keckSchedule/index.php"
-    },
-    {
-      "name": "Observing",
-      "url": "http://keckobservatory.org/observing"
-    }
-  ],
   "buttonLinks": [
     {
-      "name": "Slit Mask Home",
+      "name": "Home",
       "url": "./MaskMain.html"
     },
     {
-      "name": "Keck Home",
-      "url": "http://www2.keck.hawaii.edu/inst/PILogin/homepage.php"
+      "name": "Help",
+      "url": "./MaskHelp.html"
     },
     {
       "name": "Log Out",
-      "url": "http://www3build.keck.hawaii.edu/logout"
+      "url": "https://www3build.keck.hawaii.edu/logout"
+    }
+  ],
+  "sidebarLinks": [
+    {
+      "title": "Submission Procedure",
+      "links": [
+        {
+          "text": "LRIS",
+          "url": "https://www2.keck.hawaii.edu/inst/lris/slitmask_submission_procedure.html"
+        },
+        {
+          "text": "DEIMOS",
+          "url": "https://www2.keck.hawaii.edu/inst/deimos/checklist-pre.html"
+        }
+      ]
+    },
+    {
+      "title": "Standard Slitmasks",
+      "links": [
+        {
+          "text": "LRIS",
+          "url": "https://www2.keck.hawaii.edu/inst/lris/slitmask.html"
+        },
+        {
+          "text": "DEIMOS",
+          "url": "https://www2.keck.hawaii.edu/inst/deimos/standard_slitmasks.html"
+        }
+      ]
+    },
+    {
+      "title": "Keck Links",
+      "links": [
+        {
+          "text": "Keck Home",
+          "url": "http://keckobservatory.org/"
+        },
+        {
+          "text": "Instruments",
+          "url": "https://www2.keck.hawaii.edu/inst/index.php"
+        },
+        {
+          "text": "Schedule",
+          "url": "http://www2.keck.hawaii.edu/observing/keckChedule/keckSchedule/index.php"
+        },
+        {
+          "text": "Observing",
+          "url": "http://keckobservatory.org/observing"
+        }
+      ]
     }
   ]
-
 }

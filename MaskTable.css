@@ -84,3 +84,30 @@
     display: block;
 }
 
+
+
+#BasicMaskTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#BasicMaskTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#BasicMaskTable td {
+    text-align: center;
+}
+
+/* Alternate light and dark rows */
+#maskDesignTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#maskDesignTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#maskDesignTable td {
+    text-align: center;
+}
+

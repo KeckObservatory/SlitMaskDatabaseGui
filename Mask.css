@@ -10,28 +10,6 @@ body {
     display: none;
 }
 
-#SlitMaskTable {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.SlitMaskClass {
-    border: 1px solid #dddddd;
-    padding: 8px;
-    text-align: left;
-}
-
-.linksTable {
-    vertical-align: bottom;
-    width: 80%;
-    display: inline-block;
-}
-
-.linksClass {
-    vertical-align: bottom;
-    width: 80%;
-
-}
 
 #OptionTable {
     border: none;
@@ -68,87 +46,14 @@ body {
     border: 1px solid #ccc;
     border-bottom: none;
     border-radius: 12px 12px 0 0;
-    cursor: pointer;
+    /*cursor: pointer;*/
     font-weight: bold;
 }
 
 .tabHead {
-    /*border-bottom: 2px solid #ccc;*/
-    /*border-bottom: none;*/
     border-collapse: collapse;
 }
 
-#svg-container {
-    border: 1px solid black;
-    width: 960px;
-    height: 400px;
-    overflow: hidden;
-}
-
-/* Alternate light and dark rows */
-#BasicMaskTable tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#BasicMaskTable tbody tr:nth-child(odd) {
-    background-color: #ffffff;
-}
-
-#BasicMaskTable td {
-    text-align: center;
-}
-
-/* Alternate light and dark rows */
-#maskDesignTable tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#maskDesignTable tbody tr:nth-child(odd) {
-    background-color: #ffffff;
-}
-
-#maskDesignTable td {
-    text-align: center;
-}
-
-.detail-button-width {
-    display: block;
-    width: 100%;
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-.collapsible {
-    text-align: center;
-    border: none;
-    border-radius: 15px;
-    background-color: #acacbf;
-    color: black;
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-.spinner {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: auto;
-    margin-top: 20px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.slit-table-details {
-    border-collapse: collapse;
-    width: 100%;
-}
 
 .OptionsClass {
     padding: 8px;
@@ -181,12 +86,6 @@ body {
     margin-right: 5px;
 }
 
-.limit-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .main-button {
     background-color: inherit;
     font-size: 20px;
@@ -194,7 +93,7 @@ body {
     border-radius: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    cursor: pointer;
+    /*cursor: pointer;*/
 
     display: block;
     align-items: center;
@@ -217,22 +116,6 @@ body {
     height: 48px;
 }
 
-.label {
-    display: block;
-    text-align: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.limit-container {
-    display: flex;
-    align-items: center;
-}
-
-.limit-label {
-    margin-right: 8px;
-    font-size: 14px;
-}
 
 input[name="LimitResults"] {
     padding: 6px;
@@ -241,17 +124,6 @@ input[name="LimitResults"] {
     margin-top: 5px;
 }
 
-.headerTd {
-    display: inline-block;
-}
-
-#keckName {
-    padding-left: 10px;
-}
-
-.linksClass {
-    vertical-align: middle;
-}
 
 .toggle-btn {
     position: absolute;
@@ -270,12 +142,42 @@ input[name="LimitResults"] {
     background-color: #ccc;
 }
 
-.username-container {
-    display: flex;
-    align-items: center;
 
+.sidebar {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: #c1cbe6;
+    padding: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    transition: left 0.3s ease;
 }
 
-.username-container #userName {
-    margin-right: 5px;
+.sidebar a:hover {
+    transform: translateY(-3px); /* Adjust the value to control the amount of rise */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar.open {
+    left: -200px;
 }
