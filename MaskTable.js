@@ -1,24 +1,60 @@
 
-var apiUrl = ''; // define the api Url in the HTML
-var apiRootUrl = ''; // define the api Url in the HTML
-var queryResults = []; // store the data to be used by the sort
+// set variables that can be updated elsewhere
+var queryResults = [];
 var addOptions = true;
-var pageSize = 12;
+var pageSize = 10;
 var currentPage = 1;
 
 
-fetch('mask_config.json')
-.then(response => response.json())
-.then(config => {
-  wwwBaseLoc = config.wwwBaseLoc;
-  apiRootUrl = config.apiRootUrl;
-  console.log('api root', apiRootUrl);
-  queryApi();
-})
-.catch(error => console.error('Error loading config:', error));
+function displayTable(apiUrl) {
+  fetch('MaskConfig.json')
+  .then(response => response.json())
+  .then(config => {
+    const wwwBaseLoc = config.wwwBaseLoc;
+    const apiRootUrl = config.apiRootUrl;
+    queryApi(apiUrl, apiRootUrl, wwwBaseLoc);
+  })
+  .catch(error => console.error('Error loading config:', error));
+}
+
+export { displayTable };
 
 
-function StandardMaskTable(data) {
+function queryApi(apiUrl, apiRootUrl, wwwBaseLoc) {
+  console.log('root api ', apiRootUrl + apiUrl)
+  fetch(apiRootUrl + apiUrl, {
+    mode: 'cors',
+    credentials: 'include' // cookies
+  })
+  .then(response => response.json())
+  .then(data => {
+    queryResults = data.data;
+    StandardMaskTable(queryResults, wwwBaseLoc);
+  })
+  .catch(error => console.error('Error accessing data:', error));
+}
+
+// allow searchTable to be used in the MaskMain once loaded via tables
+window.searchTable = function() {
+  var input, filter, tr, td, i, j, txtValue;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+
+  var filteredData = queryResults.filter(row => {
+    for (const value of Object.values(row)) {
+      if (String(value).toUpperCase().includes(filter)) {
+        return true;
+      }
+    }
+    return false;
+  });
+  StandardMaskTable(filteredData);
+
+  // Reset pagination to page 1 (to display the results)
+  currentPage = 1;
+}
+
+function StandardMaskTable(data, wwwBaseLoc) {
 
   const tableBody = document.getElementById('BasicMaskRenderer');
   const headerRow = document.getElementById('headerRow');
@@ -35,13 +71,22 @@ function StandardMaskTable(data) {
       const cell = document.createElement('th');
       cell.className = 'tab';
       cell.textContent = key.replace(/-/g, ' ');
-      cell.onclick = () => sortTable(columnIndex); // Set click event for sorting
+      cell.onclick = () => sortTable(columnIndex);
       const sortIcon = document.createElement('span');
       sortIcon.className = 'sort-icon';
       sortIcon.innerHTML = '&uarr;&darr;';
       cell.appendChild(sortIcon);
       headerRow.appendChild(cell);
     });
+  } else {
+    console.log('no results')
+    // If data is empty, display "No Results" message
+    const noResultsRow = document.createElement('tr');
+    const noResultsCell = document.createElement('td');
+    noResultsCell.textContent = 'No Results';
+    noResultsRow.appendChild(noResultsCell);
+    tableBody.appendChild(noResultsRow);
+    return;
   }
 
   const startIndex = (currentPage - 1) * pageSize;
@@ -65,16 +110,27 @@ function StandardMaskTable(data) {
       const dropdownContent = document.createElement('div');
       dropdownContent.className = 'dropdown-content';
       const options = ['Plot', 'Details', 'Fits File'];
+
+      // determine if desid or bluid should be used and which syntax
+      const designId = (rowData['Design-ID'] ? rowData['Design-ID'] : rowData['desid'] ? rowData['desid'] : '')
+      const blueId = (rowData['Blue-ID'] ? rowData['Blue-ID'] : rowData['bluid'] ? rowData['bluid'] : '')
+      let blueParam = '';
+      if (blueId === '') {
+        blueParam = 'design-id=' + designId;
+      } else {
+        blueParam = 'blue-id=' + blueId;
+      }
+
       const options_urls = [
-        // plotUrl + '?blue-id=' + rowData['Blue-ID'],
-        wwwBaseLoc + 'MaskPlot.html?design-id=' + rowData['Design-ID'],
-        wwwBaseLoc + 'MaskDetails.html?design-id=' + rowData['Design-ID'],
+        wwwBaseLoc + 'MaskPlot.html?' + blueParam,
+        wwwBaseLoc + 'MaskDetails.html?design-id=' + designId,
         'Fits File'
       ];
       options.forEach((option, index) => {
         const optionLink = document.createElement('a');
         optionLink.textContent = option;
         optionLink.href = options_urls[index];
+        optionLink.target = "_blank";
         dropdownContent.appendChild(optionLink);
       });
       dropdownContainer.appendChild(dropdownContent);
@@ -83,7 +139,7 @@ function StandardMaskTable(data) {
       // Show dropdown near cursor when hovering over the row or dropdown
       row.addEventListener('mouseover', function (event) {
         const dropdown = this.querySelector('.dropdown');
-        if (dropdown && !dropdown.contains(event.relatedTarget)) { // Check if the cursor is not on the dropdown content
+        if (dropdown && !dropdown.contains(event.relatedTarget)) {
           dropdown.style.display = 'block';
           dropdown.style.left = event.clientX + 'px';
           dropdown.style.top = event.clientY + 'px';
@@ -97,95 +153,78 @@ function StandardMaskTable(data) {
           dropdown.style.display = 'none';
         }
       });
+
     }
 
     tableBody.appendChild(row);
   }
 }
 
+
 function displayPagination(totalRows) {
-  const totalPages = Math.ceil(totalRows / pageSize);
+  let totalPages = Math.ceil(totalRows / pageSize);
+  if (isNaN(totalPages)) {
+    totalPages = 0;
+  }
+
   const paginationContainer = document.getElementById('paginationContainer');
-  paginationContainer.innerHTML = '';
 
-  // Add "Previous" button
-  const prevButton = document.createElement('button');
-  prevButton.textContent = 'Previous';
-  prevButton.onclick = () => {
-    if (currentPage > 1) {
-      currentPage--;
-      searchTable();
-    }
-  };
-  paginationContainer.appendChild(prevButton);
+  if (totalPages > 1) {
+    paginationContainer.innerHTML = '';
 
-  // Add current page number
-  const currentPageSpan = document.createElement('span');
-  currentPageSpan.textContent = 'Page ' + currentPage + '/' + totalPages;
-  paginationContainer.appendChild(currentPageSpan);
-
-  // Add "Next" button
-  const nextButton = document.createElement('button');
-  nextButton.textContent = 'Next';
-  nextButton.onclick = () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      searchTable(); // Update search results when navigating pages
-    }
-  };
-  paginationContainer.appendChild(nextButton);
-}
-
-function queryApi() {
-  console.log('root api ', apiRootUrl + apiUrl)
-  fetch(apiRootUrl + apiUrl, {
-    mode: 'cors',
-    credentials: 'include' // cookies
-  })
-  .then(response => response.json())
-  .then(data => {
-    queryResults = data.data; // Store the original data
-    StandardMaskTable(queryResults); // Display the data in the table
-  })
-  .catch(error => console.error('Error accessing data:', error));
-}
-
-function searchTable() {
-  var input, filter, tr, td, i, j, txtValue;
-  input = document.getElementById("searchInput");
-  filter = input.value.toUpperCase();
-  
-  var filteredData = queryResults.filter(row => {
-    for (const value of Object.values(row)) {
-      if (String(value).toUpperCase().includes(filter)) {
-        return true; 
+    // Add "Previous" button
+    const prevButton = document.createElement('button');
+    prevButton.textContent = 'Previous';
+    prevButton.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        searchTable();
       }
-    }
-    return false; 
-  });
+    };
+    paginationContainer.appendChild(prevButton);
 
-  StandardMaskTable(filteredData);
+    // Add current page number
+    const currentPageSpan = document.createElement('span');
+    currentPageSpan.textContent = 'Page ' + currentPage + '/' + totalPages;
+    paginationContainer.appendChild(currentPageSpan);
+
+    // Add "Next" button
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Next';
+    nextButton.onclick = () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        searchTable();
+      }
+    };
+    paginationContainer.appendChild(nextButton);
+
+    paginationContainer.style.display = 'block'; // Ensure pagination container is visible
+  } else {
+    // Hide pagination container if there are no pages to display
+    paginationContainer.style.display = 'none';
+  }
 }
+
 
 function sortTable(columnIndex) {
-  const table = document.getElementById("BasicMaskTable");
-  const rows = Array.from(table.rows).slice(1);
 
-  rows.sort((a, b) => {
-    const cellA = a.cells[columnIndex].textContent.trim();
-    const cellB = b.cells[columnIndex].textContent.trim();
+  const key = Object.keys(queryResults[0])[columnIndex];
 
-    return cellA.localeCompare(cellB);
-  });
-
-  if (table.classList.contains("sorted")) {
-    rows.reverse();
-    table.classList.remove("sorted");
+  // ascending or descending
+  if (queryResults.sortKey === key && !queryResults.sortDesc) {
+    queryResults.sort((a, b) => (a[key] > b[key]) ? -1 : ((a[key] < b[key]) ? 1 : 0));
+    queryResults.sortDesc = true;
   } else {
-    table.classList.add("sorted");
+    queryResults.sort((a, b) => (a[key] < b[key]) ? -1 : ((a[key] > b[key]) ? 1 : 0));
+    queryResults.sortDesc = false;
+    queryResults.sortKey = key;
   }
 
-  for (let row of rows) {
-    table.tBodies[0].appendChild(row);
-  }
+  // Reset to the first page
+  currentPage = 1;
+
+  // Re-render the table with sorted results
+  StandardMaskTable(queryResults);
 }
+

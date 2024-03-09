@@ -1,0 +1,53 @@
+
+<script type="module" src="MaskMain.js"></script>
+
+<table id="OptionTable">
+  <thead>
+  <tr class="OptionsClass">
+    <th class="OptionsClass">
+      <a href="#" onclick="loadContent('MaskSubmit.html')" class="main-button">
+        <img class="main-icon" src="imgs/submit.png">
+        <span class="label">Submit Mask Design</span>
+      </a>
+    </th>
+    <th class="OptionsClass">
+      <a href="#" onclick="loadContent('MaskMillQueue.html')" class="main-button">
+        <img class="main-icon" src="imgs/milling-machine.png">
+        <span class="label">Mask Milling Queue</span>
+      </a>
+    </th>
+  </tr>
+  <tr class="OptionsClass">
+    <th class="OptionsClass">
+      <a href="#" onclick="loadContent('MaskCalibInventory.html')" class="main-button">
+        <img class="main-icon" src="imgs/measurement.png">
+        <span class="label">Calibration Masks</span>
+      </a>
+    </th>
+    <th class="OptionsClass">
+      <a href="#" onclick="loadContent('MaskInventory.html')" class="main-button">
+        <img class="inventory-icon" src="imgs/inventory.png">
+        <span class="label">Mask Inventory</span>
+      </a>
+    </th>
+  </tr>
+  <!--  add row for the mask admin if the user is an admin -->
+  <tr class="OptionsClass">
+    <th class="OptionsClass">
+      <a href="MaskAdminSearch.html" class="main-button" id="adminSearchButton" style="display: none;">
+<!--      <a href="MaskAdminSearch.html" class="main-button" id="adminSearchButton" style="display: block;">-->
+        <img class="main-icon" src="imgs/global-network.png">
+        <span class="label">Admin Mask Search</span>
+      </a>
+    </th>
+  </tr>
+  </thead>
+</table>
+
+<!-- add the Admin Search Options if user is an Admin -->
+<script>
+  addAdminButton();
+</script>
+
+
+

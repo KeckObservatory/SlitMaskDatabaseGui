@@ -4,17 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--  <link rel="stylesheet" type="text/css" href="Mask.css">-->
   <link rel="stylesheet" type="text/css" href="MaskTable.css">
-  <script src="MaskHeader.js"></script>
-  <script src="MaskTable.js"></script>
-  <title>User Mask Inventory</title>
+  <script type="module" src="MaskTable.js"></script>
 </head>
 
-<body>
-<!-- add the common header -->
-<div id="pageName" style="display: none;">User Mask Inventory</div>
-<div id="headerContainer"></div>
+<h3>User Mask Inventory</h3>
 
 <!-- Search bar -->
 <div id="searchBar">
@@ -30,11 +24,10 @@
 </table>
 
 <div id="paginationContainer"></div>
-<script>
-  // set the api url
-  apiUrl = '/slitmask/user-mask-inventory';
+
+<script type="module">
+  import { displayTable } from './MaskTable.js';
+  const apiUrl = '/slitmask/user-mask-inventory';
+  displayTable(apiUrl);
 </script>
 
-</body>
-
-</html>

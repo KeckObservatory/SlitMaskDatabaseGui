@@ -5,70 +5,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="Mask.css">
-  <script type="module" src="MaskHeader.js"></script>
+  <script type="module" src="header.js"></script>
+  <script type="module" src="MaskMain.js"></script>
+  <script type="module" src="sidebar.js"></script>
 
   <title>Slit Mask Menu</title>
   <style>
+      .sidebar {
+          position: absolute;
+          top: 120px;
+          left: 0;
+          height: 100vh;
+          width: 200px;
+          background-color: #c1cbe6;
+          padding: 20px;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
+          transition: left 0.3s ease;
+      }
+
+      .sidebar ul {
+          list-style-type: none;
+          padding: 10px;
+          font-size: 12px;
+      }
+
+      .sidebar h3 {
+          margin-top: 0;
+          font-size: 14px;
+      }
+
+      .sidebar a {
+          display: block;
+          padding: 10px 0;
+          text-decoration: none;
+          color: #333;
+      }
+
+      .sidebar.open {
+          left: -200px;
+      }
+
+      .content {
+          margin-left: 250px;
+          padding: 20px;
+          transition: margin-left 0.3s ease;
+      }
+      #keckFoot {
+          margin-left: 200px;
+          padding: 10px;
+          transition: margin-left 0.3s ease;
+      }
 
   </style>
+
+
 </head>
 
 <body>
+
 <!-- add the common header -->
-<div id="pageName" style="display: none;">Slit Mask Menu</div>
+<div id="pageName" style="display: none;">Keck Slitmask Portal</div>
 <div id="headerContainer"></div>
 
-<h2>Mask Options:</h2>
+<!-- add the sidebar links dynamically -->
+<div class="sidebar" id="sidebar">
+  <button class="toggle-btn" onclick="toggleSidebar()">...</button>
+  <div id="sidebarLinks"></div>
+</div>
 
-<table id="OptionTable">
-  <thead>
-  <tr class="OptionsClass">
-    <th class="OptionsClass">
-      <a href="MaskSubmit.html" target="_blank" class="material-button">
-        <img class="material-icon" src="imgs/submit.png">
-        <span class="label">Submit Mask Design</span>
-      </a>
-    </th>
-    <th class="OptionsClass">
-      <a href="MaskMillQueue.html" target="_blank" class="material-button">
-        <img class="material-icon" src="imgs/milling-machine.png">
-        <span class="label">Mask Milling Queue</span>
-      </a>
-    </th>
-    <th class="OptionsClass">
-      <a href="MaskCalibInventory.html" target="_blank" class="material-button">
-        <img class="material-icon" src="imgs/measurement.png">
-        <span class="label">Calibration Masks</span>
-      </a>
-    </th>
-  </tr>
-  <tr>
-    <!-- second row -->
-    <th class="OptionsClass">
-      <a href="MaskUsers.html" target="_blank" class="material-button">
-        <img class="material-icon" src="imgs/history.png">
-        <span class="label">File Upload History</span>
-      </a>
-    </th>
-    <th class="OptionsClass">
-      <a href="MaskUsers.html" target="_blank" class="material-button">
-        <img class="material-icon" src="imgs/group.png">
-        <span class="label">Mask System Users</span>
-      </a>
-    </th>
-    <th class="OptionsClass">
-      <a href="MaskInventory.html" target="_blank" class="material-button">
-        <img class="inventory-icon" src="imgs/inventory.png">
-        <span class="label">Mask Inventory</span>
-      </a>
-<!--      <div class="limit-container">-->
-<!--        <span class="limit-label">Limit:</span>-->
-<!--        <input type="text" name="LimitResults" placeholder="40" pattern="\d{0,4}" size="4" maxlength="4">-->
-<!--      </div>-->
-    </th>
-  </tr>
-  </thead>
-</table>
+<!-- Main content dynamically loaded -->
+<div class="content" id="content">
+</div>
+
+<footer id="keckFoot">
+    <object type="text/html" data="footer.html" id="footer" width="100%" style="overflow:auto; border:0;"></object>
+</footer>
+
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const content = document.querySelector('.content');
+    const foot = document.querySelector('#keckFoot');
+
+    // Toggle the 'open' class
+    sidebar.classList.toggle('open');
+
+    if (sidebar.classList.contains('open')) {
+      foot.style.marginLeft = '0';
+      content.style.marginLeft = '50px';
+    } else {
+      foot.style.marginLeft = '200px';
+      content.style.marginLeft = '250px';
+    }
+  }
+
+  function loadContent(url) {
+    fetch(url)
+    .then(response => response.text())
+    .then(data => {
+      const mainContent = document.getElementById('content');
+      mainContent.innerHTML = data;
+
+      // Find and execute scripts within the loaded content
+      const scripts = mainContent.querySelectorAll('script[type="module"]');
+      scripts.forEach(script => {
+        const newScript = document.createElement('script');
+        newScript.type = 'module';
+        newScript.text = script.text;
+        document.body.appendChild(newScript);
+      });
+    })
+    .catch(error => console.error('Error loading content:', error));
+  }
+
+  // Load content from MainTest.html initially
+  window.onload = function() {
+    loadContent('MaskHome.html');
+  };
+
+</script>
+<script type="module">
+  import { addAdminButton } from './MaskMain.js';
+    addAdminButton();
+</script>
 </body>
 
 </html>

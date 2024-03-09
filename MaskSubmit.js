@@ -1,6 +1,6 @@
 function submitMask() {
   let apiRootUrl = ''
-  fetch('mask_config.json')
+  fetch('MaskConfig.json')
   .then(config => {
     apiRootUrl = config.apiRootUrl;
 

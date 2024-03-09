@@ -3,32 +3,107 @@
 <link rel="stylesheet" type="text/css" href="Mask.css">
 <link rel="icon" href="imgs/favicon.ico" type="image/x-icon">
 
-  <script type="module" src="MaskHeader.js"></script>
+  <script type="module" src="header.js"></script>
 
   <script language=javascript>if (window != top) top.location=window.location;</script>
 
 
   <link rel="stylesheet" type="text/css" href="Mask.css">
 
-  <title id="headerTitle">SLIT MASK COMMON HEADER</title>
-
   <meta name='doccomm' content='Keck Observatory Web Page'>
   <meta http-equiv='Cache-Control:no-cache'>
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 
-  <table width=100% border=0 cellspacing=0 background="imgs/logobar.jpg">
+    <style>
+
+        #headerTitle {
+            font-family: 'Times New Roman'; /* Papyrus font */
+            color: #9F9491; /* Color */
+
+        }
+
+        #infoDropdown {
+            padding-top: 10px;
+            padding-right: 2%;
+            text-align: right;
+            font-size: 18px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            z-index: 1;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            padding: 12px;
+            right: 0; /* Align to the right */
+            border-radius: 10px; /* Round the corners */
+            width: auto; /* Adjust width based on content */
+        }
+
+        .dropdown-container:hover .dropdown-content {
+            display: block;
+            background-color: #f1f1f1;
+        }
+
+        .dropbtn {
+            background-color: #fff;
+            color: #333;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown {
+            position: absolute;
+            display: none;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 8px 16px; /* Adjust padding */
+            text-decoration: none;
+            display: block;
+            text-align: left; /* Align text to the left */
+        }
+        /*.dropdown-container:hover .dropdown-content,*/
+        /*.ellipsis-span.active + .dropdown-content {*/
+        /*    display: block;*/
+        /*}*/
+
+
+
+    </style>
+
+  <title id="headerTitle">SLIT MASK COMMON HEADER</title>
+
+
+  <!--  <table width=100% border=0 cellspacing=0 background="imgs/logobar.jpg">-->
+  <table width=100% border=0 cellspacing=0 >
     <tr>
       <td align=center width=120 class="headerTd">
         <a id="logoLink" href="">
           <img border=0 src=./imgs/wmkecklogo.gif width=64>
         </a>
       </td>
-      <td colspan="4" align="left" style="font-size: 36px; color: white;">
+<!--      <td colspan="4" align="left" style="font-size: 36px; color: white;">-->
+      <td colspan="4" align="left" style="font-size: 36px; color: black;">
       &nbsp; <span id="headerName"></span>
       </td>
     </tr>
     <tr>
-      <td nowrap width=120 id="keckName"><font color=white size=1>W.M. Keck Observatory</font></td>
+<!--      <td nowrap width=120 id="keckName"><font color=white size=1>W.M. Keck Observatory</font></td>-->
+      <td nowrap width=120 id="keckName"><font color=black size=1>W.M. Keck Observatory</font></td>
 
       <!-- add the keck links  -->
       <td width=90% class="linksClass">
@@ -39,7 +114,6 @@
   </table>
 </head>
 
-<body>
-<!-- Add User Name and the buttons for Homepage / Logout-->
-<table width=100% id="buttonLinksTable"></table>
+<!-- Add User Name with dropdown menu : home / help / Logout-->
+<table width=100% id="infoDropdown"></table>
 

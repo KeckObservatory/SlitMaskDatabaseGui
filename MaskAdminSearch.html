@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="Mask.css">
+  <style>
+      #formContainer {
+          text-align: center;
+      }
+
+      #optionsDropdown {
+          font-size: 16px;
+          height: 30px;
+      }
+
+      #searchInput {
+          font-size: 16px;
+          height: 25px;
+      }
+
+      #submitBtn {
+          font-size: 16px;
+          height: 30px;
+          margin-left: 10px;
+      }
+  </style>
+  <script type="module" src="header.js"></script>
+  <script type="module" src="MaskTable.js"></script>
+  <script type="module" src="MaskAdminSearch.js"></script>
+  <title>Slit Mask Search</title>
+</head>
+<body>
+<!-- add the common header -->
+<div id="pageName" style="display: none;">Slit Mask Menu</div>
+<div id="headerContainer"></div>
+
+<!-- Container for the form, centered horizontally -->
+<div id="formContainer">
+  <!-- the search parameter form -->
+  <form id="inputForm">
+    <select id="optionsDropdown">
+      <option value="">Search Options</option>
+    </select>
+    <input type="text" id="searchInput" placeholder="Search query..." />
+    <button id="submitBtn">Search</button>
+  </form>
+</div>
+
+<br><br>
+
+<h2></h2>
+<table id="BasicMaskTable">
+  <thead class="tabHead">
+  <tr id="headerRow"></tr>
+  </thead>
+  <tbody id="BasicMaskRenderer"></tbody>
+</table>
+
+<div id="paginationContainer"></div>
+
+</body>
+</html>

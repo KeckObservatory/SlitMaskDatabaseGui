@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<script type="module" src="MaskHeader.js"></script>
+<script type="module" src="header.js"></script>
 <link rel="stylesheet" type="text/css" href="Mask.css">
 
 <!-- add the common header -->
@@ -13,13 +13,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mask Details</title>
 </head>
+
 <body>
 <!--<h2>Mask Design Details</h2>-->
 <div id="spin1" class="spinner"></div>
 <table border="1" id="maskDesignTable" style="display: none;">
   <tbody id="firstTable"></tbody>
 </table>
-
 
 <h2>Additional Information</h2>
 <div id="spin3" class="spinner"></div>
@@ -30,7 +30,7 @@
     try {
       const response = await fetch(url, {
         mode: 'cors',
-        credentials: 'include' // cookies
+        credentials: 'include'
       });
       return await response.json();
     } catch (error) {
@@ -48,7 +48,7 @@
     }
 
     // get the api url from the config file
-    const response = await fetch('mask_config.json');
+    const response = await fetch('MaskConfig.json');
     const config = await response.json();
     const apiRootUrl = config.apiRootUrl;
     const apiUrl = apiRootUrl + `/slitmask/mask-detail?design-id=${designId}`;
@@ -113,7 +113,6 @@
 
     hideAllSpinners();
     showTable('maskDesignTable');
-    // showTable('maskOwnerTable');
   }
 
   function showSpinner(spinnerId) {
@@ -126,13 +125,11 @@
 
   function hideAllSpinners() {
     hideSpinner('spin1');
-    // hideSpinner('spin2');
     hideSpinner('spin3');
   }
 
   function showAllSpinners() {
     showSpinner('spin1');
-    // showSpinner('spin2');
     showSpinner('spin3');
   }
 

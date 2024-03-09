@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--  <title>Keck Footer</title>-->
+  <style>
+
+      footer {
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: fixed;
+          bottom: 0;
+          z-index: 999; /* Ensure the footer appears above other content */
+          background-color: #b2bcd9;
+          width: 110%;
+          border-top-left-radius: 20px; /* Rounded corners at the top left */
+          border-top-right-radius: 20px; /* Rounded corners at the top right */
+      }
+
+      .link-group {
+          margin: 8px;
+          text-align: left;
+      }
+
+      .link-group-title {
+          font-weight: bold;
+          /*margin-bottom: 8px;*/
+      }
+
+      .footer-link {
+          display: block;
+          /*margin-bottom: 8px;*/
+          text-decoration: none;
+      }
+  </style>
+</head>
+
+<body>
+
+<footer id="keckFooter"></footer>
+
+<script>
+  function createFooterLink(href, text) {
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = text;
+    link.classList.add('footer-link');
+    link.setAttribute('target', '_blank');
+    return link;
+  }
+
+  function createFooterLinkGroup(title, links) {
+    const group = document.createElement('div');
+    group.classList.add('link-group');
+
+    const titleElem = document.createElement('div');
+    titleElem.textContent = title;
+    titleElem.classList.add('link-group-title');
+    group.appendChild(titleElem);
+
+    links.forEach(link => group.appendChild(link));
+
+    return group;
+  }
+
+  function createKeckFooter() {
+    const footer = document.getElementById('keckFooter');
+
+    const aboutLinks = [
+      createFooterLink('https://www.keckobservatory.org/about/people/', 'People'),
+      createFooterLink('https://www.keckobservatory.org/about/mission-vision-values/', 'Mission, Vision, & Values')
+    ];
+    footer.appendChild(createFooterLinkGroup('About', aboutLinks));
+
+    const mediaLinks = [
+      createFooterLink('https://www.keckobservatory.org/news/', 'News'),
+      createFooterLink('https://www.keckobservatory.org/events/', 'Events')
+    ];
+    footer.appendChild(createFooterLinkGroup('Media', mediaLinks));
+
+    // Address and contact information as multiple lines
+    const addressLines = [
+      'W.M Keck Observatory',
+      '65-1120 Mamalahoa Hwy.',
+      'Kamuela, HI 96743'
+    ];
+    const address = document.createElement('div');
+    addressLines.forEach(line => {
+      const lineElement = document.createElement('div');
+      lineElement.textContent = line;
+      address.appendChild(lineElement);
+    });
+    footer.appendChild(createFooterLinkGroup('Address', [address]));
+
+    const contactLines = [
+      'Phone: 808.885.7887',
+      'Fax: 808.885.4464',
+      'Email: slitmask@keck.hawaii.edu'
+    ];
+    const contact = document.createElement('div');
+    contactLines.forEach(line => {
+      const lineElement = document.createElement('div');
+      lineElement.textContent = line;
+      contact.appendChild(lineElement);
+    });
+    footer.appendChild(createFooterLinkGroup('Contact', [contact]));
+  }
+
+  createKeckFooter();
+</script>
+
+</body>
+
+</html>
