@@ -157,7 +157,8 @@ input[name="LimitResults"] {
 }
 
 .sidebar a:hover {
-    transform: translateY(-3px); /* Adjust the value to control the amount of rise */
+    transform: translateY(-3px);
+    color: green;
 }
 
 .sidebar ul {
