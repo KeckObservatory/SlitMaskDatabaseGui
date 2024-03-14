@@ -23,7 +23,7 @@ async function loadHeader() {
     if (infoDropdown) {
       addInfoDropDown(configInfo.buttonLinks);
     }
-    
+
     // add the name of the page to the header
     const header_name = headerContainer.querySelector('#headerName');
     if (header_name) {
@@ -39,21 +39,13 @@ async function loadHeader() {
     // add the username
     const user_name = headerContainer.querySelector('#userName');
     if (user_name) {
-        user_name.innerHTML = userinfo.Title + " " + userinfo.FirstName + " " + userinfo.LastName + " ";
+      user_name.innerHTML = userinfo.Title + " " + userinfo.FirstName + " " + userinfo.LastName + " ";
 
-      // Add an ellipsis to indicate the menu button
-      const ellipsisSpan = document.createElement('span');
-      ellipsisSpan.textContent = '...';
-      ellipsisSpan.style.backgroundColor = 'hsl(0, 0%, 95%)';
-      ellipsisSpan.style.borderRadius = '50%'; // oval
-      ellipsisSpan.style.padding = '3px 5px 5px 5px'; // top right bottom left
-
-      // TODO this still opens on anywhere hovering over the line
-      ellipsisSpan.addEventListener('click', function() {
-        dropdownContent.classList.toggle('show');
-      });
-
-      user_name.appendChild(ellipsisSpan);
+      // Add dots indicate the menu button
+      const optionsDotSpan = document.createElement('span');
+      optionsDotSpan.textContent = '...';
+      optionsDotSpan.classList.add('options-dots');  // for styling
+      user_name.appendChild(optionsDotSpan);
     }
   } catch (error) {
     console.error('Failed to load header:', error);
@@ -118,10 +110,8 @@ function addInfoDropDown(buttonLinks) {
   userNameLabel.addEventListener('click', function() {
     dropdownContent.classList.toggle('show');
   });
+
 }
-
-
-
 
 
 function imgLink(config) {

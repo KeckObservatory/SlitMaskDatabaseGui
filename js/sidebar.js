@@ -1,17 +1,3 @@
-function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  const content = document.querySelector('.content');
-
-  // Toggle the 'open' class
-  sidebar.classList.toggle('open');
-
-  // Adjust content width based on sidebar state
-  if (sidebar.classList.contains('open')) {
-    content.style.marginLeft = '0';
-  } else {
-    content.style.marginLeft = '250px';
-  }
-}
 
 async function loadSideBar() {
   try {
@@ -48,5 +34,5 @@ function genLinks(config) {
   });
 }
 
-// adds the common header
+// adds the common sidebar
 window.addEventListener('DOMContentLoaded', loadSideBar);

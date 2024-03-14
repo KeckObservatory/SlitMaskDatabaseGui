@@ -34,8 +34,13 @@ function queryApi(apiUrl, apiRootUrl, wwwBaseLoc) {
   .catch(error => console.error('Error accessing data:', error));
 }
 
-// allow searchTable to be used in the MaskMain once loaded via tables
+// expose search to the MaskMain once loaded via tables
 window.searchTable = function() {
+  currentPage = 1;
+  renderTable();
+}
+
+function renderTable() {
   var input, filter, tr, td, i, j, txtValue;
   input = document.getElementById("searchInput");
   filter = input.value.toUpperCase();
@@ -49,9 +54,6 @@ window.searchTable = function() {
     return false;
   });
   StandardMaskTable(filteredData);
-
-  // Reset pagination to page 1 (to display the results)
-  currentPage = 1;
 }
 
 function StandardMaskTable(data, wwwBaseLoc) {
@@ -178,7 +180,8 @@ function displayPagination(totalRows) {
     prevButton.onclick = () => {
       if (currentPage > 1) {
         currentPage--;
-        searchTable();
+        // searchTable();
+        renderTable();
       }
     };
     paginationContainer.appendChild(prevButton);
@@ -194,18 +197,18 @@ function displayPagination(totalRows) {
     nextButton.onclick = () => {
       if (currentPage < totalPages) {
         currentPage++;
-        searchTable();
+        // searchTable();
+        renderTable();
       }
     };
     paginationContainer.appendChild(nextButton);
 
-    paginationContainer.style.display = 'block'; // Ensure pagination container is visible
+    paginationContainer.style.display = 'block';
   } else {
     // Hide pagination container if there are no pages to display
     paginationContainer.style.display = 'none';
   }
 }
-
 
 function sortTable(columnIndex) {
 

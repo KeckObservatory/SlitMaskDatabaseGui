@@ -1,0 +1,145 @@
+/* Dark mode styles for the entire page */
+body {
+    background-color: #1a1a1a; /* Dark background color */
+    color: #ffffff; /* Light text color */
+    padding-bottom: 150px;
+}
+
+/* Dark mode styles for the sidebar */
+.sidebar {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: #262626; /* Dark sidebar background color */
+    padding: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    transition: left 0.3s ease;
+    color: #ffffff; /* Light text color for sidebar */
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #ffffff; /* Light text color for sidebar links */
+}
+
+.sidebar a:hover {
+    transform: translateY(-2px);
+    color: #abcef3;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.sidebar.open {
+    left: -200px; /* Adjust the sidebar position for dark mode */
+}
+
+/* Dark mode styles for the toggle button */
+.toggle-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #262626; /* Dark color for toggle button */
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    color: #ffffff; /* Light color for toggle button text */
+}
+
+.toggle-btn:hover {
+    background-color: #333333; /* Darker color for toggle button on hover */
+}
+
+/* Dark mode styles for the table and buttons */
+#OptionTable,
+.InventoryClass {
+    border: none;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 100px;
+}
+
+.tab {
+    padding: 10px 20px;
+    background-color: #333333; /* Dark background color for tabs */
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    font-weight: bold;
+    color: #ffffff; /* Light text color for tabs */
+}
+
+
+.main-button {
+    background-color: #333333; /* Dark background color for main buttons */
+    font-size: 20px;
+    padding: 20px 20px 10px; /* Adjust padding to create space between icon and text */
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #ffffff; /* Light text color for main buttons */
+}
+
+.main-button:hover {
+    transform: translateY(-3px);
+    background-color: #444444; /
+}
+
+.main-button .label {
+    margin-right: 8px;
+}
+
+.main-button img {
+    width: 48px;
+    height: 48px;
+    display: block; /* for image uniformity */
+    margin: 0 auto; /* for image uniformity */
+}
+
+/* Dark mode styles for icons */
+.main-icon,
+.inventory-icon {
+    background-color: inherit;
+    width: 120px;
+    height: 120px;
+}
+
+/* Dark mode styles for labels */
+.label {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #ffffff; /* Light text color for labels */
+}
+
+/* Dark mode styles for other elements */
+.input[name="LimitResults"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
