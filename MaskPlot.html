@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/Mask.css">
+  <script type="module" src="js/header.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/svg-pan-zoom/3.5.14/svg-pan-zoom.min.js"></script>
+  <title>Mask Plot</title>
+</head>
+<body>
+<!-- add the common header -->
+<div id="pageName" style="display: none;">Mask Plot</div>
+<div id="headerContainer"></div>
+
+<div id="svgPlot"></div>
+<!--<embed id="svgPlot" type="image/svg+xml" width="100%" height="100%" onload="initSVG()">-->
+
+<script src="js/MaskPlot.js"></script>
+
+
+<script>
+  // Call the getPlot function when the page loads
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const blueID = urlParams.get('blue-id');
+    const designID = urlParams.get('design-id');
+
+    if (blueID) {
+      getPlot(`blue-id=${blueID}`);
+    } else if (designID) {
+      getPlot(`design-id=${designID}`);
+    }
+    else {
+      console.log('blue-id not defined');
+    }
+  };
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<h3><u>DEIMOS</u></h3>
+<p>
+    A DEIMOS mask design file must be a multi-extension FITS file containing several tables which describe a desired slitmask.  Such a FITS file will typically have been created by the <a href="http://www.ucolick.org/~phillips/deimos_ref/masks.html#tools">DSIMULATOR</a> program.
+</p>
+<p>
+    <b>DEIMOS users take note:</b> The e-mail addresses for the mask design author and the mask blueecho observer must exist as known users of this slitmask submission system. Please be sure that there are users with those e-mail addresses before using them to design a slitmask with DSIMULATOR.
+</p>
+<h3><u>LRIS</u></h3>
+<p>
+    LRIS users may submit ASCII mask design files created by either of two means.
+<dl>
+    <dt>
+        <a href="http://www2.keck.hawaii.edu/inst/lris/autoslit.html">AUTOSLIT</a>
+    </dt>
+    <dd>
+        This program is by Cohen, Shopbell, et al.  It should be <a href="http://www.astro.caltech.edu/~pls/autoslit/">available from Caltech</a>.
+        <br/>
+        Note that neither Keck nor UCO/Lick has control nor detailed knowledge of the operation of AUTOSLIT.
+        <br/>
+        The AUTOSLIT program produces multiple output files, and we are not aware of a canonical nomenclature scheme for distinguishing the various output files. There is also no clear indication of which file is which in the content of the headers of the output files from AUTOSLIT.
+        <br/>
+        The output file that is needed for slitmask manufacture seems to be associated with a character string something like <tt>file3</tt> in the setup for AUTOSLIT. This file is the one which contains multiple rows of mill coordinates for slitlets which are separated by lines containing the word <tt>newrow</tt>.
+        <br/>
+        Please submit only this one kind of output from AUTOSLIT; i.e., the file containing the slitlet milling coordinates.
+    </dd>
+    <dt>
+        <a href="http://www.ucolick.org/~phillips/lris/prep.html">
+            PREP (Simulator/Mapmask/Fabmask)</a>
+    </dt>
+    <dd>
+        This program is by Phillips. It should be available from UCO/Lick.
+    </dd>
+</dl>
+The mill outputs from these LRIS programs will be
+converted automatically to multi-extension FITS files by
+this web interface, but they lack much of the metadata
+which simplifies DEIMOS data reduction.
+</p>
+<p>
+    <b>LRIS users take note:</b>
+    The GUINAMEs which will be used for milling and selection
+    of the masks are created using the first 8 characters of
+    the file names used in the entry box below).
+    Those 8 characters for the GUINAME for all masks must be
+    unique, and duplicate names will be mangled in an attempt
+    to ensure uniqueness.
+    Until further notice the only control that LRIS users have
+    over the GUINAME is to name the input files according to
+    these conventions.
+</p>
+<h2><u>Submitting</u></h2>
+<p>
+    Please use the file chooser below to tell your web
+    browser the name(s) of your mask design file(s).
+    Choose either DEIMOS or LRIS.
+    Then press the Send button to have your browser transmit
+    those file(s) to our web server.
+    After that, follow the instructions on subsequent pages to
+    insert the mask designs into the database for
+    manufacturing.
+</p>
+<p>
+    <b>Please take note of a change.</b>
+    Previously it was possible to submit tar files with more
+    than one mask design.
+    This is no longer allowed.
+    Now it is possible to select as many as 10 files in
+    the file chooser provided by the web browser.
+    All of those selected files will be uploaded together.
+</p>
+
+<form id="maskSubmitForm" enctype="multipart/form-data">
+  <input type="file" name="maskFile" size="80" multiple=""/>
+  <p></p>
+  <hr />
+  <p>Please indicate the intended spectrograph:<br /></p>
+  DEIMOS <input type="radio" name="instrument" value="DEIMOS" checked />&nbsp;&nbsp;&nbsp;&nbsp;
+  LRIS <input type="radio" name="instrument" value="LRIS" />
+  <hr />
+  <button type="button" onclick="submitMask()" id="submitMaskBtn">Submit</button>
+  <p>
+    Reminder: Keck Observatory requires that all masks be submitted <strong>four weeks</strong> before the date of observing. Masks with unusually complex design may need to be submitted earlier; check with the Instrument Scientist at Keck for more details.
+  </p>
+</form>
+
+</body>

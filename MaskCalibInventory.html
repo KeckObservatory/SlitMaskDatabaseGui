@@ -1,0 +1,34 @@
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/Mask.css">
+  <link rel="stylesheet" type="text/css" href="css/mui-style.css">
+  <script type="module" src="js/MaskTable.js"></script>
+</head>
+
+<h3>Calibration Masks</h3>
+
+<!-- Search bar -->
+<div id="searchBar">
+  <input type="text" id="searchInput" placeholder="Search..." />
+  <button onclick="searchTable()">Search</button>
+</div>
+
+<!--<table id="BasicMaskTable">-->
+<table class="mui-table mui-table--bordered">
+  <thead class="tabHead">
+  <tr id="headerRow"></tr>
+  </thead>
+  <tbody id="GeneratedMaskTable"></tbody>
+</table>
+
+<div id="paginationContainer"></div>
+
+<script type="module">
+  import { displayTable } from './js/MaskTable.js';
+
+  const apiUrl = '/slitmask/calibration-masks';
+  displayTable(apiUrl);
+</script>
+
