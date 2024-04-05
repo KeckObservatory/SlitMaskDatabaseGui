@@ -66,7 +66,10 @@ function adminSearch() {
     const apiUrl = `/slitmask/admin-search`;
     const queryString = `search-options=${encodeURIComponent(JSON.stringify(searchQuery))}`;
     const fullUrl = `${apiUrl}?${queryString}`;
-    displayTable(fullUrl);
+
+    let options = ['Edit Use Date', 'Forget', 'ReMill', 'Plot', 'Details', 'Fits File', 'Mill File'];
+
+    displayTable(fullUrl, options);
 
   }
 };

@@ -1,12 +1,4 @@
 
-
-// add the listener to the submit button in MaskSubmit.html
-document.addEventListener('DOMContentLoaded', function() {
-  const submitBtn = document.getElementById('submitMaskBtn');
-  submitBtn.addEventListener('click', submitMask);
-});
-
-
 async function submitMask() {
   try {
   // Fetch the API root URL from MaskConfig.json

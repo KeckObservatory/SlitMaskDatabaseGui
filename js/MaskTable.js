@@ -1,26 +1,28 @@
 
 // set variables that can be updated in html or elsewhere
-var queryResults = [];
-var addOptions = true;
-var pageSize = 10;
-var currentPage = 1;
+let queryResults = [];
+let addOptions = true;
+let pageSize = 10;
+let currentPage = 1;
+let options = [];
 
-
-function displayTable(apiUrl) {
+function displayTable(apiUrl, new_options = ['Plot', 'Details', 'Fits File']) {
+  options = new_options
   fetch('MaskConfig.json')
   .then(response => response.json())
   .then(config => {
-    const wwwBaseLoc = config.wwwBaseLoc;
     const apiRootUrl = config.apiRootUrl;
-    queryApi(apiUrl, apiRootUrl, wwwBaseLoc);
+    getTableInfo(apiUrl, apiRootUrl);
   })
-  .catch(error => console.error('Error loading config:', error));
+  .catch(error => {
+      alert(`Error reading configuration: ${error}`);
+  });
 }
 
 export { displayTable };
 
 
-function queryApi(apiUrl, apiRootUrl, wwwBaseLoc) {
+function getTableInfo(apiUrl, apiRootUrl) {
   console.log('root api ', apiRootUrl + apiUrl)
   fetch(apiRootUrl + apiUrl, {
     mode: 'cors',
@@ -29,23 +31,25 @@ function queryApi(apiUrl, apiRootUrl, wwwBaseLoc) {
   .then(response => response.json())
   .then(data => {
     queryResults = data.data;
-    StandardMaskTable(queryResults, wwwBaseLoc);
+    StandardMaskTable(queryResults);
   })
-  .catch(error => console.error('Error accessing data:', error));
+  .catch(error => {
+    alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);
+  });
 }
 
-// expose search to the MaskMain once loaded via tables
+// expose search to the MaskHome once loaded via tables
 window.searchTable = function() {
   currentPage = 1;
   renderTable();
 }
 
 function renderTable() {
-  var input, filter, tr, td, i, j, txtValue;
+  let input, filter, tr, td, i, j, txtValue;
   input = document.getElementById("searchInput");
   filter = input.value.toUpperCase();
 
-  var filteredData = queryResults.filter(row => {
+  let filteredData = queryResults.filter(row => {
     for (const value of Object.values(row)) {
       if (String(value).toUpperCase().includes(filter)) {
         return true;
@@ -57,7 +61,7 @@ function renderTable() {
 }
 
 
-function StandardMaskTable(data, wwwBaseLoc) {
+function StandardMaskTable(data) {
   const tableBody = document.getElementById('GeneratedMaskTable');
   const headerRow = document.getElementById('headerRow');
 
@@ -77,11 +81,6 @@ function StandardMaskTable(data, wwwBaseLoc) {
       cell.appendChild(sortIcon);
       headerRow.appendChild(cell);
     });
-
-    // Add a header cell for the options column
-    // const optionsHeaderCell = document.createElement('th');
-    // optionsHeaderCell.textContent = 'Options';
-    // headerRow.appendChild(optionsHeaderCell);
   } else {
     console.log('no results');
     // If data is empty, display "No Results" message
@@ -112,7 +111,7 @@ function StandardMaskTable(data, wwwBaseLoc) {
       // Create the menu for each row
       const menu = document.createElement('div');
       menu.classList.add('menu');
-      addMenuItems(menu, rowData, wwwBaseLoc);
+      addMenuItems(menu, rowData);
       document.body.appendChild(menu); // Append menu to body to get accurate cursor position
 
       // Show menu on row hover
@@ -163,23 +162,36 @@ function StandardMaskTable(data, wwwBaseLoc) {
   displayPagination(data.length);
 }
 
-function addMenuItems(menu, rowData, wwwBaseLoc) {
-  const options = ['Plot', 'Details', 'Fits File'];
+function addMenuItems(menu, rowData) {
   options.forEach(option => {
     const optionLink = document.createElement('a');
     optionLink.textContent = option;
-    optionLink.classList.add('menu-item'); // Add a class for styling
+    optionLink.classList.add('menu-item');
+
+    const blueOrDesign = rowData['Blue-ID'] ? 'blue-id=' + rowData['Blue-ID'] :
+                        (rowData['bluid'] ? 'blue-id=' + rowData['bluid'] :
+                        (rowData['Design-ID'] ? 'design-id=' + rowData['Design-ID'] :
+                        (rowData['desid'] ? 'design-id=' + rowData['desid'] : 'udefined')));
+
+
+    // optionLink.target = "_blank";
     let optionUrl = '';
     if (option === 'Plot') {
-      optionUrl = wwwBaseLoc + 'MaskPlot.html?' + (rowData['Blue-ID'] ? 'blue-id=' + rowData['Blue-ID'] : 'design-id=' + rowData['Design-ID']);
+      optionUrl = 'index.html?url=MaskPlot.html&' + blueOrDesign;
     } else if (option === 'Details') {
-      optionUrl = wwwBaseLoc + 'MaskDetails.html?design-id=' + rowData['Design-ID'];
+      optionUrl = 'index.html?url=MaskDetails.html&design-id=' + rowData['Design-ID'];
     } else if (option === 'Fits File') {
       // TODO: Implement logic to generate Fits File URL
       optionUrl = 'Fits File URL';
+    } else if (option === 'Edit Use Date') {
+      optionUrl = 'index.html?url=MaskUseDate.html&design-id=' + rowData['Design-ID'];
+      // optionLink.target = "_self";
+    } else if (option === 'Forget') {
+      optionUrl = 'index.html?url=MaskForget.html&' + blueOrDesign;
+    } else if (option === 'ReMill') {
+      optionUrl = 'index.html?url=MaskRemill.html&' + blueOrDesign;
     }
     optionLink.href = optionUrl;
-    optionLink.target = "_blank";
     menu.appendChild(optionLink);
   });
 }

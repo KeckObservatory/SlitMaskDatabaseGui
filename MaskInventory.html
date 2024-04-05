@@ -18,18 +18,22 @@
   <button onclick="searchTable()">Search</button>
 </div>
 
-<table id="BasicMaskTable">
-  <thead class="tabHead">
-  <tr id="headerRow"></tr>
-  </thead>
-  <tbody id="GeneratedMaskTable"></tbody>
-</table>
+<div style="overflow-x: auto;">
+  <table id="BasicMaskTable">
+    <thead class="tabHead">
+    <tr id="headerRow"></tr>
+    </thead>
+    <tbody id="GeneratedMaskTable"></tbody>
+  </table>
+</div>
 
 <div id="paginationContainer"></div>
 
 <script type="module">
   import { displayTable } from './js/MaskTable.js';
   const apiUrl = '/slitmask/user-mask-inventory';
-  displayTable(apiUrl);
+  let options = ['Edit Use Date', 'Forget', 'Plot', 'Details', 'Fits File'];
+
+  displayTable(apiUrl, options);
 </script>
 

@@ -47,7 +47,7 @@ async function loadHeader() {
     // add the username
     const user_name = headerContainer.querySelector('#userName');
     if (user_name) {
-      user_name.innerHTML = userinfo.Title + " " + userinfo.FirstName + " " + userinfo.LastName + " ";
+      user_name.innerHTML = userinfo.FirstName + " " + userinfo.LastName + " ";
     }
   } catch (error) {
     console.error('Failed to load header:', error);

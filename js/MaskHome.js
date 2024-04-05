@@ -1,6 +1,7 @@
 
 export function addAdminButton() {
   let apiRootUrl;
+  console.log('adding admin butt');
 
   fetch('MaskConfig.json')
   .then(response => response.json())
@@ -9,10 +10,13 @@ export function addAdminButton() {
     console.log('api root', apiRootUrl);
     queryApi();
   })
-  .catch(error => console.error('Error loading config file:', error));
+  .catch(error => {
+      alert(`Error reading configuration: ${error}`);
+  });
 
   function queryApi() {
     if (!apiRootUrl) return;
+    console.log('querying api - admin butt');
 
     const apiUrl = apiRootUrl + `/slitmask/user-type`;
 
@@ -30,12 +34,20 @@ export function addAdminButton() {
         if (adminSearchButton) {
           adminSearchButton.style.display = 'block';
         }
+        const timelineButton = document.getElementById('timelineButton');
+        if (timelineButton) {
+          timelineButton.style.display = 'block';
+        }
+        const recentBarButton = document.getElementById('recentBarButton');
+        if (recentBarButton) {
+          recentBarButton.style.display = 'block';
+        }
       }
     })
     .catch(error => {
-      console.error('Error fetching Admin Status:', error);
-    });
-  }
+        console.log(`Error fetching Admin Status: ${error}`);
+      });
+    }
 }
 
 export function loadContent(url) {
@@ -54,7 +66,10 @@ export function loadContent(url) {
       document.body.appendChild(newScript);
     });
   })
-  .catch(error => console.error('Error loading content:', error));
+  .catch(error => {
+    alert(`Error loading content: ${error}`);
+  });
+
 }
 
 

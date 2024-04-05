@@ -34,26 +34,55 @@
         </a>
       </th>
     </tr>
-    <!--  add row for the mask admin if the user is an admin -->
     <tr class="OptionsClass">
+      <!-- Personal upload history -->
+      <!-- @app.route("/slitmask/user-file-upload-history") -->
       <th class="OptionsClass">
-        <a href="#" onclick="loadContent('MaskAdminSearch.html')" class="main-button">
-
-<!--        <a href="MaskAdminSearch.html" class="main-button" id="adminSearchButton" style="display: none;">-->
-          <img class="main-icon" src="imgs/global-network.png">
-          <span class="label">Admin Mask Search</span>
+        <a href="#" onclick="loadContent('MaskInventory.html')" class="main-button">
+          <img class="main-icon" src="imgs/history.png">
+          <span class="label">Upload History</span>
         </a>
       </th>
+
+      <!--  any more? -->
+      <th class="OptionsClass">
+        <a href="#" onclick="loadContent('MaskAdminSearch.html')" class="main-button" id="adminSearchButton" style="display: none;">
+          <img class="main-icon" src="imgs/global-network.png">
+          <span class="label">Admin - Mask Search</span>
+        </a>
+      </th>
+
     </tr>
+
+    <!--  mask admin - search button -->
+    <tr class="OptionsClass">
+      <th class="OptionsClass">
+        <a href="#" onclick="loadContent('MaskRecentBarcodes.html')" class="main-button" id="recentBarButton" style="display: none;">
+          <img class="main-icon" src="imgs/scanned.png">
+          <span class="label">Admin - Recent Barcodes</span>
+        </a>
+      </th>
+
+      <!--  mask admin - Timeline Report -->
+      <!-- @app.route("/slitmask/timeline-report") -->
+      <th class="OptionsClass">
+        <a href="#" onclick="loadContent('MaskTimeline.html')" class="main-button" id="timelineButton" style="display: none;">
+          <img class="main-icon" src="imgs/timeline.png">
+          <span class="label">Admin - Timeline report</span>
+        </a>
+      </th>
+
+    </tr>
+
     </thead>
   </table>
 
 </div>
 
 <!-- add the Admin Search Options if user is an Admin -->
-<script>
-  addAdminButton();
-</script>
+<!--<script>-->
+<!--  addAdminButton();-->
+<!--</script>-->
 
 
 

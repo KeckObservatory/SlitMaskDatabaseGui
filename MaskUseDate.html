@@ -1,0 +1,175 @@
+
+<body>
+
+<h3>The Mask Date-of-Use can be extended for up to 365 days.</h3>
+
+<br><br>
+
+<table>
+  <tr>
+    <th>Mask Design Id</th>
+    <th> <> </th>
+    <th>Mask Design Name</th>
+    <th> <> </th>
+    <th>Current Use Date</th>
+  </tr>
+  <tr>
+    <td align="center"><div id="design-id"></div></td>
+    <td> | </td>
+    <td align="center"><div id="design-name-id"></div></td>
+    <td> | </td>
+    <td align="center"><div id="use-date-id"></div></td>
+  </tr>
+</table>
+<br><br>
+<form>
+  <label for="numDays">Number of Days:</label>
+  <input type="number" id="numDays" value="0" min="0" max="365"/>
+  <button type="button" onclick="updateUseDate()">Set Use Date</button>
+</form>
+
+<script>
+  let apiRootUrl;
+
+  // show the use date and the design-id
+  function loadParams() {
+    fetch('MaskConfig.json')
+    .then(response => response.json())
+    .then(config => {
+      apiRootUrl = config.apiRootUrl;
+      showCurrentUse();
+      showDesignId();
+    })
+    .catch(error => {
+      alert(`Error reading configuration: ${error}`);
+    });
+
+  }
+
+  function showDesignId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const designId = urlParams.get('design-id');
+    const designIdDiv = document.getElementById("design-id");
+
+    designIdDiv.innerText = designId;
+    console.log('IDD', designId);
+
+  }
+
+  function showCurrentUse() {
+
+    // Find the object with the name "Blueprint"
+    const urlParams = new URLSearchParams(window.location.search);
+    const designId = urlParams.get('design-id');
+    const useDateId = document.getElementById("use-date-id");
+    const designNameId = document.getElementById("design-name-id");
+
+    let full_url = `${apiRootUrl}/slitmask/mask-detail?design-id=${designId}`;
+
+    fetch(full_url, {
+      mode: 'cors',
+      credentials: 'include' // cookies
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('data', data.data)
+      const blueprintObject = data.data.find(item => item[0] === "Blueprint");
+      // Access the date_use property from the "Blueprint" object
+      if (blueprintObject) {
+        const dateUse = blueprintObject[1][0].date_use;
+        const date = new Date(dateUse);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+
+        const formattedDate = `${year}-${month}-${day}`;
+        useDateId.innerText = formattedDate;
+
+        console.log("Date Use:", dateUse);
+      } else {
+        console.log("Blueprint not found in the data.");
+      }
+      const maskDesign = data.data.find(item => item[0] === "Mask Design");
+      // Access the date_use property from the "Blueprint" object
+      if (blueprintObject) {
+        const designName = maskDesign[1][0]["Design-Name"];
+        designNameId.innerText = designName;
+
+        console.log("Date Use:", designName);
+      } else {
+        console.log("Blueprint not found in the data.");
+      }
+
+    })
+    .catch(error => {
+      alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);
+    });
+  }
+
+  function updateUseDate() {
+    let apiUrl = "/slitmask/extend-mask-use-date"
+    setUseDate(apiUrl);
+  }
+
+  function setUseDate(apiUrl) {
+    console.log('root api ', apiRootUrl + apiUrl)
+
+    // Get the design-id parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const designId = urlParams.get('design-id');
+    console.log("Design ID:", designId);
+
+    showCurrentUse(apiRootUrl, designId);
+
+    const numDays = document.getElementById("numDays").value;
+
+    let full_url = `${apiRootUrl}${apiUrl}?design-id=${designId}&number-days=${numDays}`;
+
+    // update the Use Date
+    fetch(full_url, {
+      mode: 'cors',
+      credentials: 'include' // cookies
+    })
+    .then(response => response.json())
+    .then(data => {
+      queryResults = data.data;
+      console.log('stuff', queryResults);
+    })
+    .catch(error => {
+      alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);
+    });
+  }
+
+  // makes sure the input is only integers
+  const inputField = document.getElementById("numDays");
+
+  inputField.addEventListener("input", function() {
+    // Get the input value
+    const inputValue = inputField.value;
+
+    // Check if the input value is numeric
+    if (!isNaN(inputValue)) {
+      // Parse the input value as a number
+      const numericValue = parseInt(inputValue);
+
+      // Check if the numeric value is greater than 365
+      if (numericValue > 365) {
+        // If so, set the input value to 365
+        inputField.value = 365;
+      }
+    } else {
+      // If the input value is not numeric, set it to an empty string
+      inputField.value = "";
+    }
+  });
+
+  // expose the updateUseDate to be used in index.html
+  window.onload = updateUseDate;
+
+  // load the Date-Use and Design ID
+  window.onload = loadParams();
+</script>
+
+</body>
+

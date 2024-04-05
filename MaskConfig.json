@@ -6,11 +6,11 @@
   "buttonLinks": [
     {
       "name": "Home",
-      "url": "./MaskMain.html"
+      "url": "./index.html"
     },
     {
       "name": "Help",
-      "url": "./MaskHelp.html"
+      "url": "./index.html?url=MaskHelp.html"
     },
     {
       "name": "Log Out",

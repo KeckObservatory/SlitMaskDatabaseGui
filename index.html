@@ -22,7 +22,10 @@
     <script src="js/MaskSubmit.js"></script>
 
     <!-- For loading the content into the same page -->
-    <script type="module" src="js/MaskMain.js"></script>
+    <script type="module" src="js/MaskHome.js"></script>
+
+    <!-- Used to display the mask plots -->
+    <script src="js/MaskPlot.js"></script>
 
   </head>
   <body>
@@ -66,7 +69,7 @@
 
 
 
-    <!-- Main content dynamically added by MaskTable.js / MaskPlot.js / MaskMain.js-->
+    <!-- Main content dynamically added by MaskTable.js / MaskPlot.js / MaskHome.js-->
     <div id="content-wrapper">
       <div class="mui--appbar-height"></div>
       <div class="mui-container-fluid">
@@ -88,33 +91,64 @@
     </footer>
 
     <script>
+
       function loadContent(url) {
         fetch(url)
         .then(response => response.text())
           .then(data => {
+            console.log("loading content: ");
+
             const mainContent = document.getElementById('content');
             mainContent.innerHTML = data;
 
-            // Find and execute scripts within the loaded content
-            const scripts = mainContent.querySelectorAll('script[type="module"]');
-            scripts.forEach(script => {
-            const newScript = document.createElement('script');
-            newScript.type = 'module';
-            newScript.text = script.text;
-            document.body.appendChild(newScript);
-          });
-        })
-        .catch(error => console.error('Error loading content:', error));
+            // Find and execute module scripts within the loaded content
+            let moduleScripts = mainContent.querySelectorAll('script[type="module"]');
+            moduleScripts.forEach(script => {
+              console.log("loading module script: ", script);
+
+              const newScript = document.createElement('script');
+              newScript.type = 'module';
+              newScript.textContent = script.textContent;
+              document.body.appendChild(newScript);
+            });
+
+            // Find and execute non-module scripts within the loaded content
+            let nonModuleScripts = mainContent.querySelectorAll('script:not([type="module"])');
+            nonModuleScripts.forEach(script => {
+              console.log("loading non-module script: ", script);
+              const newScript = document.createElement('script');
+              newScript.textContent = script.textContent;
+              document.body.appendChild(newScript);
+            });
+
+
+          })
+          .catch(error => console.error('Error loading content:', error));
         }
 
-        // Load content from home initially
-        window.onload = function() {
-        loadContent('MaskHome.html');
-      };
+      // Function to extract URL parameters
+      function getUrlParameter(name) {
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(window.location.href);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
 
+      // Function to load content from URL parameter or default URL
+      function loadInitialContent() {
+        const urlParam = getUrlParameter('url');
+        const initialUrl = urlParam ? urlParam : 'MaskHome.html';
+        loadContent(initialUrl);
+      }
+
+      // Call loadInitialContent on window load
+      window.onload = loadInitialContent;
     </script>
+
     <script type="module">
-      import { addAdminButton } from './js/MaskMain.js';
+      import { addAdminButton } from './js/MaskHome.js';
       addAdminButton();
     </script>
 

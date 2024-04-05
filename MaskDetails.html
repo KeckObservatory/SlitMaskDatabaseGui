@@ -1,32 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<script type="module" src="js/header.js"></script>
-<link rel="stylesheet" type="text/css" href="css/Mask.css">
-<!--<link rel="stylesheet" type="text/css" href="css/MaskDetails.css">-->
-
-<!-- add the common header -->
-<div id="pageName" style="display: none;">Slit Mask Details</div>
-<div id="headerContainer"></div>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mask Details</title>
-</head>
 
 <body>
-<!--<h2>Mask Design Details</h2>-->
 <div id="spin1" class="spinner"></div>
-<table border="1" id="maskDesignTable" style="display: none;">
-  <tbody id="firstTable"></tbody>
+<div style="overflow-x: auto;">
+<table class="mui-table" id="MaskDetails1" style="display: none;">
+  <tbody></tbody>
 </table>
+  <hr/>
+  <hr/>
+<table class="mui-table" id="BasicMaskTable2" style="display: none;">
+  <tbody></tbody>
+</table>
+</div>
 
 <h2>Additional Information</h2>
 <div id="spin3" class="spinner"></div>
 <div id="remainingTables"></div>
 
-<script>
+<script type="module">
   async function queryApi(url) {
     try {
       const response = await fetch(url, {
@@ -41,6 +31,7 @@
   }
 
   async function getResults() {
+    console.log('running getResults');
     const designId = getDesignID();
     if (!designId) {
       console.error('No design ID found in URL parameters');
@@ -53,6 +44,7 @@
     const config = await response.json();
     const apiRootUrl = config.apiRootUrl;
     const apiUrl = apiRootUrl + `/slitmask/mask-detail?design-id=${designId}`;
+
     showAllSpinners();
 
     const results = await queryApi(apiUrl);
@@ -62,34 +54,62 @@
       return;
     }
 
-    const [mask_design, ...remainingObjects] = results.data;
+    // const [maskInfo, ...additionInfo] = results.data;
+    //
+    // // basic information table
+    // createHorizontalTable(maskInfo[1][0], 'MaskDetails1');
 
-    createHorizontalTable(mask_design[1][0], 'maskDesignTable');
+    const [maskInfo, ...additionInfo] = results.data;
+
+    // Get the keys of the maskInfo object
+    const keys = Object.keys(maskInfo[1][0]);
+    const halfLength = Math.ceil(keys.length / 2);
+
+    // Split the keys into two halves
+    const firstHalfKeys = keys.slice(0, halfLength);
+    const secondHalfKeys = keys.slice(halfLength);
+
+    // Create the first half object
+    const firstHalf = {};
+    firstHalfKeys.forEach(key => {
+      firstHalf[key] = maskInfo[1][0][key];
+    });
+
+    // Create the second half object
+    const secondHalf = {};
+    secondHalfKeys.forEach(key => {
+      secondHalf[key] = maskInfo[1][0][key];
+    });
+
+    // Now you can use firstHalf and secondHalf as needed
+    createHorizontalTable(firstHalf, 'MaskDetails1');
+    createHorizontalTable(secondHalf, 'BasicMaskTable2');
+
 
     const remainingTablesContainer = document.getElementById('remainingTables');
 
-    if (remainingObjects.length === 0) {
+    if (additionInfo.length === 0) {
       console.log('No remaining objects to display.');
       hideAllSpinners();
       return;
     }
 
     // create the remaining tables dynamically
-    remainingObjects.forEach(function([title, tableData], index) {
+    additionInfo.forEach(function([title, tableData], index) {
       if (Array.isArray(tableData) && tableData.length === 0) {
         console.log(`Table data for ${title} is empty.`);
         return;
       }
-      console.log(`Creating table for ${title}:`, tableData);
+      // console.log(`Creating table for ${title}:`, tableData);
+      console.log(`Creating table for ${title}:`);
       const tableId = `table${index + 3}`;
       const table = document.createElement('table');
       table.id = tableId; // Corrected assignment
-      table.border = '1';
       table.style.display = 'none';
       const tbody = document.createElement('tbody');
       table.appendChild(tbody);
 
-      // collapsible header as a button
+      // collapsible table as a button
       const button = document.createElement('button');
       button.classList.add('collapsible', 'detail-button-width');
       button.textContent = title;
@@ -113,7 +133,8 @@
     });
 
     hideAllSpinners();
-    showTable('maskDesignTable');
+    showTable('MaskDetails1');
+    showTable('BasicMaskTable2');
   }
 
   function showSpinner(spinnerId) {
@@ -147,29 +168,30 @@
 
     const tbody = table.querySelector('tbody');
 
-    if (!tbody) {
-      console.error('Tbody element not found for table:', table);
-      return;
-    }
-
     const keys = Object.keys(obj);
     const numKeys = keys.length;
 
-    for (let i = 0; i < numKeys; i++) {
-      const tr = document.createElement('tr');
+    // Create a table header with the object keys
+    const headerRow = document.createElement('tr');
 
-      // Create a row for the key
-      const tdKey = document.createElement('td');
-      tdKey.innerHTML = '<strong>' + keys[i].replace(/-/g, ' ') + '</strong>';
-      tr.appendChild(tdKey);
-
-      // Append the key's value in the next row
-      const tdValue = document.createElement('td');
-      tdValue.textContent = obj[keys[i]];
-      tr.appendChild(tdValue);
-
-      tbody.appendChild(tr);
+    for (const key in obj) {
+      const th = document.createElement('th');
+      th.textContent = key.replace(/-/g, ' ');
+      headerRow.appendChild(th);
     }
+    tbody.appendChild(headerRow);
+
+    // Add the row with the object values
+    const valueRow = document.createElement('tr');
+    for (const value of Object.values(obj)) {
+      const td = document.createElement('td');
+      td.textContent = value;
+      valueRow.appendChild(td);
+    }
+
+    // Append the value row to the table body
+    tbody.appendChild(valueRow);
+
   }
 
   function createHeaderTable(objList, tableId) {
@@ -217,10 +239,8 @@
   }
 
   // Call getResults when the page loads
-  window.onload = function() {
-    getResults();
-  };
+  window.onload = getResults();
 
 </script>
 </body>
-</html>
+
