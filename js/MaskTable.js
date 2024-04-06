@@ -182,7 +182,7 @@ function addMenuItems(menu, rowData) {
       optionUrl = 'index.html?url=MaskDetails.html&design-id=' + rowData['Design-ID'];
     } else if (option === 'Fits File') {
       // TODO: Implement logic to generate Fits File URL
-      optionUrl = 'Fits File URL';
+      optionUrl = 'index.html?url=MaskFitsFile.html&' + blueOrDesign;
     } else if (option === 'Edit Use Date') {
       optionUrl = 'index.html?url=MaskUseDate.html&design-id=' + rowData['Design-ID'];
       // optionLink.target = "_self";

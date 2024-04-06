@@ -1,0 +1,155 @@
+
+<body>
+
+<h3>Mask Definition File download / fits tables</h3>
+
+<br><br>
+
+<table>
+  <tr>
+    <th>Mask Design Id</th>
+    <th> - </th>
+    <th>Mask Blueprint Id</th>
+    <th> - </th>
+    <th>Mask Design Name</th>
+    <th> - </th>
+    <th>Current Use Date</th>
+  </tr>
+  <tr>
+    <td align="center"><div id="design-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="blue-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="design-name-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="use-date-id"></div></td>
+  </tr>
+</table>
+<br><br>
+
+<h4>Download the Mask Definition Fits Table File</h4> <br>
+<form>
+  <button type="button" id="downBtn" onclick="downloadMdf()">Download</button>
+</form>
+
+
+<script>
+  let apiRootUrl;
+  let blueId;
+  let designId;
+
+  // show the use date and the design-id
+  function loadParams() {
+    fetch('MaskConfig.json')
+    .then(response => response.json())
+    .then(config => {
+      apiRootUrl = config.apiRootUrl;
+
+      showId();
+      showInfo();
+    })
+    .catch(error => {
+      alert(`Error reading configuration: ${error}`);
+    });
+
+  }
+
+    function showId() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    designId = urlParams.get('design-id');
+    const designIdDiv = document.getElementById("design-id");
+    designIdDiv.innerText = designId;
+
+    blueId = urlParams.get('blue-id');
+    const blueIdDiv = document.getElementById("blue-id");
+    blueIdDiv.innerText = blueId;
+  }
+
+  // hides button
+  function showInfo() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const designId = urlParams.get('design-id');
+    const blueIdId = document.getElementById("blue-id");
+    const designNameId = document.getElementById("design-name-id");
+    const useDateId = document.getElementById("use-date-id");
+
+    let fullUrl = `${apiRootUrl}/slitmask/mask-detail?design-id=${designId}`;
+
+    fetch(fullUrl, {
+      mode: 'cors',
+      credentials: 'include' // cookies
+    })
+    .then(response => response.json())
+    .then(data => {
+
+      // get the blue-id
+      const blueprintObject = data.data.find(item => item[0] === "Blueprint");
+      if (blueprintObject) {
+        const dateUse = new Date(blueprintObject[1][0].date_use);
+        const year = dateUse.getFullYear();
+        const month = String(dateUse.getMonth() + 1).padStart(2, '0');
+        const day = String(dateUse.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        useDateId.innerText = formattedDate;
+        if (blueId === null) {
+          blueId = blueprintObject[1][0].bluid
+          blueIdId.innerText = blueId;
+        }
+      } else {
+        console.log("Blueprint not found in the data.");
+      }
+
+
+      // get the design name
+      const maskDesign = data.data.find(item => item[0] === "Mask Design");
+      if (maskDesign) {
+        const designName = maskDesign[1][0]["Design-Name"];
+        designNameId.innerText = designName;
+        console.log("Design Name:", designName);
+      } else {
+        console.log("Mask Design not found in the data.");
+      }
+    })
+    .catch(error => {
+      alert(`Error accessing data, check API at ${fullUrl}: ${error}`);
+    });
+  }
+
+  function downloadMdf() {
+    alert('needs dbMaskOut implemented on the current server');
+    // let apiUrl = `${apiRootUrl}/slitmask/mask-description-file`;
+    // let fullUrl;
+    // if (blueId === null) {
+    //   fullUrl = `${apiUrl}?design-id=${designId}`;
+    // } else {
+    //   fullUrl = `${apiUrl}?blue-id=${blueId}`;
+    // }
+    //
+    // fetch(fullUrl, {
+    //   mode: 'cors',
+    //   credentials: 'include'
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('data', data);
+    //   if (data.data) {
+    //     alert(`Success: Mask with blueprint ID ${blueId} has been sent to be remilled.`)
+    //   } else {
+    //     alert(`Error: An error occurred, the mask with blueprint ID ${blueId} has not been sent to be remilled.`)
+    //   }
+    // })
+    // .catch(error => {
+    //   alert(`Error accessing data, check API at ${fullUrl}: ${error}`);
+    // });
+  }
+
+  // expose the downloadMdf to be used in index.html
+  window.onload = downloadMdf;
+
+  // load the Date-Use and Design ID
+  window.onload = loadParams();
+</script>
+
+</body>
+
