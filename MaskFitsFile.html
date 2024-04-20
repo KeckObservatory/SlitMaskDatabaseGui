@@ -1,7 +1,7 @@
 
 <body>
 
-<h3>Mask Definition File download / fits tables</h3>
+<h3>Mask Definition File (MDF) Fits Table download</h3>
 
 <br><br>
 
@@ -27,9 +27,19 @@
 </table>
 <br><br>
 
+<div id="loadingIndicator" style="display: none;">
+<!--  <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">-->
+<!--    <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>-->
+<!--  </svg>-->
+
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
 <h4>Download the Mask Definition Fits Table File</h4> <br>
 <form>
-  <button type="button" id="downBtn" onclick="downloadMdf()">Download</button>
+  <button type="button" id="downloadBtn" onclick="downloadMdf()">Download</button>
 </form>
 
 
@@ -37,6 +47,31 @@
   let apiRootUrl;
   let blueId;
   let designId;
+
+  function showLoadingIndicator() {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+      loadingIndicator.style.display = 'block';
+    }
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+      downloadBtn.disabled = true;
+    }
+  }
+
+  // Function to hide loading indicator and show download button
+  function hideLoadingIndicator() {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+      loadingIndicator.style.display = 'none';
+    }
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+      downloadBtn.style.display = 'block';
+    }
+  }
 
   // show the use date and the design-id
   function loadParams() {
@@ -66,7 +101,6 @@
     blueIdDiv.innerText = blueId;
   }
 
-  // hides button
   function showInfo() {
     const urlParams = new URLSearchParams(window.location.search);
     const designId = urlParams.get('design-id');
@@ -83,7 +117,7 @@
     .then(response => response.json())
     .then(data => {
 
-      // get the blue-id
+      // get the date-use and blue-id (if needed)
       const blueprintObject = data.data.find(item => item[0] === "Blueprint");
       if (blueprintObject) {
         const dateUse = new Date(blueprintObject[1][0].date_use);
@@ -99,7 +133,6 @@
       } else {
         console.log("Blueprint not found in the data.");
       }
-
 
       // get the design name
       const maskDesign = data.data.find(item => item[0] === "Mask Design");
@@ -117,31 +150,105 @@
   }
 
   function downloadMdf() {
-    alert('needs dbMaskOut implemented on the current server');
-    // let apiUrl = `${apiRootUrl}/slitmask/mask-description-file`;
-    // let fullUrl;
-    // if (blueId === null) {
-    //   fullUrl = `${apiUrl}?design-id=${designId}`;
-    // } else {
-    //   fullUrl = `${apiUrl}?blue-id=${blueId}`;
-    // }
-    //
-    // fetch(fullUrl, {
-    //   mode: 'cors',
-    //   credentials: 'include'
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('data', data);
-    //   if (data.data) {
-    //     alert(`Success: Mask with blueprint ID ${blueId} has been sent to be remilled.`)
-    //   } else {
-    //     alert(`Error: An error occurred, the mask with blueprint ID ${blueId} has not been sent to be remilled.`)
-    //   }
-    // })
-    // .catch(error => {
-    //   alert(`Error accessing data, check API at ${fullUrl}: ${error}`);
-    // });
+    let apiUrl = `${apiRootUrl}/slitmask/mask-description-file`;
+    let fullUrl;
+    if (blueId === null) {
+      fullUrl = `${apiUrl}?design-id=${designId}`;
+    } else {
+      fullUrl = `${apiUrl}?blue-id=${blueId}`;
+    }
+
+    // Disable the button
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.disabled = true;
+
+    showLoadingIndicator();
+
+    fetch(fullUrl, {
+      mode: 'cors',
+      credentials: 'include'
+    })
+    .then(response => {
+      // check if it is a file,  or an error
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/zip')) {
+        return response.blob(); // Read response body as Blob
+      } else {
+        return response.json(); // Read response body as JSON
+      }
+    })
+    .then(data => {
+      if (data instanceof Blob) {
+        // If data is a Blob (file), proceed with downloading
+        const blobUrl = URL.createObjectURL(data);
+        downloadFiles(blobUrl, blueId);
+      } else {
+        // If data is not a Blob, display as JSON (error message)
+        alert(JSON.stringify(data));
+      }
+    })
+    .catch(error => {
+      alert(`Error accessing data, check API at ${fullUrl}: ${error}`);
+    })
+    .finally(() => {
+      // Enable the button
+      downloadBtn.disabled = false;
+
+      // Hide loading indicator
+      hideLoadingIndicator();
+    });
+  }
+
+
+  // function downloadMdf() {
+  //   let apiUrl = `${apiRootUrl}/slitmask/mask-description-file`;
+  //   let fullUrl;
+  //   if (blueId === null) {
+  //     fullUrl = `${apiUrl}?design-id=${designId}`;
+  //   } else {
+  //     fullUrl = `${apiUrl}?blue-id=${blueId}`;
+  //   }
+  //   const downloadBtn = document.getElementById('downloadBtn');
+  //   downloadBtn.disabled = true;
+  //   showLoadingIndicator();
+  //
+  //   fetch(fullUrl, {
+  //     mode: 'cors',
+  //     credentials: 'include'
+  //   })
+  //   .then(response => {
+  //     // check if it is a file,  or an error
+  //     const contentType = response.headers.get('content-type');
+  //     if (contentType && contentType.includes('application/zip')) {
+  //       downloadFiles(response.url, blueId);
+  //     } else {
+  //       alert(response.json());
+  //     }
+  //   })
+  //   .then(data => {
+  //     console.log('is this needed');
+  //     // if (data.data) {
+  //     //   alert(`WTF Error: An error occurred, an MDF for mask with blueprint ID ${blueId} cannot be created. \n ${data.data}`)
+  //     // }
+  //   })
+  //   .catch(error => {
+  //     alert(`Error accessing data, check API at ${fullUrl}: ${error}`);
+  //   })
+  //   .finally(() => {
+  //     downloadBtn.disabled = false;
+  //
+  //     // Hide loading indicator
+  //     hideLoadingIndicator();
+  //   });
+  // }
+
+  function downloadFiles(fullUrl, blueId) {
+    let link = document.createElement('a');
+    link.href = fullUrl;
+    link.download = `mdf-files-${blueId}.zip`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   // expose the downloadMdf to be used in index.html

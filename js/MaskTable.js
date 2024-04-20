@@ -6,6 +6,12 @@ let pageSize = 10;
 let currentPage = 1;
 let options = [];
 
+function setMenuOff() {
+  addOptions = false;
+}
+
+export { setMenuOff };
+
 function displayTable(apiUrl, new_options = ['Plot', 'Details', 'Fits File']) {
   options = new_options
   fetch('MaskConfig.json')
@@ -168,28 +174,34 @@ function addMenuItems(menu, rowData) {
     optionLink.textContent = option;
     optionLink.classList.add('menu-item');
 
-    const blueOrDesign = rowData['Blue-ID'] ? 'blue-id=' + rowData['Blue-ID'] :
-                        (rowData['bluid'] ? 'blue-id=' + rowData['bluid'] :
-                        (rowData['Design-ID'] ? 'design-id=' + rowData['Design-ID'] :
-                        (rowData['desid'] ? 'design-id=' + rowData['desid'] : 'udefined')));
+    // const blueOrDesign = rowData['Blue-ID'] ? 'blue-id=' + rowData['Blue-ID'] :
+    //                     (rowData['bluid'] ? 'blue-id=' + rowData['bluid'] :
+    //                     (rowData['Design-ID'] ? 'design-id=' + rowData['Design-ID'] :
+    //                     (rowData['desid'] ? 'design-id=' + rowData['desid'] : 'undefined')));
+    const blueId = rowData['Blue-ID'] ? 'blue-id=' + rowData['Blue-ID']
+                  : rowData['bluid'] ? 'blue-id=' + rowData['bluid'] : null;
+    const designId = rowData['Design-ID'] ? 'design-id=' + rowData['Design-ID']
+                    : rowData['desid'] ? 'design-id=' + rowData['desid'] : null;
 
+    const blueDesignOrBoth = (blueId ? blueId : '') + (designId ? (blueId ? '&' : '') + designId : '') || 'undefined';
 
     // optionLink.target = "_blank";
     let optionUrl = '';
     if (option === 'Plot') {
-      optionUrl = 'index.html?url=MaskPlot.html&' + blueOrDesign;
+      optionUrl = 'index.html?url=MaskPlot.html&' + blueDesignOrBoth;
     } else if (option === 'Details') {
       optionUrl = 'index.html?url=MaskDetails.html&design-id=' + rowData['Design-ID'];
     } else if (option === 'Fits File') {
       // TODO: Implement logic to generate Fits File URL
-      optionUrl = 'index.html?url=MaskFitsFile.html&' + blueOrDesign;
+      // optionUrl = 'index.html?url=MaskFitsFile.html&' + blueOrDesign;
+      optionUrl = 'index.html?url=MaskFitsFile.html&' + blueDesignOrBoth;
     } else if (option === 'Edit Use Date') {
       optionUrl = 'index.html?url=MaskUseDate.html&design-id=' + rowData['Design-ID'];
       // optionLink.target = "_self";
     } else if (option === 'Forget') {
-      optionUrl = 'index.html?url=MaskForget.html&' + blueOrDesign;
+      optionUrl = 'index.html?url=MaskForget.html&' + blueDesignOrBoth;
     } else if (option === 'ReMill') {
-      optionUrl = 'index.html?url=MaskRemill.html&' + blueOrDesign;
+      optionUrl = 'index.html?url=MaskRemill.html&' + blueDesignOrBoth;
     }
     optionLink.href = optionUrl;
     menu.appendChild(optionLink);
@@ -218,11 +230,13 @@ function displayPagination(totalRows) {
       }
     };
     paginationContainer.appendChild(prevButton);
+    paginationContainer.appendChild(document.createTextNode(' '));
 
     // Add current page number
     const currentPageSpan = document.createElement('span');
     currentPageSpan.textContent = 'Page ' + currentPage + '/' + totalPages;
     paginationContainer.appendChild(currentPageSpan);
+    paginationContainer.appendChild(document.createTextNode(' '));
 
     // Add "Next" button
     const nextButton = document.createElement('button');

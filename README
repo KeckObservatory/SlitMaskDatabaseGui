@@ -1,12 +1,14 @@
 
 
-TODO - incomplete issues 
+TODO - incomplete issues
 
 MaskFitsFile.html
   -- waiting for dbMaskOut to be owrking on server running api
 
 MaskUploadHistory.html
   -- waiting on @app.route("/slitmask/user-file-upload-history") to be implemented
+  -- is this needed? They can search and sort by user inventory.
+  -- wasn't in original definition,  but is on original webpage
 
 Blueid / DesignId
   -- confirm that this translation is 1 to 1,  or sufficient for the uses
@@ -14,3 +16,6 @@ Blueid / DesignId
 appbar.html
   -- pull out the header / appbar from the index.html and put into separate file
   -- issue is the MUI button doesn't work when this is done?
+
+MaskDetails.html
+  -- timeline report does not have design-id,  only bluid

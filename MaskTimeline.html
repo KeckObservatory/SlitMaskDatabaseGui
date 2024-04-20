@@ -30,7 +30,9 @@
 
 <script type="module">
   import { displayTable } from './js/MaskTable.js';
+  import { setMenuOff } from './js/MaskTable.js';
   const apiUrl = 'slitmask/timeline-report';
+  setMenuOff();
   displayTable(apiUrl);
 </script>
 
