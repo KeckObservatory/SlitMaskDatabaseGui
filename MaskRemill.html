@@ -14,6 +14,8 @@
     <th>Mask Design Name</th>
     <th> - </th>
     <th>Current Use Date</th>
+    <th> - </th>
+    <th>Mask Status</th>
   </tr>
   <tr>
     <td align="center"><div id="design-id"></div></td>
@@ -23,184 +25,80 @@
     <td align="center"><div id="design-name-id"></div></td>
     <td> - </td>
     <td align="center"><div id="use-date-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="mask-status-id"></div></td>
   </tr>
 </table>
 <br><br>
 
-<div id="editUseForm" style="display: none;">
-  <h4>Update the mask use date to be in the future. </h4>
-  <br>
-  <form>
-    <label for="numDays">Number of Days:</label>
-    <input type="number" id="numDays" value="0" min="0" max="365"/>
-    <button type="button" onclick="updateUseDate()">Set Use Date</button>
-  </form>
+<div id="loadingIndicator" style="display: none;">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
 </div>
 
-<div id="remillForm" style="display: none;">
-  <h4>Send the mask to be re-milled.</h4>
-    <button type="button" onclick="remillMask()">ReMill Mask</button>
-</div>
+<h4>Set the new use date,  and mark the mask to be re-milled.</h4> <br>
+
+<input type="date" id="new-use-date-id" name="use-date"> <br><br>
+
+<form>
+  <button type="button" id="downloadBtn" onclick="setReMill()">Re-Mill</button>
+</form>
+
 
 <script>
   let apiRootUrl;
   let blueId;
+  let designId;
 
-  // show the use date and the design-id
-  function loadParams() {
-    fetch('MaskConfig.json')
-    .then(response => response.json())
-    .then(config => {
-      apiRootUrl = config.apiRootUrl;
-      showCurrentUse();
-      showDesignId();
-    })
-    .catch(error => {
-      alert(`Error reading configuration: ${error}`);
-    });
+  function setReMill() {
+    let apiUrl = `${apiRootUrl}/slitmask/remill-mask`;
 
-  }
+    var newDate = getNewUseDate();
+    if (newDate === null) {
+      return;
+    }
 
-  function showDesignId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const designId = urlParams.get('design-id');
-    const designIdDiv = document.getElementById("design-id");
+    let fullUrl;
+    if (blueId === null) {
+      fullUrl = `${apiUrl}?design-id=${designId}&use-date=${newDate}`;
+    } else {
+      fullUrl = `${apiUrl}?blue-id=${blueId}&use-date=${newDate}`;
+    }
 
-    designIdDiv.innerText = designId;
-  }
+    // Disable the button
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.disabled = true;
 
-  // hides button
-  function showCurrentUse() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const designId = urlParams.get('design-id');
-    const useDateId = document.getElementById("use-date-id");
-    const blueIdId = document.getElementById("blue-id");
-    const designNameId = document.getElementById("design-name-id");
+    showLoadingIndicator();
 
-    let full_url = `${apiRootUrl}/slitmask/mask-detail?design-id=${designId}`;
-
-    fetch(full_url, {
-      mode: 'cors',
-      credentials: 'include' // cookies
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('data', data.data)
-      const blueprintObject = data.data.find(item => item[0] === "Blueprint");
-      if (blueprintObject) {
-        const dateUse = new Date(blueprintObject[1][0].date_use);
-        const today = new Date();
-        blueId = blueprintObject[1][0].bluid
-
-        if (dateUse < today) {
-          editUseForm.style.display = "block";
-          remillForm.style.display = "none";
-        } else {
-          editUseForm.style.display = "none";
-          remillForm.style.display = "block";
-        }
-
-        const year = dateUse.getFullYear();
-        const month = String(dateUse.getMonth() + 1).padStart(2, '0');
-        const day = String(dateUse.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
-        useDateId.innerText = formattedDate;
-        blueIdId.innerText = blueId;
-      } else {
-        console.log("Blueprint not found in the data.");
-      }
-      const maskDesign = data.data.find(item => item[0] === "Mask Design");
-      if (maskDesign) {
-        const designName = maskDesign[1][0]["Design-Name"];
-        designNameId.innerText = designName;
-        console.log("Design Name:", designName);
-      } else {
-        console.log("Mask Design not found in the data.");
-      }
-    })
-    .catch(error => {
-      alert(`Error accessing data, check API at ${full_url}: ${error}`);
-    });
-  }
-
-  function remillMask() {
-    let full_url = `${apiRootUrl}/slitmask/remill-mask?blue-id=${blueId}`;
-
-    fetch(full_url, {
+    fetch(fullUrl, {
       mode: 'cors',
       credentials: 'include'
     })
     .then(response => response.json())
     .then(data => {
-      if (data.data) {
-        alert(`Success: Mask with blueprint ID ${blueId} has been sent to be remilled.`)
+      if (data.success === 1) {
+        alert(data.data.msg);
+        window.addEventListener('focus', reloadPage);
       } else {
-        alert(`Error: An error occurred, the mask with blueprint ID ${blueId} has not been sent to be remilled.`)
+        alert("Error: " + data.data.error + "\n" + data.data.msg);
       }
-
-    })
-  }
-
-  function updateUseDate() {
-    let apiUrl = "/slitmask/extend-mask-use-date"
-    setUseDate(apiUrl);
-  }
-
-  function setUseDate(apiUrl) {
-
-    // Get the design-id parameter from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const designId = urlParams.get('design-id');
-
-    showCurrentUse(apiRootUrl, designId);
-
-    const numDays = document.getElementById("numDays").value;
-
-    let full_url = `${apiRootUrl}${apiUrl}?design-id=${designId}&number-days=${numDays}`;
-
-    // update the Use Date
-    fetch(full_url, {
-      mode: 'cors',
-      credentials: 'include' // cookies
-    })
-    .then(response => response.json())
-    .then(data => {
-      queryResults = data.data.msg;
-      alert(`Success: ${queryResults}`);
     })
     .catch(error => {
-      alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);
+      alert(`Error accessing data, check API at ${fullUrl}: ${error}`);
+    })
+    .finally(() => {
+      // Enable the button again
+      downloadBtn.disabled = false;
+
+      // Hide loading indicator
+      hideLoadingIndicator();
     });
   }
 
-  // makes sure the input is only integers
-  const inputField = document.getElementById("numDays");
-
-  inputField.addEventListener("input", function() {
-    // Get the input value
-    const inputValue = inputField.value;
-
-    // Check if the input value is numeric
-    if (!isNaN(inputValue)) {
-      // Parse the input value as a number
-      const numericValue = parseInt(inputValue);
-
-      // Check if the numeric value is greater than 365
-      if (numericValue > 365) {
-        // If so, set the input value to 365
-        inputField.value = 365;
-      }
-    } else {
-      // If the input value is not numeric, set it to an empty string
-      inputField.value = "";
-    }
-  });
-
-  // expose the updateUseDate to be used in index.html
-  window.onload = updateUseDate;
-
-  // expose the button to be used in index.html
-  window.onload = remillMask;
+  // expose the setReMill to be used in index.html
+  window.onload = setReMill;
 
   // load the Date-Use and Design ID
   window.onload = loadParams();

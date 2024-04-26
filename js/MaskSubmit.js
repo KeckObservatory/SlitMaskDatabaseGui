@@ -14,7 +14,7 @@ async function submitMask() {
   if (fileInput.files.length === 0) {
   alert("Please select a file.");
   return false;
-}
+  }
 
   // Get the first selected file
   const file = fileInput.files[0];

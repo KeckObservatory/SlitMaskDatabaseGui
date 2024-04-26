@@ -1,13 +1,40 @@
 
 <body>
 
+<h2>Delete Mask / Forget Mask</h2>
+<br>
 
+<table>
+  <tr>
+    <th>Mask Design Id</th>
+    <th> - </th>
+    <th>Mask Blueprint Id</th>
+    <th> - </th>
+    <th>Mask Design Name</th>
+    <th> - </th>
+    <th>Current Use Date</th>
+    <th> - </th>
+    <th>Mask Status</th>
+  </tr>
+  <tr>
+    <td align="center"><div id="design-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="blue-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="design-name-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="use-date-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="mask-status-id"></div></td>
+  </tr>
+</table>
+
+<br><br>
 <h3>The mask will be forgotten.  This cannot be undone.</h3>
-<h3> <div id="blue-id"></div>
-  <div id="design-id"></div> </h3>
+<br>
 
 <form>
-  <button type="button" id='forget-btn', onclick="forgetMask()">Forget about Mask</button>
+  <button type="button" id='forget-btn', onclick="forgetMask()">Forget Mask</button>
 </form>
 
 
@@ -15,34 +42,6 @@
   let apiRootUrl;
   let blueIdParam;
   let designIdParam;
-
-  // show the use date and the design-id
-  function loadParams() {
-    fetch('MaskConfig.json')
-    .then(response => response.json())
-    .then(config => {
-      apiRootUrl = config.apiRootUrl;
-      showId();
-    })
-    .catch(error => {
-      alert(`Error reading configuration: ${error}`);
-    });
-
-  }
-
-  function showId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    blueIdParam = urlParams.get('blue-id');
-    if (blueIdParam === null) {
-      designIdParam = urlParams.get('design-id');
-      const designIdDiv = document.getElementById("design-id")
-      designIdDiv.innerText = `Design Id: ${designIdParam}`;
-    } else {
-      const blueIdDiv = document.getElementById("blue-id");
-      blueIdDiv.innerText = `Blueprint Id: ${blueIdParam}`;
-    }
-
-  }
 
   function forgetMask() {
     let apiUrl = "/slitmask/forget-mask"

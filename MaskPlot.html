@@ -5,6 +5,33 @@
 
 <div id="svgPlot"></div>
 
+<br><br>
+
+<table class="centered-info-table-container">
+  <tr>
+    <th>Mask Design Id</th>
+    <th> - </th>
+    <th>Mask Blueprint Id</th>
+    <th> - </th>
+    <th>Mask Design Name</th>
+    <th> - </th>
+    <th>Current Use Date</th>
+    <th> - </th>
+    <th>Mask Status</th>
+  </tr>
+  <tr>
+    <td align="center"><div id="design-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="blue-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="design-name-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="use-date-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="mask-status-id"></div></td>
+  </tr>
+</table>
+
 <script type="module">
 
   function displayPlot() {
@@ -23,6 +50,9 @@
   };
 
   window.onload = displayPlot();
+
+  // load the Date-Use and Design ID
+  window.onload = loadParams();
 </script>
 
 </body>

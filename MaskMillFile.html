@@ -1,7 +1,7 @@
 
 <body>
 
-<h3>Mask Definition File (MDF) Fits Table download</h3>
+<h3>Mask Mill File Download Page</h3>
 
 <br><br>
 
@@ -38,9 +38,9 @@
   </div>
 </div>
 
-<h4>Download the Mask Definition Fits Table File</h4> <br>
+<h4>Download the Mask Mill Files (gcode) </h4> <br>
 <form>
-  <button type="button" id="downloadBtn" onclick="downloadMdf()">Download</button>
+  <button type="button" id="downloadBtn" onclick="downloadMillFile()">Download</button>
 </form>
 
 
@@ -49,8 +49,8 @@
   let blueId;
   let designId;
 
-  function downloadMdf() {
-    let apiUrl = `${apiRootUrl}/slitmask/mask-description-file`;
+  function downloadMillFile() {
+    let apiUrl = `${apiRootUrl}/slitmask/mill-files`;
     let fullUrl;
     if (blueId === null) {
       fullUrl = `${apiUrl}?design-id=${designId}`;
@@ -108,8 +108,8 @@
     document.body.removeChild(link);
   }
 
-  // expose the downloadMdf to be used in index.html
-  window.onload = downloadMdf;
+  // expose the downloadMillFile to be used in index.html
+  window.onload = downloadMillFile;
 
   // load the Date-Use and Design ID
   window.onload = loadParams();

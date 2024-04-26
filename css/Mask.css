@@ -73,3 +73,6 @@
     margin-bottom: 15px;
 }
 
+.centered-info-table-container {
+    margin: 0 auto; /* Center the container horizontally */
+}

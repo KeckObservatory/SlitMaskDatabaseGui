@@ -184,7 +184,7 @@ function addMenuItems(menu, rowData) {
                     : rowData['desid'] ? 'design-id=' + rowData['desid'] : null;
 
     const blueDesignOrBoth = (blueId ? blueId : '') + (designId ? (blueId ? '&' : '') + designId : '') || 'undefined';
-
+    console.log('option', option);
     // optionLink.target = "_blank";
     let optionUrl = '';
     if (option === 'Plot') {
@@ -202,6 +202,8 @@ function addMenuItems(menu, rowData) {
       optionUrl = 'index.html?url=MaskForget.html&' + blueDesignOrBoth;
     } else if (option === 'ReMill') {
       optionUrl = 'index.html?url=MaskRemill.html&' + blueDesignOrBoth;
+    } else if (option === 'Mill File') {
+      optionUrl = 'index.html?url=MaskMillFile.html&' + blueDesignOrBoth;
     }
     optionLink.href = optionUrl;
     menu.appendChild(optionLink);
