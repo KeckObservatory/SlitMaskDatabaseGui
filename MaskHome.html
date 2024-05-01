@@ -1,13 +1,13 @@
 
 <script type="module" src="js/MaskMain.js"></script>
 
-<div class="mui-container-fluid">
+<div class="mui-container-fluid" id="container">
   <table id="OptionTable">
     <thead>
+    <tr><!-- Empty row for spacing --></tr>
     <tr class="OptionsClass">
       <th class="OptionsClass">
         <a href="#" onclick="loadContent('MaskSubmit.html')" class="main-button">
-<!--        <a href="MaskSubmit.html" class="main-button">-->
           <img class="main-icon" src="imgs/submit.png">
           <span class="label">Submit Mask Design</span>
         </a>
@@ -28,7 +28,6 @@
       </th>
       <th class="OptionsClass">
         <a href="#" onclick="loadContent('MaskInventory.html')" class="main-button">
-  <!--        <img class="inventory-icon" src="imgs/inventory.png">-->
           <img class="main-icon" src="imgs/inventory.png">
           <span class="label">Mask Inventory</span>
         </a>
@@ -37,12 +36,12 @@
     <tr class="OptionsClass">
       <!-- Personal upload history -->
       <!-- @app.route("/slitmask/user-file-upload-history") -->
-      <th class="OptionsClass">
-        <a href="#" onclick="loadContent('MaskUploadHistory.html')" class="main-button">
-          <img class="main-icon" src="imgs/history.png">
-          <span class="label">Upload History</span>
-        </a>
-      </th>
+<!--      <th class="OptionsClass">-->
+<!--        <a href="#" onclick="loadContent('MaskUploadHistory.html')" class="main-button">-->
+<!--          <img class="main-icon" src="imgs/history.png">-->
+<!--          <span class="label">Upload History</span>-->
+<!--        </a>-->
+<!--      </th>-->
 
       <!--  any more? -->
       <th class="OptionsClass">
@@ -52,17 +51,20 @@
         </a>
       </th>
 
-    </tr>
+<!--    </tr>-->
 
-    <!--  mask admin - search button -->
-    <tr class="OptionsClass">
+<!--    &lt;!&ndash;  mask admin - search button &ndash;&gt;-->
+<!--    <tr class="OptionsClass">-->
       <th class="OptionsClass">
         <a href="#" onclick="loadContent('MaskRecentBarcodes.html')" class="main-button" id="recentBarButton" style="display: none;">
           <img class="main-icon" src="imgs/scanned.png">
           <span class="label">Admin - Recent Barcodes</span>
         </a>
       </th>
+    </tr>
 
+    <!--  mask admin - search button -->
+    <tr class="OptionsClass">
       <!--  mask admin - Timeline Report -->
       <!-- @app.route("/slitmask/timeline-report") -->
       <th class="OptionsClass">
@@ -79,10 +81,6 @@
 
 </div>
 
-<!-- add the Admin Search Options if user is an Admin -->
-<!--<script>-->
-<!--  addAdminButton();-->
-<!--</script>-->
 
 
 

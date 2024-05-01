@@ -39,17 +39,17 @@
 
 
 <script>
-  let apiRootUrl;
-  let blueIdParam;
-  let designIdParam;
+  let blueId;
+  let designId;
 
+  // the showInfo
   function forgetMask() {
     let apiUrl = "/slitmask/forget-mask"
     let full_url;
-    if (blueIdParam === null) {
-      full_url = `${apiRootUrl}${apiUrl}?design-id=${designIdParam}`;
+    if (blueId === null) {
+      full_url = `${apiRootUrl}${apiUrl}?design-id=${designId}`;
     } else {
-      full_url = `${apiRootUrl}${apiUrl}?blue-id=${blueIdParam}`;
+      full_url = `${apiRootUrl}${apiUrl}?blue-id=${blueId}`;
     }
 
     // update the Use Date
@@ -59,9 +59,12 @@
     })
     .then(response => response.json())
     .then(data => {
-      queryResults = data.data.msg;
-      console.log('stuff', queryResults);
-      alert(queryResults);
+      if (data.success === 1) {
+        alert(data.data.msg);
+        window.addEventListener('focus', reloadPage);
+      } else {
+        alert("Error: " + data.data.error + "\n" + data.data.msg);
+      }
     })
     .catch(error => {
       alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);

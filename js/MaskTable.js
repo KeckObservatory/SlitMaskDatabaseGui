@@ -88,13 +88,17 @@ function StandardMaskTable(data) {
       headerRow.appendChild(cell);
     });
   } else {
-    console.log('no results');
     // If data is empty, display "No Results" message
     const noResultsRow = document.createElement('tr');
     const noResultsCell = document.createElement('td');
     noResultsCell.textContent = 'No Results';
     noResultsRow.appendChild(noResultsCell);
     tableBody.appendChild(noResultsRow);
+
+    // hide any left behind pagination buttons
+    const paginationContainer = document.getElementById('paginationContainer');
+    paginationContainer.style.display = 'none';
+
     return;
   }
 
@@ -111,6 +115,7 @@ function StandardMaskTable(data) {
       cell.textContent = value;
       row.appendChild(cell);
     });
+
 
     // add hover menu of options
     if (addOptions) {
@@ -144,6 +149,8 @@ function StandardMaskTable(data) {
         menu.style.top = top + 'px';
 
         menu.style.display = 'block';
+
+        row.classList.add('highlighted-row');
       });
 
       // Hide menu on row exit or when mouse leaves the menu
@@ -151,12 +158,19 @@ function StandardMaskTable(data) {
         if (!menu.contains(event.relatedTarget)) {
           menu.style.display = 'none';
         }
+        row.classList.remove('highlighted-row');
+      });
+
+      // Hide menu when mouse leaves the menu
+      menu.addEventListener('mouseenter', function (event) {
+        row.classList.add('highlighted-row');
       });
 
       // Hide menu when mouse leaves the menu
       menu.addEventListener('mouseleave', function (event) {
         if (!row.contains(event.relatedTarget)) {
           menu.style.display = 'none';
+          row.classList.remove('highlighted-row');
         }
       });
     }
@@ -174,29 +188,22 @@ function addMenuItems(menu, rowData) {
     optionLink.textContent = option;
     optionLink.classList.add('menu-item');
 
-    // const blueOrDesign = rowData['Blue-ID'] ? 'blue-id=' + rowData['Blue-ID'] :
-    //                     (rowData['bluid'] ? 'blue-id=' + rowData['bluid'] :
-    //                     (rowData['Design-ID'] ? 'design-id=' + rowData['Design-ID'] :
-    //                     (rowData['desid'] ? 'design-id=' + rowData['desid'] : 'undefined')));
     const blueId = rowData['Blue-ID'] ? 'blue-id=' + rowData['Blue-ID']
                   : rowData['bluid'] ? 'blue-id=' + rowData['bluid'] : null;
     const designId = rowData['Design-ID'] ? 'design-id=' + rowData['Design-ID']
                     : rowData['desid'] ? 'design-id=' + rowData['desid'] : null;
 
     const blueDesignOrBoth = (blueId ? blueId : '') + (designId ? (blueId ? '&' : '') + designId : '') || 'undefined';
-    console.log('option', option);
-    // optionLink.target = "_blank";
+
     let optionUrl = '';
     if (option === 'Plot') {
       optionUrl = 'index.html?url=MaskPlot.html&' + blueDesignOrBoth;
     } else if (option === 'Details') {
-      optionUrl = 'index.html?url=MaskDetails.html&design-id=' + rowData['Design-ID'];
+      optionUrl = 'index.html?url=MaskDetails.html&' + designId;
     } else if (option === 'Fits File') {
-      // TODO: Implement logic to generate Fits File URL
-      // optionUrl = 'index.html?url=MaskFitsFile.html&' + blueOrDesign;
       optionUrl = 'index.html?url=MaskFitsFile.html&' + blueDesignOrBoth;
     } else if (option === 'Edit Use Date') {
-      optionUrl = 'index.html?url=MaskUseDate.html&design-id=' + rowData['Design-ID'];
+      optionUrl = 'index.html?url=MaskUseDate.html&' + designId;
       // optionLink.target = "_self";
     } else if (option === 'Forget') {
       optionUrl = 'index.html?url=MaskForget.html&' + blueDesignOrBoth;
@@ -227,7 +234,6 @@ function displayPagination(totalRows) {
     prevButton.onclick = () => {
       if (currentPage > 1) {
         currentPage--;
-        // searchTable();
         renderTable();
       }
     };

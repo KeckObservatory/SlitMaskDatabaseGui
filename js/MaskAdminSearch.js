@@ -9,7 +9,7 @@ function adminSearch() {
     {label: 'Design ID', name: 'desid', array: true},
     {label: 'Mill Sequence', name: 'millseq'},
     {label: 'Barcode', name: 'barcode', array: true},
-    {label: 'Milled', name: 'milled', dropdown: true},
+    {label: 'Milled', name: 'milled'},
     {label: 'Calibration days', name: 'caldays'},
   ];
 

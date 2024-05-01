@@ -55,8 +55,8 @@
 }
 
 .main-button img {
-    width: 48px;
-    height: 48px;
+    width: 64px;
+    height: 64px;
     display: block;
     margin: 0 auto;
 }
@@ -73,6 +73,22 @@
     margin-bottom: 15px;
 }
 
+/* for centering the info table,  in specific on the plot page */
 .centered-info-table-container {
-    margin: 0 auto; /* Center the container horizontally */
+    margin: 0 auto;
+}
+
+/* add spacing above the home button page */
+#container {
+    padding-top: 50px;
+
+}
+
+.highlighted-row {
+    background-color: inherit;
+}
+
+.highlighted-row {
+    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.2);
 }
