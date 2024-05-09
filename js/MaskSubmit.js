@@ -12,19 +12,20 @@ async function submitMask() {
 
   // Check if a file is selected
   if (fileInput.files.length === 0) {
-  alert("Please select a file.");
-  return false;
+    alert("Please select a file.");
+    return false;
   }
 
+  // TODO this seems like the location to submit more than one
   // Get the first selected file
   const file = fileInput.files[0];
 
   // Prepare form data
   const formData = new FormData();
-  formData.append('maskFile', file);
+  formData.append('mask-file', file);
 
   // Send a POST request to the API endpoint
-  const apiUrl = apiRootUrl + '/slitmask/upload-mdf';
+  const apiUrl = apiRootUrl + '/upload-mdf';
   const response = await fetch(apiUrl, {
   method: 'POST',
   body: formData,
@@ -33,23 +34,53 @@ async function submitMask() {
 
   // Check if the response is OK
   if (!response.ok) {
-  const errorData = await response.json();
-  throw new Error(errorData.error || 'Error uploading file.');
-}
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const errorData = await response.json();
+      if (response.status === 413 && errorData.error && errorData.error.includes('Payload Too Large')) {
+        throw new Error('File size too large!');
+      } else {
+        throw new Error(errorData.error || 'Error uploading file.');
+      }
+    } else {
+      // Read the response body as text
+      const errorText = await response.text();
+      throw new Error(errorText || 'Error uploading file.');
+    }
+    // const errorData = await response.json();
+    // throw new Error(errorData.error || 'Error uploading file.');
+    // const errorText = await response.text();
+    // if (response.status === 413 && errorText.includes('Payload Too Large')) {
+    //   alert('File Size is Too Large');
+    // } else {
+    //   alert(errorText || 'Error uploading file.');
+    // }
+  } else {
 
-  // Parse response data into text
-  const responseData = await response.text();
-  console.log('Response from server:', responseData);
+    // Parse response data into text
+    const responseData = await response.json();
+    console.log('Response from server:', responseData);
 
-  // Alert response data
-  alert(responseData);
+    // Alert response data
+    var alertMsg = JSON.stringify(responseData.data.msg);
 
-  // Redirect to home page
-  window.location.href = 'index.html';
+    if (responseData.data.warning) {
+      alertMsg += "\n\nWARNING:";
+      responseData.data.warning.forEach(function(item) {
+        alertMsg += "\n" + JSON.stringify(item);
+      });
+    }
+
+    alert(alertMsg);
+
+    // Redirect to home page
+    window.location.href = 'index.html';
+  }
 } catch (error) {
 
   // Log error message and display alert
   console.error('Error:', error);
+
   alert(error.message);
 }
 }

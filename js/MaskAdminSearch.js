@@ -23,6 +23,10 @@ function adminSearch() {
     optionsDropdown.appendChild(optionElement);
   });
 
+
+  // load all results on page load
+  submitForm();
+
   // Add event listener for Enter key press on searchInput field
   document.getElementById('searchInput').addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
@@ -63,7 +67,7 @@ function adminSearch() {
     }
 
     // Results:
-    const apiUrl = `/slitmask/admin-search`;
+    const apiUrl = `/admin-search`;
     const queryString = `search-options=${encodeURIComponent(JSON.stringify(searchQuery))}`;
     const fullUrl = `${apiUrl}?${queryString}`;
 
@@ -72,6 +76,7 @@ function adminSearch() {
     displayTable(fullUrl, options);
 
   }
+
 };
 
 export { adminSearch };

@@ -37,7 +37,7 @@ function showInfo() {
   const useDateId = document.getElementById("use-date-id");
   const maskStatId = document.getElementById("mask-status-id");
 
-  let fullUrl = `${apiRootUrl}/slitmask/mask-detail?design-id=${designId}`;
+  let fullUrl = `${apiRootUrl}/mask-detail?design-id=${designId}`;
 
   fetch(fullUrl, {
     mode: 'cors',

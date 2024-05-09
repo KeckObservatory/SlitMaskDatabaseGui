@@ -18,7 +18,7 @@ export function addAdminButton() {
     if (!apiRootUrl) return;
     console.log('querying api - admin butt');
 
-    const apiUrl = apiRootUrl + `/slitmask/user-type`;
+    const apiUrl = apiRootUrl + `/user-type`;
 
     fetch(apiUrl, {
       mode: 'cors',

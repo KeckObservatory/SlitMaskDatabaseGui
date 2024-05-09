@@ -10,7 +10,7 @@ function getPlot(blueIdStr) {
     .then(config => {
       console.log('here1');
       const apiRootUrl = config.apiRootUrl;
-      const apiUrl = `${apiRootUrl}/slitmask/mask-plot?${blueIdStr}`;
+      const apiUrl = `${apiRootUrl}/mask-plot?${blueIdStr}`;
 
       return fetch(apiUrl, {
         mode: 'cors',

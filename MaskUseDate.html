@@ -48,7 +48,7 @@
     const useDateId = document.getElementById("use-date-id");
     const designNameId = document.getElementById("design-name-id");
 
-    let full_url = `${apiRootUrl}/slitmask/mask-detail?design-id=${designId}`;
+    let full_url = `${apiRootUrl}/mask-detail?design-id=${designId}`;
 
     fetch(full_url, {
       mode: 'cors',
@@ -92,7 +92,7 @@
   }
 
   function updateUseDate() {
-    let apiUrl = "/slitmask/extend-mask-use-date"
+    let apiUrl = "/extend-mask-use-date"
     setUseDate(apiUrl);
   }
 

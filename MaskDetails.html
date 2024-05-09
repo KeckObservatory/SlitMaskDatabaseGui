@@ -43,7 +43,7 @@
     const response = await fetch('MaskConfig.json');
     const config = await response.json();
     const apiRootUrl = config.apiRootUrl;
-    const apiUrl = apiRootUrl + `/slitmask/mask-detail?design-id=${designId}`;
+    const apiUrl = apiRootUrl + `/mask-detail?design-id=${designId}`;
 
     showAllSpinners();
 
