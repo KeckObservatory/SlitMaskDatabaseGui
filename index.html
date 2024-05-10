@@ -97,16 +97,12 @@
         fetch(url)
         .then(response => response.text())
           .then(data => {
-            console.log("loading content: ");
-
             const mainContent = document.getElementById('content');
             mainContent.innerHTML = data;
 
             // Find and execute module scripts within the loaded content
             let moduleScripts = mainContent.querySelectorAll('script[type="module"]');
             moduleScripts.forEach(script => {
-              console.log("loading module script: ", script);
-
               const newScript = document.createElement('script');
               newScript.type = 'module';
               newScript.textContent = script.textContent;
@@ -116,7 +112,6 @@
             // Find and execute non-module scripts within the loaded content
             let nonModuleScripts = mainContent.querySelectorAll('script:not([type="module"])');
             nonModuleScripts.forEach(script => {
-              console.log("loading non-module script: ", script);
               const newScript = document.createElement('script');
               newScript.textContent = script.textContent;
               document.body.appendChild(newScript);

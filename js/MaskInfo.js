@@ -3,7 +3,7 @@
 
 
 function loadParams() {
-  fetch('MaskConfig.json')
+  fetch('js/MaskConfig.live.json')
   .then(response => response.json())
   .then(config => {
     apiRootUrl = config.apiRootUrl;
@@ -29,7 +29,6 @@ function showId() {
 }
 
 function showInfo() {
-  console.log('this is the new stuff');
   const urlParams = new URLSearchParams(window.location.search);
   const designId = urlParams.get('design-id');
   const blueIdId = document.getElementById("blue-id");
@@ -48,7 +47,6 @@ function showInfo() {
 
     // get the date-use and blue-id (if needed)
     const blueprintObject = data.data.find(item => item[0] === "Blueprint");
-    console.log('mask info', blueprintObject[1][0]);
     if (blueprintObject) {
       const dateUse = new Date(blueprintObject[1][0].date_use);
       const year = dateUse.getFullYear();
@@ -78,7 +76,6 @@ function showInfo() {
     if (maskDesign) {
       const designName = maskDesign[1][0]["Design-Name"];
       designNameId.innerText = designName;
-      console.log("Design Name:", designName);
     } else {
       console.log("Mask Design not found in the data.");
     }

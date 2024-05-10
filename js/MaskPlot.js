@@ -1,6 +1,6 @@
 function getPlot(blueIdStr) {
   return new Promise((resolve, reject) => {
-    fetch('MaskConfig.json')
+    fetch('js/MaskConfig.live.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to load configuration file');
@@ -8,7 +8,6 @@ function getPlot(blueIdStr) {
       return response.json();
     })
     .then(config => {
-      console.log('here1');
       const apiRootUrl = config.apiRootUrl;
       const apiUrl = `${apiRootUrl}/mask-plot?${blueIdStr}`;
 
@@ -29,7 +28,7 @@ function getPlot(blueIdStr) {
       // svgPlot.setAttribute('src', svgContent);
 
       readSvgJs(svgContent);
-      resolve();
+      // resolve();
       initSVG();
       initializeSvgPanZoom(svgPlot);
 
@@ -40,6 +39,7 @@ function getPlot(blueIdStr) {
     });
   });
 }
+
 
 function initSVG() {
   var svgPlot = document.getElementById('svgPlot');
@@ -65,7 +65,7 @@ function initSVG() {
   // Function to handle zoom using mouse wheel
 function handleZoom(evt) {
   // Prevent default zoom behavior
-  evt.preventDefault();
+  // evt.preventDefault();
 
   var svgPlot = document.getElementById('svgPlot');
   var svgDoc = svgPlot.contentDocument || svgPlot.getSVGDocument();

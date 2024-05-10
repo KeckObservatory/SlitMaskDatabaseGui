@@ -14,7 +14,7 @@ export { setMenuOff };
 
 function displayTable(apiUrl, new_options = ['Plot', 'Details', 'Fits File']) {
   options = new_options
-  fetch('MaskConfig.json')
+  fetch('js/MaskConfig.live.json')
   .then(response => response.json())
   .then(config => {
     const apiRootUrl = config.apiRootUrl;
@@ -29,7 +29,6 @@ export { displayTable };
 
 
 function getTableInfo(apiUrl, apiRootUrl) {
-  console.log('root api ', apiRootUrl + apiUrl)
   fetch(apiRootUrl + apiUrl, {
     mode: 'cors',
     credentials: 'include' // cookies

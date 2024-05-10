@@ -4,21 +4,17 @@
 // main function to load all the header elements
 async function loadHeader() {
   try {
-    console.log('appbar1');
-
     const configResponse = await fetch('MaskConfig.json');
     const configInfo = await configResponse.json();
 
     // todo want to move out of index.html
     // const appHtml = await fetch('appbar.html');
     // const html = await appHtml.text();
-    // console.log(html);
 
     // const headerContainer = document.getElementById('shared-header');
     // headerContainer.innerHTML = html;
 
     const headerContainer = document.getElementById('shared-header');
-    console.log(headerContainer);
 
     // add the username and check login,  redirects if not logged in
     const userinfo = await checkLogin(configInfo);
@@ -38,12 +34,6 @@ async function loadHeader() {
       header_name.innerHTML = page_name;
     }
 
-    // add the title of the page
-    // const header_title = headerContainer.querySelector('#headerTitle');
-    // if (header_title) {
-    //   header_title.innerHTML = page_name;
-    // }
-
     // add the username
     const user_name = headerContainer.querySelector('#userName');
     if (user_name) {
@@ -62,8 +52,6 @@ async function checkLogin(config) {
 
     const url = wwwRootUrl + '/userinfo/';
     const userinfo = await getApiData(url);
-
-    console.log()
 
     // redirect if not logged in
     let currentURL = window.location.href;

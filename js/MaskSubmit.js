@@ -2,7 +2,7 @@
 async function submitMask() {
   try {
   // Fetch the API root URL from MaskConfig.json
-  const configResponse = await fetch('MaskConfig.json');
+  const configResponse = await fetch('js/MaskConfig.live.json');
   const configInfo = await configResponse.json();
   const apiRootUrl = configInfo.apiRootUrl;
 
@@ -47,27 +47,18 @@ async function submitMask() {
       const errorText = await response.text();
       throw new Error(errorText || 'Error uploading file.');
     }
-    // const errorData = await response.json();
-    // throw new Error(errorData.error || 'Error uploading file.');
-    // const errorText = await response.text();
-    // if (response.status === 413 && errorText.includes('Payload Too Large')) {
-    //   alert('File Size is Too Large');
-    // } else {
-    //   alert(errorText || 'Error uploading file.');
-    // }
   } else {
 
     // Parse response data into text
     const responseData = await response.json();
-    console.log('Response from server:', responseData);
 
     // Alert response data
-    var alertMsg = JSON.stringify(responseData.data.msg);
+    var alertMsg = stripQuotes(JSON.stringify(responseData.data.msg));
 
     if (responseData.data.warning) {
       alertMsg += "\n\nWARNING:";
       responseData.data.warning.forEach(function(item) {
-        alertMsg += "\n" + JSON.stringify(item);
+        alertMsg += "\n• " + stripQuotes(JSON.stringify(item));
       });
     }
 
@@ -85,6 +76,6 @@ async function submitMask() {
 }
 }
 
-
-// Expose the submitMask function globally
-// window.submitMask = submitMask;
+function stripQuotes(str) {
+  return str.replace(/^"(.*)"$/, '$1');
+}

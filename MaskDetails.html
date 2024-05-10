@@ -31,7 +31,6 @@
   }
 
   async function getResults() {
-    console.log('running getResults');
     const designId = getDesignID();
     if (!designId) {
       console.error('No design ID found in URL parameters');
@@ -89,7 +88,6 @@
     const remainingTablesContainer = document.getElementById('remainingTables');
 
     if (additionInfo.length === 0) {
-      console.log('No remaining objects to display.');
       hideAllSpinners();
       return;
     }
@@ -97,11 +95,8 @@
     // create the remaining tables dynamically
     additionInfo.forEach(function([title, tableData], index) {
       if (Array.isArray(tableData) && tableData.length === 0) {
-        console.log(`Table data for ${title} is empty.`);
         return;
       }
-      // console.log(`Creating table for ${title}:`, tableData);
-      console.log(`Creating table for ${title}:`);
       const tableId = `table${index + 3}`;
       const table = document.createElement('table');
       table.id = tableId; // Corrected assignment

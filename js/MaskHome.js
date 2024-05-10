@@ -1,13 +1,11 @@
 
 export function addAdminButton() {
   let apiRootUrl;
-  console.log('adding admin butt');
 
-  fetch('MaskConfig.json')
+  fetch('js/MaskConfig.live.json')
   .then(response => response.json())
   .then(config => {
     apiRootUrl = config.apiRootUrl;
-    console.log('api root', apiRootUrl);
     queryApi();
   })
   .catch(error => {
@@ -16,8 +14,6 @@ export function addAdminButton() {
 
   function queryApi() {
     if (!apiRootUrl) return;
-    console.log('querying api - admin butt');
-
     const apiUrl = apiRootUrl + `/user-type`;
 
     fetch(apiUrl, {
@@ -26,7 +22,6 @@ export function addAdminButton() {
     })
     .then(response => response.json())
     .then(info => {
-      console.log('user', info.data['user_type']);
       const userType = info.data['user_type'];
 
       if (userType === "maskadmin") {

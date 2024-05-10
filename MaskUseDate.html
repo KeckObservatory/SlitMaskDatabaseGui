@@ -56,7 +56,6 @@
     })
     .then(response => response.json())
     .then(data => {
-      console.log('data', data.data)
       const blueprintObject = data.data.find(item => item[0] === "Blueprint");
       // Access the date_use property from the "Blueprint" object
       if (blueprintObject) {
@@ -69,8 +68,6 @@
 
         const formattedDate = `${year}-${month}-${day}`;
         useDateId.innerText = formattedDate;
-
-        console.log("Date Use:", dateUse);
       } else {
         console.log("Blueprint not found in the data.");
       }
@@ -79,8 +76,6 @@
       if (blueprintObject) {
         const designName = maskDesign[1][0]["Design-Name"];
         designNameId.innerText = designName;
-
-        console.log("Date Use:", designName);
       } else {
         console.log("Blueprint not found in the data.");
       }
@@ -116,7 +111,6 @@
     .then(response => response.json())
     .then(data => {
       queryResults = data.data;
-      console.log('stuff', queryResults);
     })
     .catch(error => {
       alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);
