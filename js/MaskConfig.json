@@ -1,8 +1,8 @@
 
 {
-  "wwwRootUrl": "https://www3build.keck.hawaii.edu/",
-  "wwwBaseLoc": "/sandbox/lfuhrman/Slitmask/",
-  "apiRootUrl": "https://vm-appserver.keck.hawaii.edu/slitmask",
+  "wwwRootUrl": "",
+  "wwwBaseLoc": "",
+  "apiRootUrl": "",
   "buttonLinks": [
     {
       "name": "Home",
