@@ -39,7 +39,7 @@
     }
 
     // get the api url from the config file
-    const response = await fetch('MaskConfig.json');
+    const response = await fetch('js/MaskConfig.live.json');
     const config = await response.json();
     const apiRootUrl = config.apiRootUrl;
     const apiUrl = apiRootUrl + `/mask-detail?design-id=${designId}`;
