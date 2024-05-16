@@ -5,11 +5,19 @@
   "apiRootUrl": "",
   "buttonLinks": [
     {
-      "name": "Home",
+      "name": "Slitmask Homepage",
       "url": "./index.html"
     },
     {
-      "name": "Help",
+      "name": "Observer Homepage",
+      "url": "https://www2.keck.hawaii.edu/inst/PILogin/homepage.php"
+    },
+    {
+      "name": "Update Information",
+      "url": "https://www2.keck.hawaii.edu/inst/PILogin/updateInfo.php?"
+    },
+    {
+      "name": "Slitmask Help",
       "url": "./index.html?url=MaskHelp.html"
     },
     {
@@ -57,7 +65,7 @@
         },
         {
           "text": "Schedule",
-          "url": "http://www2.keck.hawaii.edu/observing/keckChedule/keckSchedule/index.php"
+          "url": "https://www2.keck.hawaii.edu/observing/keckSchedule/keckSchedule.php" 
         },
         {
           "text": "Observing",

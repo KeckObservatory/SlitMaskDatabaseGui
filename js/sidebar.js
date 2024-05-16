@@ -11,6 +11,7 @@ async function loadSideBar() {
     sidebarContainer.innerHTML = html;
 
     genLinks(configInfo)
+    imgLink(configInfo);
 
   } catch (error) {
     console.error('Failed to load sidebar:', error);
@@ -53,6 +54,17 @@ function genLinks(config) {
     // Append section container to sidebar container
     sidebarLinksElem.appendChild(sectionContainer);
   });
+}
+
+// add the home page link to the keck image banner
+function imgLink(config) {
+  const logoLink = document.getElementById('logoLink');
+  if (logoLink) {
+    const keckLogoLink = config.wwwBaseLoc + '/index.html';
+    logoLink.setAttribute('href', keckLogoLink);
+  } else {
+    console.error("Element with id 'logoLink' not found.");
+  }
 }
 
 

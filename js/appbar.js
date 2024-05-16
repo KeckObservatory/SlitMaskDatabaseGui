@@ -4,7 +4,7 @@
 // main function to load all the header elements
 async function loadHeader() {
   try {
-    const configResponse = await fetch('MaskConfig.json');
+    const configResponse = await fetch('js/MaskConfig.live.json');
     const configInfo = await configResponse.json();
 
     // todo want to move out of index.html
@@ -18,9 +18,6 @@ async function loadHeader() {
 
     // add the username and check login,  redirects if not logged in
     const userinfo = await checkLogin(configInfo);
-
-    // add link inside keck image
-    imgLink(configInfo);
 
     // username,  logout
     const infoDropdown = document.getElementById('infoDropdown');
@@ -39,6 +36,7 @@ async function loadHeader() {
     if (user_name) {
       user_name.innerHTML = userinfo.FirstName + " " + userinfo.LastName + " ";
     }
+
   } catch (error) {
     console.error('Failed to load header:', error);
   }
@@ -126,14 +124,6 @@ function addInfoDropDown(buttonLinks) {
 
   // Append container to the infoDropdown element
   infoDropdown.appendChild(container);
-}
-
-
-function imgLink(config) {
-  // add the home page link to the keck image banner
-  const keckLogoLink = config.wwwBaseLoc + '/index.html';
-  const logoLink = document.getElementById('logoLink');
-  logoLink.setAttribute('href', keckLogoLink);
 }
 
 
