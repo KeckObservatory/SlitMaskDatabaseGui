@@ -3,8 +3,8 @@ import { displayTable } from './MaskTable.js';
 function adminSearch() {
   const optionsList = [
     {label: 'Email:', name: 'email'},
-    {label: 'Display name:', name: 'guiname'},
-    {label: 'Name:', name: 'name'},
+    {label: 'Design Name:', name: 'name'},
+    {label: 'Project Name:', name: 'guiname'},
     {label: 'Blue ID', name: 'bluid', array: true},
     {label: 'Design ID', name: 'desid', array: true},
     {label: 'Mill Sequence', name: 'millseq'},

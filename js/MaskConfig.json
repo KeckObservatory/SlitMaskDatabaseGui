@@ -27,6 +27,15 @@
   ],
   "sidebarLinks": [
     {
+      "title": "Creation Software",
+      "links": [
+        {
+          "text": "SMDT",
+          "url": "https://www2.keck.hawaii.edu/realpublic/realpublic/inst/deimos/smdt.html"
+        }
+      ]
+    },
+    {
       "title": "Submission Procedure",
       "links": [
         {
