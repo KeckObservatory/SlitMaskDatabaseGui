@@ -1,8 +1,8 @@
 
 async function submitMask() {
   try {
-  // Fetch the API root URL from MaskConfig.live.json
-  const configResponse = await fetch('js/MaskConfig.live.json');
+  // Fetch the API root URL from MaskConfig.json
+  const configResponse = await fetch('js/MaskConfig.json');
   const configInfo = await configResponse.json();
   const apiRootUrl = configInfo.apiRootUrl;
 

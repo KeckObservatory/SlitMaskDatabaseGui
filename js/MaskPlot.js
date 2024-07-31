@@ -1,6 +1,6 @@
 function getPlot(blueIdStr) {
   return new Promise((resolve, reject) => {
-    fetch('js/MaskConfig.live.json')
+    fetch('js/MaskConfig.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to load configuration file');

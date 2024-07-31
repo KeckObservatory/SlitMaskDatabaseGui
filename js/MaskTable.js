@@ -14,7 +14,7 @@ export { setMenuOff };
 
 function displayTable(apiUrl, new_options = ['Plot', 'Details', 'Fits File']) {
   options = new_options
-  fetch('js/MaskConfig.live.json')
+  fetch('js/MaskConfig.json')
   .then(response => response.json())
   .then(config => {
     const apiRootUrl = config.apiRootUrl;

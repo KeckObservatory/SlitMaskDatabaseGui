@@ -4,7 +4,7 @@
 // main function to load all the header elements
 async function loadHeader() {
   try {
-    const configResponse = await fetch('js/MaskConfig.live.json');
+    const configResponse = await fetch('js/MaskConfig.json');
     const configInfo = await configResponse.json();
 
     // todo want to move out of index.html

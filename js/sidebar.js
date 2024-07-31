@@ -1,7 +1,7 @@
 
 async function loadSideBar() {
   try {
-    const configResponse = await fetch('js/MaskConfig.live.json');
+    const configResponse = await fetch('js/MaskConfig.json');
     const configInfo = await configResponse.json();
 
     const sidebarHtml = await fetch('sidebar.html');
