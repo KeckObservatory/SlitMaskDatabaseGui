@@ -1,8 +1,7 @@
 
 {
-  "wwwRootUrl": "",
-  "wwwBaseLoc": "",
-  "apiRootUrl": "",
+  "wwwBaseLoc": "/observers/Slitmask/rel",
+  "apiRootUrl": "/api/slitmask-summit",
   "buttonLinks": [
     {
       "name": "Slitmask Homepage",
