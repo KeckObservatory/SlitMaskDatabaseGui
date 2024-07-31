@@ -46,15 +46,13 @@ async function loadHeader() {
 // confirm the user is logged in
 async function checkLogin(config) {
   try {
-    const wwwRootUrl = config.wwwRootUrl;
-
-    const url = wwwRootUrl + '/userinfo/';
+    const url = '/userinfo/';
     const userinfo = await getApiData(url);
 
     // redirect if not logged in
     let currentURL = window.location.href;
     if (!userinfo.hasOwnProperty('Id')) {
-      window.location.href = wwwRootUrl + '/login/?url=' + currentURL;
+      window.location.href = window.location.origin + '/login/?url=' + currentURL;
     }
     return userinfo;
 
