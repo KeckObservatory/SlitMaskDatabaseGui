@@ -21,7 +21,7 @@
     },
     {
       "name": "Log Out",
-      "url": "https://www3build.keck.hawaii.edu/logout"
+      "url": "/logout"
     }
   ],
   "sidebarLinks": [
