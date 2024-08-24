@@ -37,6 +37,10 @@ export function addAdminButton() {
         if (recentBarButton) {
           recentBarButton.style.display = 'block';
         }
+        const activeButton = document.getElementById('maskActive');
+        if (activeButton) {
+          activeButton.style.display = 'block';
+        }
       }
     })
     .catch(error => {

@@ -17,8 +17,8 @@
   <button onclick="searchTable()">Search</button>
 </div>
 
-<div style="overflow-x: auto;">
-  <table id="BasicMaskTable">
+<div style="overflow-x: auto; white-space: nowrap;">
+  <table class="mui-table mui-table--bordered" style="min-width: 100%;">
     <thead class="tabHead">
     <tr id="headerRow"></tr>
     </thead>
@@ -26,14 +26,59 @@
   </table>
 </div>
 
+
 <div id="paginationContainer"></div>
+
+<!--<script type="module">-->
+<!--  import { displayTable } from './js/MaskTable.js';-->
+<!--  import { setMenuOff } from './js/MaskTable.js';-->
+<!--  setMenuOff();-->
+
+<!--  const apiUrl = '/mill-queue';-->
+<!--  displayTable(apiUrl);-->
+<!--</script>-->
 
 <script type="module">
   import { displayTable } from './js/MaskTable.js';
   import { setMenuOff } from './js/MaskTable.js';
-  setMenuOff();
 
-  const apiUrl = '/mill-queue';
-  displayTable(apiUrl);
+  let apiRootUrl;
+
+  // Fetch configuration to get the API root URL
+  fetch('js/MaskConfig.json')
+  .then(response => response.json())
+  .then(config => {
+    apiRootUrl = config.apiRootUrl;
+    queryApi();  // Once the config is loaded, check user type
+  })
+  .catch(error => {
+    alert(`Error reading configuration: ${error}`);
+  });
+
+  // Function to check if the user is an admin
+  function queryApi() {
+    if (!apiRootUrl) return;
+    const apiUrl = apiRootUrl + `/user-type`;
+
+    fetch(apiUrl, {
+      mode: 'cors',
+      credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(info => {
+      const userType = info.data['user_type'];
+
+      if (userType !== "maskadmin") {
+        setMenuOff();  // Call setMenuOff only if the user is not an admin
+      }
+
+      const millQueueUrl = '/mill-queue';
+      displayTable(millQueueUrl);  // Display the table once user type is determined
+    })
+    .catch(error => {
+      alert(`Error fetching user type: ${error}`);
+    });
+  }
 </script>
+
 

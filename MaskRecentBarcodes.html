@@ -5,11 +5,28 @@
   <link rel="stylesheet" type="text/css" href="css/Mask.css">
   <link rel="stylesheet" type="text/css" href="css/mui-style.css">
 
+  <style>
+      #daysInputContainer {
+          margin-bottom: 20px;
+      }
+
+      #searchBar {
+          margin-bottom: 20px;
+      }
+  </style>
+
   <script type="module" src="js/MaskTable.js"></script>
 
 </head>
 
 <h3>Recently Scanned Barcodes</h3>
+
+<!-- Input field for number of days -->
+<div id="daysInputContainer">
+  <input type="number" id="daysInput" placeholder="Number of days" />
+  <button onclick="setNumDays()">Apply</button>
+</div>
+
 
 <!-- Search bar -->
 <div id="searchBar">
@@ -17,8 +34,8 @@
   <button onclick="searchTable()">Search</button>
 </div>
 
-<div style="overflow-x: auto;">
-  <table id="BasicMaskTable">
+<div style="overflow-x: auto; white-space: nowrap;">
+  <table class="mui-table mui-table--bordered" style="min-width: 100%;">
     <thead class="tabHead">
     <tr id="headerRow"></tr>
     </thead>
@@ -26,11 +43,31 @@
   </table>
 </div>
 
+
+
+
 <div id="paginationContainer"></div>
 
 <script type="module">
   import { displayTable } from './js/MaskTable.js';
   const apiUrl = '/recently-scanned-barcodes';
+
+  // Initial table display with default of 14 days
   displayTable(apiUrl);
+
+  // redisplay when a number of days is input
+  function setNumDays() {
+    const daysInput = document.getElementById('daysInput').value;
+    let apiUrlWithDays = apiUrl;
+
+    if (daysInput) {
+      apiUrlWithDays += `?number-days=${encodeURIComponent(daysInput)}`;
+    }
+
+    displayTable(apiUrlWithDays);
+  }
+
+  // Expose setNumDays for HTML button
+  window.setNumDays = setNumDays;
 </script>
 

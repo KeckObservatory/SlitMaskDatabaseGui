@@ -1,0 +1,81 @@
+
+<body>
+
+<h2>Archive Mask</h2>
+<br>
+
+<table>
+  <tr>
+    <th>Mask Design Id</th>
+    <th> - </th>
+    <th>Mask Blueprint Id</th>
+    <th> - </th>
+    <th>Mask Design Name</th>
+    <th> - </th>
+    <th>Current Use Date</th>
+    <th> - </th>
+    <th>Mask Status</th>
+  </tr>
+  <tr>
+    <td align="center"><div id="design-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="blue-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="design-name-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="use-date-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="mask-status-id"></div></td>
+  </tr>
+</table>
+
+<br><br>
+<h3>The mask will be archived.  This will require admin intervention to re-mill inorder to be active again.</h3>
+<br>
+
+<form>
+  <button type="button" id='forget-btn', onclick="archiveMask()">Archive Mask</button>
+</form>
+
+
+<script>
+  let blueId;
+  let designId;
+
+  // the showInfo
+  function archiveMask() {
+    let apiUrl = "/archive-mask"
+    let full_url;
+    if (blueId === null) {
+      full_url = `${apiRootUrl}${apiUrl}?design-id=${designId}`;
+    } else {
+      full_url = `${apiRootUrl}${apiUrl}?blue-id=${blueId}`;
+    }
+
+    // update the Use Date
+    fetch(full_url, {
+      mode: 'cors',
+      credentials: 'include' // cookies
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success === 1) {
+        alert(data.data.msg);
+        window.addEventListener('focus', reloadPage);
+      } else {
+        alert("Error: " + data.data.error + "\n" + data.data.msg);
+      }
+    })
+    .catch(error => {
+      alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);
+    });
+  }
+
+  // expose the archiveMask to be used in index.html
+  window.onload = archiveMask;
+
+  // load the Date-Use and Design ID
+  window.onload = loadParams();
+</script>
+
+</body>

@@ -1,30 +1,23 @@
+<!DOCTYPE html>
+<html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="css/Mask.css">
   <link rel="stylesheet" type="text/css" href="css/mui-style.css">
 
-  <style>
-      #daysInputContainer {
-          margin-bottom: 20px;
-      }
-  </style>
-
   <script type="module" src="js/MaskTable.js"></script>
 </head>
 
-<h3>Timeline of Recent Masks</h3>
-
-<div id="daysInputContainer">
-  <input type="number" id="daysInput" placeholder="Number of days" />
-  <button onclick="setNumDays()">Apply</button>
-</div>
+<h3>User Mask Available Inventory</h3>
 
 <!-- Search bar -->
 <div id="searchBar">
   <input type="text" id="searchInput" placeholder="Search..." />
   <button onclick="searchTable()">Search</button>
 </div>
+
 
 <div style="overflow-x: auto; white-space: nowrap;">
   <table class="mui-table mui-table--bordered" style="min-width: 100%;">
@@ -42,28 +35,9 @@
 
 <script type="module">
   import { displayTable } from './js/MaskTable.js';
-  import { setMenuOff } from './js/MaskTable.js';
+  const apiUrl = '/user-available-inventory';
+  let options = ['Edit Use Date', 'Archive', 'Plot', 'Details', 'Fits File'];
 
-  const apiUrl = '/timeline-report';
-
-  // setMenuOff();
-
-  // Initial table display without any filters
-  displayTable(apiUrl);
-
-  function setNumDays() {
-    const daysInput = document.getElementById('daysInput').value;
-    let apiUrlWithDays = apiUrl;
-
-    // Check if daysInput has a value
-    if (daysInput) {
-      apiUrlWithDays += `?number-days=${encodeURIComponent(daysInput)}`;
-    }
-
-    displayTable(apiUrlWithDays);
-  }
-
-  // Expose setNumDays for HTML button
-  window.setNumDays = setNumDays;
-
+  displayTable(apiUrl, options);
 </script>
+

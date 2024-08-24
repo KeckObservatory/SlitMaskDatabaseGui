@@ -59,11 +59,11 @@ function showInfo() {
         blueIdId.innerText = blueId;
       }
       if (blueprintObject[1][0].status === 0){
-        maskStatId.innerText = "not milled";
+        maskStatId.innerText = "NOT MILLED";
       } else if (blueprintObject[1][0].status === 2){
-        maskStatId.innerText = "milled";
+        maskStatId.innerText = "READY";
       } else if (blueprintObject[1][0].status === 9){
-        maskStatId.innerText = "deleted";
+        maskStatId.innerText = "ARCHIVED";
       } else {
         maskStatId.innerText = "unknown";
       }

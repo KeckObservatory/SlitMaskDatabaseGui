@@ -65,7 +65,6 @@ function renderTable() {
   StandardMaskTable(filteredData);
 }
 
-
 function StandardMaskTable(data) {
   const tableBody = document.getElementById('GeneratedMaskTable');
   const headerRow = document.getElementById('headerRow');
@@ -94,7 +93,7 @@ function StandardMaskTable(data) {
     noResultsRow.appendChild(noResultsCell);
     tableBody.appendChild(noResultsRow);
 
-    // hide any left behind pagination buttons
+    // Hide any left-behind pagination buttons
     const paginationContainer = document.getElementById('paginationContainer');
     paginationContainer.style.display = 'none';
 
@@ -104,19 +103,30 @@ function StandardMaskTable(data) {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, data.length);
 
-  // Display table rows for current page
+  // Display table rows for the current page
   for (let i = startIndex; i < endIndex; i++) {
     const rowData = data[i];
     const row = document.createElement('tr');
 
+    let archiveRow = false; // Flag to determine if row should be highlighted
+
     Object.values(rowData).forEach(value => {
       const cell = document.createElement('td');
       cell.textContent = value;
+
+      // Check if the mask has status archived
+      if (value && value.toString() === 'ARCHIVED') {
+        archiveRow = true;
+      }
+
       row.appendChild(cell);
     });
 
+    if (archiveRow) {
+      row.classList.add('archive-row');
+    }
 
-    // add hover menu of options
+    // Add hover menu of options
     if (addOptions) {
       // Create the menu for each row
       const menu = document.createElement('div');
@@ -149,7 +159,11 @@ function StandardMaskTable(data) {
 
         menu.style.display = 'block';
 
-        row.classList.add('highlighted-row');
+        if (archiveRow) {
+          row.classList.add('highlighted-archive-row');
+        } else {
+          row.classList.add('highlighted-row');
+        }
       });
 
       // Hide menu on row exit or when mouse leaves the menu
@@ -157,7 +171,11 @@ function StandardMaskTable(data) {
         if (!menu.contains(event.relatedTarget)) {
           menu.style.display = 'none';
         }
-        row.classList.remove('highlighted-row');
+        if (archiveRow) {
+          row.classList.remove('highlighted-archive-row');
+        } else {
+          row.classList.remove('highlighted-row');
+        }
       });
 
       // Hide menu when mouse leaves the menu
@@ -180,6 +198,122 @@ function StandardMaskTable(data) {
   // Display pagination controls
   displayPagination(data.length);
 }
+
+
+// function StandardMaskTable(data) {
+//   const tableBody = document.getElementById('GeneratedMaskTable');
+//   const headerRow = document.getElementById('headerRow');
+//
+//   tableBody.innerHTML = '';
+//   headerRow.innerHTML = '';
+//
+//   // Display table header
+//   if (data.length > 0) {
+//     Object.keys(data[0]).forEach((key, columnIndex) => {
+//       const cell = document.createElement('th');
+//       cell.className = 'tab';
+//       cell.textContent = key.replace(/-/g, ' ');
+//       cell.onclick = () => sortTable(columnIndex);
+//       const sortIcon = document.createElement('span');
+//       sortIcon.className = 'sort-icon';
+//       sortIcon.innerHTML = '&uarr;&darr;';
+//       cell.appendChild(sortIcon);
+//       headerRow.appendChild(cell);
+//     });
+//   } else {
+//     // If data is empty, display "No Results" message
+//     const noResultsRow = document.createElement('tr');
+//     const noResultsCell = document.createElement('td');
+//     noResultsCell.textContent = 'No Results';
+//     noResultsRow.appendChild(noResultsCell);
+//     tableBody.appendChild(noResultsRow);
+//
+//     // hide any left behind pagination buttons
+//     const paginationContainer = document.getElementById('paginationContainer');
+//     paginationContainer.style.display = 'none';
+//
+//     return;
+//   }
+//
+//   const startIndex = (currentPage - 1) * pageSize;
+//   const endIndex = Math.min(startIndex + pageSize, data.length);
+//
+//   // Display table rows for current page
+//   for (let i = startIndex; i < endIndex; i++) {
+//     const rowData = data[i];
+//     const row = document.createElement('tr');
+//
+//     Object.values(rowData).forEach(value => {
+//       const cell = document.createElement('td');
+//       cell.textContent = value;
+//       row.appendChild(cell);
+//     });
+//
+//
+//     // add hover menu of options
+//     if (addOptions) {
+//       // Create the menu for each row
+//       const menu = document.createElement('div');
+//       menu.classList.add('menu');
+//       addMenuItems(menu, rowData);
+//       document.body.appendChild(menu); // Append menu to body to get accurate cursor position
+//
+//       // Show menu on row hover
+//       row.addEventListener('mouseenter', function (event) {
+//         const x = event.clientX;
+//         const y = event.clientY;
+//         const menuWidth = menu.offsetWidth;
+//         const menuHeight = menu.offsetHeight;
+//         const windowWidth = window.innerWidth;
+//         const windowHeight = window.innerHeight;
+//
+//         let left = x + 10; // Add an offset to the right of the cursor
+//         let top = y;
+//
+//         // Adjust position to fit within window bounds
+//         if (left + menuWidth > windowWidth) {
+//           left = windowWidth - menuWidth;
+//         }
+//         if (top + menuHeight > windowHeight) {
+//           top = windowHeight - menuHeight;
+//         }
+//
+//         menu.style.left = left + 'px';
+//         menu.style.top = top + 'px';
+//
+//         menu.style.display = 'block';
+//
+//         row.classList.add('highlighted-row');
+//       });
+//
+//       // Hide menu on row exit or when mouse leaves the menu
+//       row.addEventListener('mouseleave', function (event) {
+//         if (!menu.contains(event.relatedTarget)) {
+//           menu.style.display = 'none';
+//         }
+//         row.classList.remove('highlighted-row');
+//       });
+//
+//       // Hide menu when mouse leaves the menu
+//       menu.addEventListener('mouseenter', function (event) {
+//         row.classList.add('highlighted-row');
+//       });
+//
+//       // Hide menu when mouse leaves the menu
+//       menu.addEventListener('mouseleave', function (event) {
+//         if (!row.contains(event.relatedTarget)) {
+//           menu.style.display = 'none';
+//           row.classList.remove('highlighted-row');
+//         }
+//       });
+//     }
+//
+//     tableBody.appendChild(row);
+//   }
+//
+//   // Display pagination controls
+//   displayPagination(data.length);
+// }
 
 function addMenuItems(menu, rowData) {
   options.forEach(option => {
@@ -204,8 +338,8 @@ function addMenuItems(menu, rowData) {
     } else if (option === 'Edit Use Date') {
       optionUrl = 'index.html?url=MaskUseDate.html&' + designId;
       // optionLink.target = "_self";
-    } else if (option === 'Forget') {
-      optionUrl = 'index.html?url=MaskForget.html&' + blueDesignOrBoth;
+    } else if (option === 'Archive') {
+      optionUrl = 'index.html?url=MaskArchive.html&' + blueDesignOrBoth;
     } else if (option === 'ReMill') {
       optionUrl = 'index.html?url=MaskRemill.html&' + blueDesignOrBoth;
     } else if (option === 'Mill File') {

@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -5,19 +8,17 @@
   <link rel="stylesheet" type="text/css" href="css/mui-style.css">
 
   <style>
-      #daysInputContainer {
+      #downloadButt {
           margin-bottom: 20px;
       }
   </style>
-
   <script type="module" src="js/MaskTable.js"></script>
 </head>
 
-<h3>Timeline of Recent Masks</h3>
+<h3>All Milled Masks Available at the  Summit</h3>
 
-<div id="daysInputContainer">
-  <input type="number" id="daysInput" placeholder="Number of days" />
-  <button onclick="setNumDays()">Apply</button>
+<div id="downloadButt">
+  <button onclick="downloadFile()">Download All Active Masks</button>
 </div>
 
 <!-- Search bar -->
@@ -25,6 +26,7 @@
   <input type="text" id="searchInput" placeholder="Search..." />
   <button onclick="searchTable()">Search</button>
 </div>
+
 
 <div style="overflow-x: auto; white-space: nowrap;">
   <table class="mui-table mui-table--bordered" style="min-width: 100%;">
@@ -44,26 +46,29 @@
   import { displayTable } from './js/MaskTable.js';
   import { setMenuOff } from './js/MaskTable.js';
 
-  const apiUrl = '/timeline-report';
+  let apiRootUrl;
 
-  // setMenuOff();
+  const tableUrl = '/all-active-masks';
 
-  // Initial table display without any filters
-  displayTable(apiUrl);
+  setMenuOff();
+  displayTable(tableUrl);
 
-  function setNumDays() {
-    const daysInput = document.getElementById('daysInput').value;
-    let apiUrlWithDays = apiUrl;
+  // Fetch configuration to get the API root URL
+  fetch('js/MaskConfig.json')
+  .then(response => response.json())
+  .then(config => {
+    apiRootUrl = config.apiRootUrl;
+  })
+  .catch(error => {
+    alert(`Error reading configuration: ${error}`);
+  });
 
-    // Check if daysInput has a value
-    if (daysInput) {
-      apiUrlWithDays += `?number-days=${encodeURIComponent(daysInput)}`;
-    }
-
-    displayTable(apiUrlWithDays);
+  // Function to download the file
+  function downloadFile() {
+    const downloadUrl = apiRootUrl + `/all-active-masks-file`;
+    window.location.href = downloadUrl;
   }
-
   // Expose setNumDays for HTML button
-  window.setNumDays = setNumDays;
-
+  window.downloadFile = downloadFile;
 </script>
+

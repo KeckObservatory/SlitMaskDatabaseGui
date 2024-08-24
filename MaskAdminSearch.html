@@ -18,10 +18,34 @@
           height: 25px;
       }
 
+      #searchInputForm {
+          font-size: 16px;
+          height: 25px;
+      }
+
       #submitBtn {
           font-size: 16px;
           height: 30px;
           margin-left: 10px;
+      }
+
+      #submitTableSearch {
+          font-size: 16px;
+          height: 30px;
+          margin-left: 10px;
+      }
+      #helpText {
+          font-style: italic;
+          color: #555;
+          font-weight: bold;
+          color: #721c24;
+          padding: 10px;
+          border-radius: 5px;
+          margin-top: 10px;
+      }
+      #helpText.show {
+          background-color: #f8d7da; /* Light red background */
+          border: 1px solid #f5c6cb; /* Adds a border around the text */
       }
   </style>
   <script type="module" src="js/MaskAdminSearch.js"></script>
@@ -29,27 +53,35 @@
 </head>
 <body>
 
-<!-- Container for the form, centered horizontally -->
 <div id="formContainer">
-  <!-- the search parameter form -->
   <form id="inputForm">
     <select id="optionsDropdown">
       <option value="">Search Options</option>
     </select>
-    <input type="text" id="searchInput" placeholder="Search query..." />
-    <button id="submitBtn">Search</button>
+    <input type="text" id="searchInputForm" placeholder="Search by Option..." />
+    <button id="submitBtn">Search Options</button>
   </form>
 </div>
 
-<br><br>
+<div id="helpText"></div>
 
 <h2></h2>
-<table id="BasicMaskTable">
-  <thead class="tabHead">
-  <tr id="headerRow"></tr>
-  </thead>
-  <tbody id="GeneratedMaskTable"></tbody>
-</table>
+
+<div id="searchBar">
+  <input type="text" id="searchInput" placeholder="Search Table..." />
+  <button id="submitTableSearch" onclick="searchTable()">Search Table</button>
+</div>
+
+
+<div style="overflow-x: auto; white-space: nowrap;">
+  <table class="mui-table mui-table--bordered" style="min-width: 100%;">
+    <thead class="tabHead">
+    <tr id="headerRow"></tr>
+    </thead>
+    <tbody id="GeneratedMaskTable"></tbody>
+  </table>
+</div>
+
 
 <div id="paginationContainer"></div>
 

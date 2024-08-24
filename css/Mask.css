@@ -92,3 +92,19 @@
     background-color: #000000;
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+.archive-row {
+    background-color: inherit;
+}
+
+.archive-row {
+    background-color: rgb(229, 125, 92);
+}
+
+.highlighted-archive-row {
+    background-color: inherit;
+}
+
+.highlighted-archive-row {
+    background-color: rgb(198, 85, 39);
+}
