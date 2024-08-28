@@ -42,7 +42,15 @@ function showInfo() {
     mode: 'cors',
     credentials: 'include' // cookies
   })
-  .then(response => response.json())
+  .then(response => {
+      if (!response.ok) {
+        // throw an error if the API did not return a 200 response
+        return response.json().then(errData => {
+          throw new Error(errData.error || `HTTP error! status: ${response.status}`);
+        });
+      }
+      return response.json();  // Only parse JSON if the response is OK
+  })
   .then(data => {
 
     // get the date-use and blue-id (if needed)
@@ -81,7 +89,7 @@ function showInfo() {
     }
   })
   .catch(error => {
-    alert(`Error accessing data, check API at ${fullUrl}: ${error}`);
+    alert(`Issue accessing data: ${error}`);
   });
 }
 

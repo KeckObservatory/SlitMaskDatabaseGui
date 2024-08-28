@@ -39,7 +39,7 @@ function getTableInfo(apiUrl, apiRootUrl) {
     StandardMaskTable(queryResults);
   })
   .catch(error => {
-    alert(`Error accessing data, check API at ${apiRootUrl}${apiUrl}: ${error}`);
+    alert(`Error accessing data, check Slitmask Database API at ${apiRootUrl}${apiUrl}`);
   });
 }
 

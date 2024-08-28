@@ -47,7 +47,7 @@ function adminSearch() {
           showBox = true;
           break;
         case 'name':
-          helpText.textContent = 'Search be the Design Name or Blue Name.';
+          helpText.textContent = 'Search by the Design Name or Blue Name.';
           showBox = true;
           break;
         case 'caldays':
@@ -70,8 +70,6 @@ function adminSearch() {
       helpText.classList.remove('show');
     }
   });
-
-
 
   // load all results on page load
   submitForm();
