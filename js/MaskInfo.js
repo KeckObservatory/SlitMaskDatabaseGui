@@ -66,15 +66,7 @@ function showInfo() {
         blueId = blueprintObject[1][0].bluid
         blueIdId.innerText = blueId;
       }
-      if (blueprintObject[1][0].status === 0){
-        maskStatId.innerText = "NOT MILLED";
-      } else if (blueprintObject[1][0].status === 2){
-        maskStatId.innerText = "READY";
-      } else if (blueprintObject[1][0].status === 9){
-        maskStatId.innerText = "ARCHIVED";
-      } else {
-        maskStatId.innerText = "unknown";
-      }
+      maskStatId.innerText = blueprintObject[1][0].status
     } else {
       console.log("Blueprint not found in the data.");
     }

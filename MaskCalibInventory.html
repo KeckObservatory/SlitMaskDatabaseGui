@@ -9,11 +9,20 @@
 
 <h3>Calibration Masks</h3>
 
-<!-- Search bar -->
-<div id="searchBar">
-  <input type="text" id="searchInput" placeholder="Search..." />
-  <button onclick="searchTable()">Search</button>
+<!-- Search bar / page number -->
+<div id="searchBar" style="display: flex; justify-content: space-between; align-items: center;">
+  <div id="searchInputContainer">
+    <input type="text" id="searchInput" placeholder="Search Table..." />
+    <button id="submitTableSearch" onclick="searchTable()">Search Table</button>
+  </div>
+
+  <div id="pageSizeContainer">
+    <label for="pageSizeInput">Page Size (rows):</label>
+    <input type="number" id="pageSizeInput" value="10" min="1" onchange="updatePageSize()" />
+  </div>
 </div>
+
+
 
 <div style="overflow-x: auto; white-space: nowrap;">
   <table class="mui-table mui-table--bordered" style="min-width: 100%;">
