@@ -35,6 +35,10 @@ function showInfo() {
   const designNameId = document.getElementById("design-name-id");
   const useDateId = document.getElementById("use-date-id");
   const maskStatId = document.getElementById("mask-status-id");
+  // if (document.getElementById("barcode-id")) {
+  //   const barcodeId = document.getElementById("barcode-id");
+  // }
+  const barcodeId = document.getElementById("barcode-id");
 
   let fullUrl = `${apiRootUrl}/mask-detail?design-id=${designId}`;
 
@@ -79,6 +83,26 @@ function showInfo() {
     } else {
       console.log("Mask Design not found in the data.");
     }
+
+    if (document.getElementById("barcode-id")) {
+
+      // get the design Mask.maskid (barcode)
+      const maskTable = data.data.find(item => item[0] === "Blue Mask");
+      if (maskTable) {
+        console.log('here', maskTable[1]);
+        const barcode = maskTable[1][0] && maskTable[1][0]["maskid"];
+
+        if (barcode) {
+          barcodeId.innerText = barcode;
+        } else {
+          barcodeId.innerText = "None";
+          console.log("maskid not found in the data.");
+        }
+      } else {
+        console.log("Barcode not found in the data.");
+      }
+    }
+
   })
   .catch(error => {
     alert(`Issue accessing data: ${error}`);

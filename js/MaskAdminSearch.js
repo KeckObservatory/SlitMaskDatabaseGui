@@ -43,7 +43,7 @@ function adminSearch() {
           showBox = true;
           break;
         case 'milled':
-          helpText.textContent = 'Milled - options are yes or no. The default is yes';
+          helpText.textContent = 'Milled - options are yes or no. The default is yes.';
           showBox = true;
           break;
         case 'name':
@@ -118,7 +118,7 @@ function adminSearch() {
     const queryString = `search-options=${encodeURIComponent(JSON.stringify(searchQuery))}`;
     const fullUrl = `${apiUrl}?${queryString}`;
 
-    let options = ['Edit Use Date', 'Archive', 'ReMill', 'Plot', 'Details', 'Fits File', 'Mill File'];
+    let options = ['Edit Use Date', 'Archive', 'ReMill', 'Plot', 'Details', 'Fits File', 'Mill File', 'Delete Barcode'];
 
     displayTable(fullUrl, options);
 

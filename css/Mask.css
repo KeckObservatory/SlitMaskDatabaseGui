@@ -129,3 +129,7 @@
 .highlighted-warning-row {
     background-color: rgb(221, 215, 100);
 }
+
+.help-idented {
+    padding-left: 2em;
+}

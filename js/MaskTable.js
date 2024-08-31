@@ -43,6 +43,16 @@ function getTableInfo(apiUrl, apiRootUrl) {
   });
 }
 
+
+// allow enter in the search field the same as clicking the search button
+document.getElementById("searchInput").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchTable();
+  }
+});
+
+
 // expose search to the MaskHome once loaded via tables
 window.searchTable = function() {
   currentPage = 1;
@@ -122,7 +132,6 @@ function StandardMaskTable(data) {
         archiveRow = true;
       } else if (key === 'Days-Notice' && parseInt(value, 10) < 35) {
         warnRow = true;
-        console.log('you know its true', key, value);
       }
 
       row.appendChild(cell);
@@ -240,6 +249,8 @@ function addMenuItems(menu, rowData) {
       optionUrl = 'index.html?url=MaskRemill.html&' + blueDesignOrBoth;
     } else if (option === 'Mill File') {
       optionUrl = 'index.html?url=MaskMillFile.html&' + blueDesignOrBoth;
+    } else if (option === 'Delete Barcode') {
+      optionUrl = 'index.html?url=MaskDelete.html&' + blueDesignOrBoth;
     }
     optionLink.href = optionUrl;
     menu.appendChild(optionLink);
