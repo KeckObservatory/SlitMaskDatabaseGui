@@ -1,0 +1,121 @@
+
+<body>
+
+<h3>Slitmask Barcode Delete</h3>
+
+<br><br>
+
+<table>
+  <tr>
+    <th>Mask Barcode</th>
+    <th> - </th>
+    <th>Mask Design Id</th>
+    <th> - </th>
+    <th>Mask Blueprint Id</th>
+    <th> - </th>
+    <th>Mask Design Name</th>
+    <th> - </th>
+    <th>Current Use Date</th>
+    <th> - </th>
+    <th>Mask Status</th>
+  </tr>
+  <tr>
+    <td align="center"><div id="barcode-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="design-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="blue-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="design-name-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="use-date-id"></div></td>
+    <td> - </td>
+    <td align="center"><div id="mask-status-id"></div></td>
+  </tr>
+</table>
+<br><br>
+
+<div id="loadingIndicator" style="display: none;">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<h4>Delete a barcode from the database.  Deleting a mask will remove the
+  Mask table that is associated with the mask-id (barcode).  The purpose
+of this functionality is if two or more barcodes have been scanned for a mask.</h4> <br>
+
+<input type="input" id="barcode-to-delete" name="barcode-to-delete"> <br><br>
+
+<form>
+  <button type="button" id="downloadBtn" onclick="deleteBarcode()">Delete Barcode</button>
+</form>
+
+
+<script>
+  let apiRootUrl;
+  let blueId;
+
+  function deleteBarcode() {
+    let apiUrl = `${apiRootUrl}/delete-mask`;
+    let maskId = document.getElementById("barcode-to-delete").value;
+
+    let fullUrl;
+    if (maskId === "") {
+      alert('No barcode (maskid) associated with mask design! Please enter a valid Barcode.');
+      return;
+    } else {
+      fullUrl = `${apiUrl}?mask-id=${maskId}&blue-id=${blueId}`;
+    }
+    // Disable the button
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.disabled = true;
+
+    showLoadingIndicator();
+
+    fetch(fullUrl, {
+      mode: 'cors',
+      credentials: 'include'
+    })
+    .then(response => {
+      if (response.status === 422) {
+        return response.json().then(data => {
+          throw new Error("Invalid Parameters: " + data.error || "Unknown error occurred.");
+        });
+      } else if (!response.ok) {
+          return response.json().then(data => {
+            throw new Error("Error: " + data.error || "Unknown error occurred.");
+          });
+      } else {
+        return response.json();
+      }
+    })
+    .then(data => {
+      if (data.success === 1) {
+        alert(data.data.msg);
+        window.addEventListener('focus', reloadPage);
+      } else {
+        throw new Error("Error: " + data.data.error + "\n" + data.data.msg);
+      }
+    })
+    .catch(error => {
+      alert(`${error}`);
+    })
+    .finally(() => {
+      // Enable the button again
+      downloadBtn.disabled = false;
+
+      // Hide loading indicator
+      hideLoadingIndicator();
+    });
+  }
+
+  // expose the deleteBarcode to be used in index.html
+  window.onload = deleteBarcode;
+
+  // load the Date-Use and Design ID
+  window.onload = loadParams();
+</script>
+
+</body>
+
