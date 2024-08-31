@@ -74,13 +74,16 @@
     .then(response => response.json())
     .then(info => {
       const userType = info.data['user_type'];
+      const apiUrl = '/mill-queue';
 
       if (userType !== "maskadmin") {
-        setMenuOff();  // Call setMenuOff only if the user is not an admin
+        // setMenuOff only if the user is not an admin
+        setMenuOff();
+        displayTable(apiUrl);
+      } else {
+        let options = ['Edit Use Date', 'Archive', 'Plot', 'Details', 'ReMill', 'Fits File', 'Delete Barcode'];
+        displayTable(apiUrl, options);
       }
-
-      const millQueueUrl = '/mill-queue';
-      displayTable(millQueueUrl);  // Display the table once user type is determined
     })
     .catch(error => {
       alert(`Error fetching user type: ${error}`);

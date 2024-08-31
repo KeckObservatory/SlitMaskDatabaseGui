@@ -82,7 +82,7 @@
         alert(data.data.msg);
         window.addEventListener('focus', reloadPage);
       } else {
-        alert("Error: " + data.data.error + "\n" + data.data.msg);
+        throw new Error("Error: " + data.data.error + "\n" + data.data.msg);
       }
     })
     .catch(error => {

@@ -16,12 +16,47 @@ Help for the inventory options:
 
 <ul>
   <li>
+    <b>MASK STATUS</b>
+    <ul>
+      <li>
+        <b>UNMILLED</b>
+        <p class="help-idented">
+          A mask design that is UNMILLED means that either a mask has not been created for
+          the mask,  or the mask created has expired,  been archived,  and the design has
+          been set to be re-milled.  A design with status = UNMILLED will show up in the
+          milling queue. The inital status of a mask upon submission is UNMILLED.
+        </p>
+      </li>
+      <li>
+        <b>READY</b>
+        <p class="help-idented">
+          A mask design that is READY means that a mask has been created / milled.  A
+          READY mask is on Maunakea summit and ready to observe with,  thus is either
+          in the instrument or could be configured to be inserted into the instrument.
+        </p>
+      </li>
+      <li>
+        <b>ARCHIVED</b>
+        <p class="help-idented">
+        An ARCHIVED mask design means the design will not be used to create a mask,
+        if a mask has been created that mask is now archived (recycled) and no longer
+        available for use.  To observe with an ARCHIVED mask design,  the mask
+        must be set to 'RE-MILL' by a Keck Support Astronomer,  which will put the
+        design back into the milling queue.
+        </p>
+
+      </li>
+    </ul>
+  </li>
+
+
+  <li>
     <b>Archive</b>
   </li>
 
-  <p class="indented">
+  <p class="help-idented">
     The ARCHIVE button will mark masks as ARCHIVED.  The meaning of archived is that the
-    mask is no longer READY for observing.  If it was milled,  the physics metal mask
+    mask is no longer READY for observing.  If it was milled,  the physical metal mask
     is no longer available for use.
 
     To move a mask design from ARCHIVED to READY,  the PI will need to contact someone
@@ -29,21 +64,25 @@ Help for the inventory options:
   </p><br>
 
   <li>
+    <b>Auto Archiving</b>
+  </li>
+  <p class="help-idented">
+    Mask designs are automatically archived if they are 6 months past their use date.
+    Once the mask design is marked as archived, the mask will be removed from
+    Maunakea summit and no longer be available for use. An email is sent to the PI to
+    2 weeks before the mask is archved warn them of that this process,  at this point
+    they have the ability to update the use-date saving the mask from the recycle pile.
+  </p><br>
+
+  <li>
     <b>Remill</b>
   </li>
-
-  <p class="indented">
-    After being milled, masks are marked 'done' so that they do not pop up
-    again in the 'to be milled' list. To make another copy of a mask that
-    has been milled already, you will need to mark it 'unmilled' using the
-    Remill button.
-
-    NOTE: It is a Bad Idea to use the Remill button to re-use a slitmask from
-    a previous run. The Observing Date will be past and the slitmask milling
-    work queue will reject it. Instead we recommend you (a) regenerate the
-    design file using DSIMULATOR or equivalent, and submit the revised version,
-    or (b) edit the MDF (FITS file output from DSIMULATOR) and resubmit it with
-    the corrected observing date. See Mask Dates Help for tips on this.
+  <p class="help-idented">
+    The remill functionality is only available to Keck Slitmask Admins.  Remill allows
+    a mask design to be sent to the milling queue.  If an archived mask design needs to
+    be used again,  a new mask can be milled from the design by sending marking it to
+    be remilled.  Contact an Support Astronomer or coversheet@keck.hawaii.edu to have
+    a mask remilled.
   </p><br>
 
   <li>
@@ -51,28 +90,27 @@ Help for the inventory options:
 
   </li>
 
-  <p class="indented">
-    The Plot button is not dangerous. It produces a graphical representation of
-    the mask design.
-  </p>
+  <p class="help-idented">
+    The Plot button produces a graphical representation of the mask design.
+  </p><br>
 
   <li>
     <b>FITS file</b>
   </li>
 
-  <p class="indented">
+  <p class="help-idented">
 
-    The FITS file button is not dangerous. It generates a 'FITS chunk' for any
+    The FITS file generates a 'FITS chunk' for any
     mask design. This can take a while to generate and is not useful unless you
-    already know what it is :-)
+    already know what it is.
   </p><br>
 
   <li>
     <b>Detail</b>
   </li>
 
-  <p class="indented">
-    The Detail button is not dangerous. It shows all the data contained in the
+  <p class="help-idented">
+    The Detail button shows all the data contained in the
     mask design and blueprint(s).
   </p><br>
 
