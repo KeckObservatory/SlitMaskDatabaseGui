@@ -21,27 +21,28 @@ Help for the inventory options:
       <li>
         <b>UNMILLED</b>
         <p class="help-idented">
-          A mask design that is UNMILLED means that either a mask has not been created for
-          the mask,  or the mask created has expired,  been archived,  and the design has
-          been set to be re-milled.  A design with status = UNMILLED will show up in the
-          milling queue. The inital status of a mask upon submission is UNMILLED.
+          The inital status of a mask upon submission is UNMILLED.
+          A mask design that is UNMILLED means that either (1) a mask has not been created for
+          the mask,  or (2) the mask created has been archived and the design has
+          been set to be re-milled.  A design with status = UNMILLED will be available in the
+          milling queue.
         </p>
       </li>
       <li>
         <b>READY</b>
         <p class="help-idented">
-          A mask design that is READY means that a mask has been created / milled.  A
-          READY mask is on Maunakea summit and ready to observe with,  thus is either
-          in the instrument or could be configured to be inserted into the instrument.
+          A mask design that is READY has an associated mask that was milled and is available
+          for observing.  A READY mask is on Maunakea summit is either
+          in the instrument or available to be installed in the instrument.
         </p>
       </li>
       <li>
         <b>ARCHIVED</b>
         <p class="help-idented">
-        An ARCHIVED mask design means the design will not be used to create a mask,
-        if a mask has been created that mask is now archived (recycled) and no longer
+        An ARCHIVED mask design means the design will not be used to create a mask.
+        If a mask has been created that mask is now archived (recycled) and no longer
         available for use.  To observe with an ARCHIVED mask design,  the mask
-        must be set to 'RE-MILL' by a Keck Support Astronomer,  which will put the
+        must be set to 'RE-MILL',  which will bring the
         design back into the milling queue.
         </p>
 
@@ -59,18 +60,18 @@ Help for the inventory options:
     mask is no longer READY for observing.  If it was milled,  the physical metal mask
     is no longer available for use.
 
-    To move a mask design from ARCHIVED to READY,  the PI will need to contact someone
-    at Keck Observatory to REMILL the mask.
+    To move a mask design from ARCHIVED to READY,  the mask must be set to RE-MILL and
+    a new mask will be created at the CNC mill.
   </p><br>
 
   <li>
     <b>Auto Archiving</b>
   </li>
   <p class="help-idented">
-    Mask designs are automatically archived if they are 6 months past their use date.
+    Mask designs are automatically archived if they are 6 months past their use-date.
     Once the mask design is marked as archived, the mask will be removed from
-    Maunakea summit and no longer be available for use. An email is sent to the PI to
-    2 weeks before the mask is archved warn them of that this process,  at this point
+    Maunakea summit and no longer be available for use. An email is sent to the PI
+    2 weeks before the mask is archived to warn the PI of this process,  at this point
     they have the ability to update the use-date saving the mask from the recycle pile.
   </p><br>
 
@@ -78,15 +79,15 @@ Help for the inventory options:
     <b>Remill</b>
   </li>
   <p class="help-idented">
-    The remill functionality is only available to Keck Slitmask Admins.  Remill allows
+    The REMILL functionality allows
     a mask design to be sent to the milling queue.  If an archived mask design needs to
-    be used again,  a new mask can be milled from the design by sending marking it to
-    be remilled.  Contact an Support Astronomer or coversheet@keck.hawaii.edu to have
-    a mask remilled.
+    be used again,  a new mask can be milled from the design by marking it to
+    be remilled.  Contact an Support Astronomer or coversheet@keck.hawaii.edu regarging
+    the mask milling process.
   </p><br>
 
   <li>
-      <b>Plot</b>
+    <b>Plot</b>
 
   </li>
 
@@ -111,7 +112,7 @@ Help for the inventory options:
 
   <p class="help-idented">
     The Detail button shows all the data contained in the
-    mask design and blueprint(s).
+    mask design and blueprint.
   </p><br>
 
 </ul>

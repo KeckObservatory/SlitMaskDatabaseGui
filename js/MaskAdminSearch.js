@@ -11,6 +11,7 @@ function adminSearch() {
     {label: 'Barcode', name: 'barcode', array: true},
     {label: 'Milled', name: 'milled'},
     {label: 'Number of days', name: 'caldays'},
+    {label: 'Instrument', name: 'inst'}
   ];
 
   const optionsDropdown = document.getElementById('optionsDropdown');
@@ -51,7 +52,11 @@ function adminSearch() {
           showBox = true;
           break;
         case 'caldays':
-          helpText.textContent = 'Search for the Date Use within X days or today.';
+          helpText.textContent = 'Search for the Date Use within N days or today.';
+          showBox = true;
+          break;
+        case 'inst':
+          helpText.textContent = 'Restrict results by instrument,  LRIS or DEIMOS';
           showBox = true;
           break;
         default:
@@ -97,7 +102,7 @@ function adminSearch() {
     // Construct the search query based on the selected option and input value
     let searchQuery = {};
 
-    // Handle array options
+    // Handle array input options
     if (optionsList.find(option => option.name === optionName && option.array)) {
       const arrayValues = searchValue.split(/[;, ]+/).map(val => val.trim());
       searchQuery[optionName] = arrayValues;
