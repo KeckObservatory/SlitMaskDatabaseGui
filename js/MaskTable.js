@@ -21,15 +21,11 @@ function displayTable(apiUrl, new_options = ['Plot', 'Details', 'Fits File']) {
     const apiRootUrl = config.apiRootUrl;
     const fullApiUrl = apiRootUrl + apiUrl;
 
-    console.log('Fetching:', fullApiUrl); // Log the full URL
-
     return fetch(fullApiUrl, {
       mode: 'cors',
       credentials: 'include'
     })
     .then(response => {
-      console.log('Response status:', response.status);
-      console.log('Response headers:', [...response.headers]);
 
       if (response.status === 401) {
         // Handle 401 Unauthorized
