@@ -30,7 +30,17 @@ async function submitMask() {
   method: 'POST',
   body: formData,
   credentials: 'include'
-});
+  });
+
+  // Check the response status
+  if (response.status === 401) {
+    // Handle 401 Unauthorized
+    alert('Unauthorized access, redirecting to login page.');
+    const currentUrl = window.location.href;
+    const loginUrl = `/login?url=${encodeURIComponent(currentUrl)}`;
+    window.location.href = loginUrl;
+    return;
+  }
 
   // Check if the response is OK
   if (!response.ok) {

@@ -13,17 +13,69 @@ function setMenuOff() {
 export { setMenuOff };
 
 function displayTable(apiUrl, new_options = ['Plot', 'Details', 'Fits File']) {
-  options = new_options
+  options = new_options;
+
   fetch('js/MaskConfig.json')
   .then(response => response.json())
   .then(config => {
     const apiRootUrl = config.apiRootUrl;
-    getTableInfo(apiUrl, apiRootUrl);
+    const fullApiUrl = apiRootUrl + apiUrl;
+
+    console.log('Fetching:', fullApiUrl); // Log the full URL
+
+    return fetch(fullApiUrl, {
+      mode: 'cors',
+      credentials: 'include'
+    })
+    .then(response => {
+      console.log('Response status:', response.status);
+      console.log('Response headers:', [...response.headers]);
+
+      if (response.status === 401) {
+        // Handle 401 Unauthorized
+        alert('You are no longer logged in, redirecting to login page.');
+        const currentUrl = window.location.href;
+        const loginUrl = `/login?url=${encodeURIComponent(currentUrl)}`;
+        window.location.href = loginUrl;
+        return Promise.reject('Unauthorized');
+      } else if (response.status === 302) {
+        const loginUrl = response.headers.get('Location');
+
+        if (loginUrl) {
+          window.location.href = loginUrl;
+        } else {
+          alert('Error: Redirection URL not found.');
+        }
+        return;
+      }
+
+      // Check if the response is JSON
+      const contentType = response.headers.get('Content-Type');
+      if (contentType && contentType.includes('application/json')) {
+        return response.json();
+      } else {
+        // If not JSON, handle the unexpected response
+        console.error('Received unexpected response:', contentType);
+        alert('Unexpected response received.');
+        return Promise.reject('Non-JSON response');
+      }
+    })
+    .then(data => {
+      if (data) {
+        getTableInfo(apiUrl, apiRootUrl); // Pass the apiRootUrl here
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data from API:', error);
+      // No need to handle the redirect here as it's handled in the previous block
+    });
   })
   .catch(error => {
-      alert(`Error reading configuration: ${error}`);
+    console.error('Error reading configuration:', error);
+    alert(`Error reading configuration: ${error}`);
   });
 }
+
 
 export { displayTable };
 
