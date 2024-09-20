@@ -13,11 +13,16 @@
 <form id="maskSubmitForm" enctype="multipart/form-data">
   <!-- Wrap file input and submit button in a flex container -->
   <div style="display: flex; align-items: center;">
-    <!-- File input -->
-    <input type="file" name="maskFile" size="80" multiple=""/>
+    <!-- File input, only allow one file-->
+    <input type="file" name="maskFile" size="80"/>
     <!-- Submit button -->
     <button type="button" onclick="submitMask()" id="submitMaskBtn">Submit</button>
   </div>
+  <p></p>
+  <p>
+    <br><b>Masks must be submitted individually.</b> <br> Each mask is validated upon submission,
+    so there will have feedback on the status of each mask as it is ingested (or rejected) from the database.
+  </p>
   <p></p>
   <hr />
   <!-- Additional content -->
